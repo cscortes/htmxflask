@@ -28,15 +28,15 @@ users = [
     User("joe", "robinson", "jrobinson@nowhere.com"),
 
     User("Luis", "Cortes", "Luis@somewhere.com"),
-    User("mark", "hinkle", "mhinkle@nowhere.com"),
+    User("marty", "hinkle", "mhinkle@nowhere.com"),
     User("matthew", "robinson", "mrobinson@nowhere.com"),
 
     User("collin", "western", "cwest@nowhere.com"),
-    User("mark", "hinkle II", "mhinkle2@nowhere.com"),
+    User("marty", "hinkle II", "mhinkle2@nowhere.com"),
     User("joe", "robinson", "jrobinson@nowhere.com"),
 
     User("juan", "vida", "juanvida@nowhere.com"),
-    User("mark", "hinkle III", "mhinkle3@nowhere.com"),
+    User("marty", "hinkle III", "mhinkle3@nowhere.com"),
     User("zoe", "omega", "zoe@nowhere.com") 
 ]
 
