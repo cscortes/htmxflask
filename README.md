@@ -9,10 +9,27 @@ that will display the full amount of effort required.
 
 * Since HTMX is in flux I will be using developmental version of HTMX.  
 * The most current version of HTMX is 0.0.4.
-* To use this version, use:
+
+## Client Side Notes:
+
+* Example of how to use a particular version of HTMX in your web pages:
 
 ```html
-
  <script src="https://unpkg.com/htmx.org@0.0.4"></script>
-
  ```
+ 
+ ## Server Side Notes:
+ 
+ To "run" the python side myapp.py you need to have flask installed and possibly other
+ modules. PIPENV is what you need to get it install and run.
+ 
+ **pipenv install**
+ 
+Then you can "run" the flask server with:
+
+**pyenv shell**
+**python myapp.py""
+
+
+ 
+ 
