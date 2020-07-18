@@ -28,7 +28,8 @@ that will display the full amount of effort required.
 Then you can "run" the flask server with:
 
 **pyenv shell**
-**python myapp.py""
+
+**python myapp.py**
 
 
  
