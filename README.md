@@ -25,11 +25,17 @@ that will display the full amount of effort required.
  
  **pipenv install**
  
-Then you can "run" the flask server with:
+CD into one of the Major directories and you can "run" the flask server with:
 
 **pyenv shell**
 
 **python myapp.py**
+
+This will setup your server on localhost:5000.  
+
+Open a browsers, and in the url bar type:
+
+http://localhost:5000 
 
 
  
