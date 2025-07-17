@@ -95,7 +95,6 @@ example-name/
 - **Minimal and functional** - Only styles necessary for demonstration
 - Use CSS custom properties for consistent theming
 - Prefer CSS Grid/Flexbox over complex positioning
-- Include basic responsive design (mobile-friendly)
 - Highlight HTMX-specific states (loading, swapping, etc.)
 
 **Base CSS Variables**:
@@ -188,8 +187,6 @@ Before considering an example complete, verify:
 ### Visual Design
 - **Clean and minimal** - Focus on functionality over aesthetics
 - **Consistent** - Similar spacing, colors, and typography across examples
-- **Accessible** - Proper contrast, keyboard navigation, screen reader support
-- **Responsive** - Works on mobile and desktop
 
 ### User Experience
 - **Immediate feedback** - Loading indicators, success states, error handling
@@ -202,7 +199,6 @@ Before considering an example complete, verify:
 ### Browser Support
 - Modern browsers (Chrome, Firefox, Safari, Edge)
 - No Internet Explorer support required
-- Mobile browser compatibility
 
 ### Performance Targets
 - Page load time: < 1 second

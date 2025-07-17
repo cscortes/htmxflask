@@ -1,0 +1,178 @@
+/* CSS Variables for consistent theming */
+:root {
+  --primary-color: #3b82f6;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --border-color: #d1d5db;
+  --text-color: #374151;
+  --bg-color: #ffffff;
+  --bg-light: #f9f9f9;
+}
+
+/* Basic reset and typography */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-light);
+  margin: 0;
+  padding: 20px;
+}
+
+/* Container layout */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--bg-color);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: var(--text-color);
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Form styling */
+.search-form {
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-control:hover {
+  border-color: var(--primary-color);
+}
+
+.form-control:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.form-control::placeholder {
+  color: #9ca3af;
+}
+
+.form-control[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.form-control[type="submit"]:hover {
+  background-color: #2563eb;
+}
+
+.form-control[type="submit"]:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+/* HTMX loading indicator */
+.htmx-indicator {
+  display: none;
+  color: var(--primary-color);
+  margin: 15px 0;
+  font-weight: 500;
+}
+
+.htmx-request .htmx-indicator {
+  display: block;
+}
+
+.htmx-indicator img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* Table styling */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: var(--bg-color);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+  background-color: var(--bg-light);
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.table tr:hover {
+  background-color: var(--bg-light);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* HTMX swap animations */
+.htmx-swapping {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+/* Error states */
+.error {
+  color: var(--error-color);
+  background-color: #fef2f2;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #fecaca;
+}
+
+/* Success states */
+.success {
+  color: var(--success-color);
+  background-color: #ecfdf5;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #d1fae5;
+} 
