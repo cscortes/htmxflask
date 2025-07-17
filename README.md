@@ -1,21 +1,56 @@
-# htmxflask
+# HTMX Flask Examples
 
 **Version: 0.3.1**
 
-All the HTMX examples redone using a FLASK server backend.  
+A comprehensive collection of HTMX examples with Flask backend, designed to demonstrate modern web development patterns without JavaScript frameworks.
 
-To see the original HTMX samples, go to 
-https://htmx.org/examples/. 
+## 🚀 Quick Start
 
-The idea is to create server and client side examples 
-that will display the full amount of effort required.
+```bash
+# Install dependencies for all examples
+make install
 
-* Since HTMX is in flux I will be using developmental version of HTMX.  
-* The most current version of HTMX is 2.0.6.
+# Run a specific example
+cd ACTIVESEARCH && python myapp.py
+# Then visit http://localhost:5000
+```
 
-## Client Side Notes:
+## 📁 Project Structure
 
-* Example of how to use HTMX in your web pages:
+This project contains three educational HTMX examples:
+
+### 1. **ACTIVESEARCH** - Live Search with Debouncing
+- Real-time search with 500ms debounce
+- Demonstrates `hx-post`, `hx-trigger`, `hx-target`, `hx-indicator`
+- 24 sample users with Hispanic names
+- Loading indicators and error handling
+
+### 2. **VALUESELECT** - Cascading Dropdowns
+- Dynamic model loading based on make selection
+- Demonstrates `hx-get`, `hx-target`, `hx-trigger`
+- Comprehensive car database with 400+ makes and models
+- Server-side data filtering
+
+### 3. **PLY3** - Mutually Exclusive Dropdowns
+- Constraint-based form interactions
+- Demonstrates `hx-post`, `hx-target`
+- Server-side state management
+- Template-based HTML generation
+
+## 🛠️ Development Tools
+
+### Makefile Commands
+```bash
+make help                    # Show all available commands
+make install                 # Install dependencies for all examples
+make test                    # Run linting and tests
+make clean                   # Clean up temporary files
+make version VERSION=0.4.0   # Update version and create git tag
+make pre-git-commit          # Clean invisible characters before commit
+```
+
+### HTMX Configuration
+All examples use a minimal HTMX configuration for educational purposes:
 
 ```html
 <script src="https://unpkg.com/htmx.org@2.0.6/dist/htmx.min.js"></script>
@@ -26,26 +61,47 @@ that will display the full amount of effort required.
   htmx.config.allowScriptTags = false;
 </script>
 ```
- 
- ## Server Side Notes:
- 
- To "run" the python side myapp.py you need to have flask installed and possibly other
- modules. PIPENV is what you need to get it install and run.
- 
- **pipenv install**
- 
-CD into one of the Major directories and you can "run" the flask server with:
 
-**pyenv shell**
+## 📚 Documentation
 
-**python myapp.py**
+- **[Changelog](docs/CHANGELOG.md)** - Version history and changes
+- **[Development Guiding Light](docs/DEVGUIDINGLIGHT.md)** - Development standards
+- **[Features Documentation](docs/FEATURES.md)** - Detailed feature descriptions
 
-This will setup your server on localhost:5000.  
+## 🔧 Development Workflow
 
-Open a browsers, and in the url bar type:
+This project follows strict development standards:
 
-http://localhost:5000 
+1. **Version Management**: All changes require version bumping
+2. **Documentation**: Updates must be documented in changelog
+3. **Code Quality**: Invisible character cleaning before commits
+4. **Linting**: Automated code quality checks
+
+See [`.cursorrules`](.cursorrules) for complete development guidelines.
+
+## 🏗️ Technology Stack
+
+- **Backend**: Flask (Python)
+- **Frontend**: HTMX 2.0.6 (CDN)
+- **Package Management**: uv
+- **Development**: Makefile automation
+- **Code Quality**: flake8 linting
+
+## 🎯 Learning Objectives
+
+Each example demonstrates specific HTMX patterns:
+- **Server-side rendering** without JavaScript frameworks
+- **Progressive enhancement** with minimal client-side code
+- **Real-time interactions** using HTMX attributes
+- **Error handling** and user feedback
+- **Responsive design** with CSS
+
+## 📖 Original Examples
+
+For the original HTMX examples, visit: https://htmx.org/examples/
+
+This project reimplements those examples with Flask backends to show the complete server-side implementation required.
 
 
- 
- 
+
+

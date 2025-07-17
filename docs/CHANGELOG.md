@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Proper change documentation and versioning requirements
 - **Development Workflow Standards** to ensure project consistency
 
+## [0.3.1] - 2024-12-19
+
+### Fixed
+- **Invisible character cleaning script** - Improved file extension handling
+  - Added support for all project file types (`.css`, `.html`, `.cursorrules`, `.csv`, `.yml`, `.yaml`)
+  - Added support for files without extensions (`LICENSE`, `VERSION`, `Makefile`)
+  - Excluded binary/image files (`.svg`, `.lock`, `.png`, `.jpg`, etc.) from processing
+  - Excluded `.venv` directories and other build/cache directories
+  - Refactored extension logic into reusable functions (`should_process_file`, `get_processable_files`)
+  - Eliminated code duplication and improved maintainability
+
 ## [Unreleased]
 
 ### Added
@@ -115,6 +126,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **0.3.1** - Fixed invisible character cleaning script file extension handling
 - **0.3.0** - Added git commit rules and development workflow standards
 - **0.2.1** - Added Makefile and automated version management
 - **0.2.0** - Clean HTMX implementation with CDN and comprehensive improvements
