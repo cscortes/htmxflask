@@ -14,6 +14,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Proper change documentation and versioning requirements
 - **Development Workflow Standards** to ensure project consistency
 
+## [0.4.1] - 2024-12-19
+
+### Fixed
+- **Git commit workflow** - Fixed Makefile to support `.cursorrules` requirements
+  - Added `make version-update` target for automated version bumping
+  - Implemented proper semantic versioning (feature/bugfix/patch)
+  - Corrected development workflow to follow established rules
+
+## [0.4.0] - 2024-12-19
+
+### Added
+- **Automated version management** with `make version-update` target
+  - Automatic version bumping based on change type (`feature`, `bugfix`, `patch`)
+  - Semantic versioning support (major.minor.patch)
+  - Simplified development workflow following git commit rules
+- **Comprehensive README.md documentation** - Complete project overview
+  - Quick start guide with current tooling (uv, make)
+  - Detailed project structure and learning objectives
+  - Development workflow and technology stack documentation
+  - Links to all project documentation
+
 ## [0.3.1] - 2024-12-19
 
 ### Fixed
@@ -126,6 +147,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **0.4.1** - Fixed git commit workflow and Makefile version management
+- **0.4.0** - Added automated version management and comprehensive documentation
 - **0.3.1** - Fixed invisible character cleaning script file extension handling
 - **0.3.0** - Added git commit rules and development workflow standards
 - **0.2.1** - Added Makefile and automated version management

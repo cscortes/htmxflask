@@ -1,6 +1,6 @@
 [project]
 name = "valueselect"
-version = "0.3.1"
+version = "$NEW_VERSION"
 description = "HTMX Cascading Dropdowns Example"
 requires-python = ">=3.8"
 dependencies = [

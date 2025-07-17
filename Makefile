@@ -1,6 +1,6 @@
 # HTMX Flask Examples Makefile
 
-.PHONY: help version clean test install pre-git-commit lint
+.PHONY: help version version-update clean test install pre-git-commit lint
 
 # Default target
 help: ## Show this help message
@@ -10,6 +10,8 @@ help: ## Show this help message
 	@echo ""
 	@echo "Examples:"
 	@echo "  make help                    # Show this help message"
+	@echo "  make version-update TYPE=feature  # Auto-bump version for new features"
+	@echo "  make version-update TYPE=bugfix   # Auto-bump version for bug fixes"
 	@echo "  make version 0.2.0          # Update version to 0.2.0 and create git tag"
 	@echo "  make clean                   # Clean up temporary files"
 	@echo "  make test                    # Run tests on all examples"
@@ -36,6 +38,46 @@ version: ## Update version to specified version (e.g., make version 0.2.0)
 	@git tag -a v$(VERSION) -m "Version $(VERSION) - HTMX Flask Examples"
 	@echo "Git tag v$(VERSION) created successfully"
 	@echo "Version update complete!"
+
+version-update: ## Automatically bump version based on change type (make version-update TYPE=feature|bugfix|patch)
+	@if [ -z "$(TYPE)" ]; then \
+		echo "Error: Please specify change type"; \
+		echo "Usage: make version-update TYPE=feature|bugfix|patch"; \
+		echo "  feature: bump minor version (0.1.0 -> 0.2.0)"; \
+		echo "  bugfix:  bump patch version (0.1.0 -> 0.1.1)"; \
+		echo "  patch:   bump patch version (0.1.0 -> 0.1.1)"; \
+		exit 1; \
+	fi
+	@echo "Determining current version..."
+	@if [ ! -f VERSION ]; then \
+		echo "Error: VERSION file not found. Please run 'make version VERSION=0.1.0' first."; \
+		exit 1; \
+	fi
+	@CURRENT_VERSION=$$(cat VERSION); \
+	echo "Current version: $$CURRENT_VERSION"; \
+	MAJOR=$$(echo $$CURRENT_VERSION | cut -d. -f1); \
+	MINOR=$$(echo $$CURRENT_VERSION | cut -d. -f2); \
+	PATCH=$$(echo $$CURRENT_VERSION | cut -d. -f3); \
+	if [ "$(TYPE)" = "feature" ]; then \
+		NEW_MINOR=$$((MINOR + 1)); \
+		NEW_VERSION="$$MAJOR.$$NEW_MINOR.0"; \
+		echo "Feature change: bumping minor version to $$NEW_VERSION"; \
+	elif [ "$(TYPE)" = "bugfix" ] || [ "$(TYPE)" = "patch" ]; then \
+		NEW_PATCH=$$((PATCH + 1)); \
+		NEW_VERSION="$$MAJOR.$$MINOR.$$NEW_PATCH"; \
+		echo "Bug fix: bumping patch version to $$NEW_VERSION"; \
+	else \
+		echo "Error: Invalid TYPE. Use 'feature', 'bugfix', or 'patch'"; \
+		exit 1; \
+	fi; \
+	echo "Updating version to $$NEW_VERSION..."; \
+	echo "$$NEW_VERSION" > VERSION; \
+	sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$$NEW_VERSION"/g' ACTIVESEARCH/pyproject.toml; \
+	sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$$NEW_VERSION"/g' VALUESELECT/pyproject.toml; \
+	sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$$NEW_VERSION"/g' PLY3/pyproject.toml; \
+	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: $$NEW_VERSION\*\*/g' README.md; \
+	echo "Version updated to $$NEW_VERSION in all files"; \
+	echo "Note: Remember to update docs/CHANGELOG.md with new version details"
 
 clean: ## Clean up temporary files and build artifacts
 	@echo "Cleaning up temporary files..."

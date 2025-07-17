@@ -1,6 +1,6 @@
 [project]
 name = "ply3"
-version = "0.3.1"
+version = "$NEW_VERSION"
 description = "HTMX PLY3 Example"
 requires-python = ">=3.10"
 dependencies = [

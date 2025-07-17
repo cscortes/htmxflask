@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.3.1**
+**Version: $NEW_VERSION**
 
 A comprehensive collection of HTMX examples with Flask backend, designed to demonstrate modern web development patterns without JavaScript frameworks.
 
