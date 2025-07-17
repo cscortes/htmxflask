@@ -1,34 +1,59 @@
+<!DOCTYPE html>
 <html>
-<header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Search - HTMX Example</title>
+  <!-- Link to minimal CSS for demonstration (create static/css/style.css) -->
+  <link rel="stylesheet" href="/static/css/style.css">
   <script src="/static/js/htmx.js" type="text/javascript"></script>
-</header>
-
+</head>
 <body>
+  <div class="container">
+    <h1>Search Contacts</h1>
+    <!--
+      The form provides graceful degradation: it works with or without JS.
+      hx-post: Send form data to /search/ on input (AJAX if JS enabled)
+      hx-trigger: Trigger on keyup or change, with 500s debounce
+      hx-target: Replace #search-results tbody with response
+      hx-indicator: Show .htmx-indicator while request is active
+    -->
+    <form action="/search/" method="POST" class="search-form">
+      <div class="form-group">
+        <label for="search-input">Search Users:</label>
+        <input 
+          id="search-input"
+          class="form-control" 
+          type="text" 
+          name="search" 
+          placeholder="Begin typing to search users..."
+          hx-post="/search/" 
+          hx-trigger="keyup changed delay:500" 
+          hx-target="#search-results" 
+          hx-indicator=".htmx-indicator">
+        <button type="submit">Search</button>
+      </div>
+    </form>
 
-  <h3>
-    Search Contacts
-    <span class="htmx-indicator">
-      <img src="/static/img/bars.svg" /> Searching...
-    </span>
-  </h3>
-  
-  <input class="form-control" type="text" name="search" 
-  placeholder="Begin Typing To Search Users..." 
+    <!-- Loading indicator for HTMX requests -->
+    <div class="htmx-indicator">
+      <img src="/static/img/bars.svg" alt="Loading" /> Searching...
+    </div>
 
-  hx-post="/search/" hx-trigger="keyup changed delay:500ms" 
-  hx-target="#search-results" hx-indicator=".htmx-indicator">
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th>
-      </tr>
-    </thead>
-
-    <tbody id="search-results">
-      <!-- filled with search results when ready -->
-    </tbody>
-
-  </table>
+    <!-- Results table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="search-results">
+        <!-- Initial results or empty state will be rendered here -->
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>

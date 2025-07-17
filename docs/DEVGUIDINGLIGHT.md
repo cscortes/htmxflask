@@ -86,11 +86,10 @@ example-name/
 - **IDs**: `#target-area`, `#form-container`, `#result-section`
 
 ### HTML Structure
-- Use semantic HTML elements appropriate for your HTML version (`<div>`, `<form>`, `<table>`, etc.)
-- Include proper accessibility attributes where supported (`aria-label`, `role`, etc.)
+- Use standard HTML elements (`<div>`, `<form>`, `<table>`, etc.) - avoid HTML5-specific elements
 - HTMX attributes should be the last attributes on elements
 - Always include fallback behavior for non-JavaScript users
-- Use valid HTML structure for your chosen HTML version
+- Use valid HTML structure compatible with older browsers
 
 ### CSS Guidelines
 - **Minimal and functional** - Only styles necessary for demonstration
@@ -210,12 +209,6 @@ Before considering an example complete, verify:
 - HTMX request time: < 500ms
 - CSS file size: < 10KB per example
 - HTML semantics score: 90%+
-
-### Accessibility Requirements
-- WCAG 2.1 AA compliance
-- Keyboard navigation support
-- Screen reader compatibility
-- Proper markup for your chosen HTML version
 
 ## 📖 Anti-Patterns to Avoid
 
