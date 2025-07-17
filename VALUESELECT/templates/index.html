@@ -1,47 +1,72 @@
-
+<!DOCTYPE html>
 <html>
-    <header>
-        <script src="/static/js/htmx.js" type="text/javascript"></script>
-        <style>
-            div {
-                border-style: solid;
-                border-color: rgb(3, 3, 122);
-                border-width: 5px;
-                margin-right: 10px;
-                padding-top: 20px;
-                padding-left: 20px;
-                font-size: x-large;
-                height: 60px;
-                width:300px;
-                float: left;
-            }
-        </style>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cascading Dropdowns - HTMX Example</title>
+  <!-- Link to external CSS for better organization -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="/static/js/htmx.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Car Selector</h1>
+    <p class="description">Select a car make to see available models.</p>
+    
+    <div class="dropdown-container">
+      <!-- 
+        Make Dropdown with HTMX:
+        - hx-get="/models/": Send GET request to /models/ endpoint
+        - hx-target="#ddmodels": Replace content in the models dropdown
+        - hx-indicator=".htmx-indicator": Show loading indicator during request
+        - hx-trigger="change": Trigger when selection changes
+      -->
+      <div class="form-group">
+        <label for="make-select">Car Make:</label>
+        <select 
+          id="make-select"
+          name="makeselected" 
+          class="form-control"
+          hx-get="/models/" 
+          hx-target="#ddmodels" 
+          hx-indicator=".htmx-indicator"
+          hx-trigger="change">
+          
+          <option value="">Select a make...</option>
+          {% for amake in makers %}
+            <option value="{{ amake }}">{{ amake }}</option>
+          {% endfor %}
+        </select>
+      </div>
 
-    <body>
+      <!-- Loading indicator - shown during HTMX requests -->
+      <div class="htmx-indicator">
+        <img src="/static/img/bars.svg" alt="Loading" /> Loading models...
+      </div>
 
-        <div>
-            <label>Make</label>
-                <select name="makeselected" hx-get="/models/" 
-                hx-target="#ddmodels" hx-indicator=".htmx-indicator">
-                
-                {% for amake in makers %}
-                    <option value="{{ amake }}">{{ amake }}</option>
-                {% endfor %}
+      <!-- 
+        Models Dropdown:
+        - Gets populated by HTMX responses from the make selection
+        - Initially shows models for the first make in the list
+      -->
+      <div class="form-group">
+        <label for="ddmodels">Car Model:</label>
+        <select id="ddmodels" class="form-control">
+          <option value="">Select a model...</option>
+          {% for amodel in models %}
+            <option value="{{ amodel }}">{{ amodel }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
 
-                </select>
-        </div>
-
-        <div>
-            <label>Model</label>
-                <select id="ddmodels">
-                {% for amodel in models %}
-                    <option value="{{ amodel }}">{{ amodel }}</option>
-                {% endfor %}
-                </select>
-        </div>
-
-    </body>
+    <!-- Selection display area -->
+    <div class="selection-display">
+      <h3>Your Selection</h3>
+      <p id="selection-text">Please select a make and model above.</p>
+    </div>
+  </div>
+</body>
 </html>
 
 

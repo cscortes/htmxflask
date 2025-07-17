@@ -1,0 +1,183 @@
+/* CSS Variables for consistent theming */
+:root {
+  --primary-color: #3b82f6;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --border-color: #d1d5db;
+  --text-color: #374151;
+  --bg-color: #ffffff;
+  --bg-light: #f9f9f9;
+}
+
+/* Basic reset and typography */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-light);
+  margin: 0;
+  padding: 20px;
+}
+
+/* Container layout */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: var(--bg-color);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: var(--text-color);
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.description {
+  color: #6b7280;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+/* Dropdown container */
+.dropdown-container {
+  margin-bottom: 30px;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: var(--bg-color);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-control:hover {
+  border-color: var(--primary-color);
+}
+
+.form-control:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+/* HTMX loading indicator */
+.htmx-indicator {
+  display: none;
+  color: var(--primary-color);
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.htmx-request .htmx-indicator {
+  display: block;
+}
+
+.htmx-indicator img {
+  vertical-align: middle;
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+/* HTMX swap animations */
+.htmx-swapping {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+/* Selection display area */
+.selection-display {
+  background-color: var(--bg-light);
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  margin-top: 20px;
+}
+
+.selection-display h3 {
+  margin: 0 0 10px 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.selection-display p {
+  margin: 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Error states */
+.error {
+  color: var(--error-color);
+  background-color: #fef2f2;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #fecaca;
+  margin: 10px 0;
+}
+
+/* Success states */
+.success {
+  color: var(--success-color);
+  background-color: #ecfdf5;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #d1fae5;
+  margin: 10px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  .form-control {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Loading animation for HTMX indicator */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.htmx-indicator img {
+  animation: spin 1s linear infinite;
+} 
