@@ -90,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Created comprehensive CSS with HTMX indicators and responsive design
   - Added error handling for no results
   - Enhanced documentation with detailed HTMX pattern explanation
-  - Added 24 diverse users with Hispanic names and randomized emails
+  - Added 24 diverse users names and randomized emails
 - **VALUESELECT Example**:
   - Added proper HTML structure and external CSS
   - Enhanced error handling for invalid make selections

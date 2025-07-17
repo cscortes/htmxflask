@@ -22,7 +22,7 @@ This project contains three educational HTMX examples:
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
 - Demonstrates `hx-post`, `hx-trigger`, `hx-target`, `hx-indicator`
-- 24 sample users with Hispanic names
+- 24 sample users more names
 - Loading indicators and error handling
 
 ### 2. **VALUESELECT** - Cascading Dropdowns
