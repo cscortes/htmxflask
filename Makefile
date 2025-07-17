@@ -1,6 +1,6 @@
 # HTMX Flask Examples Makefile
 
-.PHONY: help version clean test install
+.PHONY: help version clean test install pre-git-commit
 
 # Default target
 help: ## Show this help message
@@ -14,6 +14,7 @@ help: ## Show this help message
 	@echo "  make clean                   # Clean up temporary files"
 	@echo "  make test                    # Run tests on all examples"
 	@echo "  make install                 # Install dependencies for all examples"
+	@echo "  make pre-git-commit          # Remove invisible characters before commit"
 
 version: ## Update version to specified version (e.g., make version 0.2.0)
 	@if [ -z "$(VERSION)" ]; then \
@@ -57,4 +58,10 @@ install: ## Install dependencies for all examples
 	@cd VALUESELECT && uv pip install -e . 2>/dev/null || echo "  Skipped (no uv or dependencies)"
 	@echo "PLY3:"
 	@cd PLY3 && uv pip install -e . 2>/dev/null || echo "  Skipped (no uv or dependencies)"
-	@echo "Installation complete!" 
+	@echo "Installation complete!"
+
+pre-git-commit: ## Remove invisible characters from all files before git commit
+	@echo "Removing invisible characters from all files..."
+	@python scripts/clean_invisible_chars.py . --clean
+	@echo "Invisible characters removed successfully!"
+	@echo "Ready for git commit!" 
