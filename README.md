@@ -1,6 +1,6 @@
 # htmxflask
 
-**Version: 0.3.0**
+**Version: 0.3.1**
 
 All the HTMX examples redone using a FLASK server backend.  
 
