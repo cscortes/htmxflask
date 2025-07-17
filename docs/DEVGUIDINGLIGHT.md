@@ -41,7 +41,6 @@ This document serves as the **north star** for developing HTMX examples in this 
 - Keep Flask routes simple and focused
 - Use Jinja2 templates for server-side rendering
 - Demonstrate server-side thinking vs. client-side complexity
-- Each example should work without JavaScript (graceful degradation)
 
 ### 5. **Educational Code Structure**
 - **Self-documenting**: Code should be readable without extensive comments
@@ -88,7 +87,6 @@ example-name/
 ### HTML Structure
 - Use standard HTML elements (`<div>`, `<form>`, `<table>`, etc.) - avoid HTML5-specific elements
 - HTMX attributes should be the last attributes on elements
-- Always include fallback behavior for non-JavaScript users
 - Use valid HTML structure compatible with older browsers
 
 ### CSS Guidelines
@@ -157,8 +155,6 @@ As a user, I want to [action] so that [benefit].
 Before considering an example complete, verify:
 
 ### Functionality
-- [ ] Works without JavaScript (graceful degradation)
-- [ ] Works with JavaScript disabled, then enabled
 - [ ] Demonstrates the HTMX feature clearly
 - [ ] Handles error states appropriately
 - [ ] Mobile-friendly responsive design
@@ -218,7 +214,6 @@ Before considering an example complete, verify:
 
 ### ✅ Do This Instead
 - **Server-side thinking**: Handle state and logic on the server when possible
-- **Progressive enhancement**: Start with working HTML, enhance with HTMX
 - **Semantic HTML**: Use proper elements for their intended purpose
 - **Simple file structure**: Direct file serving without build steps
 - **Clear separation**: HTMX for interaction, CSS for presentation, minimal JS for edge cases
