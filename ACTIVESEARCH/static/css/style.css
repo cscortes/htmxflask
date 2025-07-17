@@ -175,4 +175,14 @@ h1 {
   padding: 12px;
   border-radius: 6px;
   border: 1px solid #d1fae5;
+}
+
+/* No results state */
+.no-results {
+  color: var(--text-color);
+  background-color: var(--bg-light);
+  padding: 20px;
+  text-align: center;
+  font-style: italic;
+  border: 1px solid var(--border-color);
 } 

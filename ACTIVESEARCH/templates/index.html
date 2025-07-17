@@ -50,7 +50,16 @@
         </tr>
       </thead>
       <tbody id="search-results">
-        <!-- Initial results or empty state will be rendered here -->
+        {% if users %}
+          {% for user in users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.fname }}</td>
+            <td>{{ user.lname }}</td>
+            <td>{{ user.email }}</td>
+          </tr>
+          {% endfor %}
+        {% endif %}
       </tbody>
     </table>
   </div>

@@ -58,12 +58,24 @@ users = [
 @app.route('/index.html')
 def root():
     """Provides the main search page."""
-    return flask.render_template("index.html")
+    return flask.render_template("index.html", users=users)
 
 
 @app.route('/search/', methods=['POST'])
 def search():
     """Handles search requests and return filtered user results as HTML fragment."""
+    searchWord = flask.request.form.get('search', None)
+    
+    # If search is empty, return all users
+    if not searchWord or searchWord.strip() == '':
+        matchusers = users
+    else:
+        matchusers = [user for user in users if user.search(searchWord)]
+    
+    # Handle no matching results (only when there was actually a search term)
+    if searchWord and searchWord.strip() != '' and not matchusers:
+        return '<tr><td colspan="4" class="no-results">No users found</td></tr>'
+    
     templ = """
             {% for user in users %}
             <tr>
@@ -74,8 +86,6 @@ def search():
             </tr>
             {% endfor %}
     """
-    searchWord = flask.request.form.get('search', None)
-    matchusers = [user for user in users if user.search(searchWord)]
     return flask.render_template_string(templ, users=matchusers)
 
 
