@@ -5,6 +5,15 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2024-12-19
+
+### Added
+- **Git Commit Rules** in `.cursorrules` for consistent development workflow
+  - Mandatory version bumping before commits using `make version VERSION=x.x.x`
+  - Required documentation updates (README.md, docs/CHANGELOG.md, etc.)
+  - Proper change documentation and versioning requirements
+- **Development Workflow Standards** to ensure project consistency
+
 ## [Unreleased]
 
 ### Added
@@ -106,6 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **0.3.0** - Added git commit rules and development workflow standards
 - **0.2.1** - Added Makefile and automated version management
 - **0.2.0** - Clean HTMX implementation with CDN and comprehensive improvements
 - **0.1.0** - Initial release with three core HTMX examples
@@ -119,4 +129,4 @@ When adding new features or making changes, please update this changelog followi
 - **Deprecated** for soon-to-be removed features
 - **Removed** for now removed features
 - **Fixed** for any bug fixes
-- **Security** for vulnerability fixes 
+- **Security** for vulnerability fixes
