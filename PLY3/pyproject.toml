@@ -1,8 +1,14 @@
 [project]
 name = "ply3"
-version = "0.2.1"
+version = "0.3.0"
 description = "HTMX PLY3 Example"
 requires-python = ">=3.10"
 dependencies = [
     "flask"
 ] 
+[project.optional-dependencies]
+dev = [
+    "flake8"
+] 
+[tool.setuptools]
+packages = [] 

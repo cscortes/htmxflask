@@ -1,6 +1,6 @@
 # HTMX Flask Examples Makefile
 
-.PHONY: help version clean test install pre-git-commit
+.PHONY: help version clean test install pre-git-commit lint
 
 # Default target
 help: ## Show this help message
@@ -28,6 +28,7 @@ version: ## Update version to specified version (e.g., make version 0.2.0)
 	@sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$(VERSION)"/g' VALUESELECT/pyproject.toml
 	@sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$(VERSION)"/g' PLY3/pyproject.toml
 	@sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: $(VERSION)\*\*/g' README.md
+	@echo "Note: Remember to update docs/CHANGELOG.md with new version details"
 	@echo "Version updated to $(VERSION) in all files"
 	@echo "Creating git tag v$(VERSION)..."
 	@git add .
@@ -45,7 +46,18 @@ clean: ## Clean up temporary files and build artifacts
 	@find . -name "uv.lock" -delete
 	@echo "Cleanup complete!"
 
-test: ## Run tests on all examples
+lint: ## Run flake8 linter on all examples
+	@echo "Installing flake8 in the environment..."
+	uv pip install flake8 > /dev/null
+	@echo "Running flake8 on ACTIVESEARCH..."
+	uv run -- flake8 --ignore=W391 --exclude=.venv ACTIVESEARCH || true
+	@echo "Running flake8 on VALUESELECT..."
+	uv run -- flake8 --ignore=W391 --exclude=.venv VALUESELECT || true
+	@echo "Running flake8 on PLY3..."
+	uv run -- flake8 --ignore=W391 --exclude=.venv PLY3 || true
+	@echo "Linting complete!"
+
+test: lint ## Run tests on all examples (lint + tests)
 	@echo "Running tests on all examples..."
 	@echo "Note: This would run tests if they existed"
 	@echo "Tests completed!"
@@ -53,15 +65,15 @@ test: ## Run tests on all examples
 install: ## Install dependencies for all examples
 	@echo "Installing dependencies for all examples..."
 	@echo "ACTIVESEARCH:"
-	@cd ACTIVESEARCH && uv pip install -e . 2>/dev/null || echo "  Skipped (no uv or dependencies)"
+	@cd ACTIVESEARCH && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "VALUESELECT:"
-	@cd VALUESELECT && uv pip install -e . 2>/dev/null || echo "  Skipped (no uv or dependencies)"
+	@cd VALUESELECT && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "PLY3:"
-	@cd PLY3 && uv pip install -e . 2>/dev/null || echo "  Skipped (no uv or dependencies)"
+	@cd PLY3 && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "Installation complete!"
 
 pre-git-commit: ## Remove invisible characters from all files before git commit
 	@echo "Removing invisible characters from all files..."
 	@python scripts/clean_invisible_chars.py . --clean
 	@echo "Invisible characters removed successfully!"
-	@echo "Ready for git commit!" 
+	@echo "Ready for git commit!"

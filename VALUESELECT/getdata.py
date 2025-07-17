@@ -1,23 +1,27 @@
 # ========================================================================
 # Sample Data Retrieval Script
-# 
+#
 # This script demonstrates how to scrape car data from Wikipedia to create
 # the car.csv file used by the VALUESELECT example.
 #
 # Usage: python getdata.py
 # Output: Creates car.csv with make,model pairs
-# ========================================================================
+# ===============================================================================
 
 from bs4 import BeautifulSoup
 import requests
 
+
 def reducecol(part):
-    """Extract text content from BeautifulSoup element, handling nested links."""
+    """
+    Extract text content from BeautifulSoup element, handling nested links.
+    """
     if part.find("a"):
-        part = part.find("a") 
-    if type(part.contents) == list:
+        part = part.find("a")
+    if isinstance(part.contents, list):
         part = part.contents[0]
     return part
+
 
 # Wikipedia URL containing SUV data
 url = "https://en.wikipedia.org/wiki/List_of_sport_utility_vehicles"
@@ -43,7 +47,7 @@ for row in rows:
 
 # Write data to CSV file
 print("Writing data to car.csv...")
-with open("car.csv", "w") as out: 
+with open("car.csv", "w") as out:
     for make, model in suvs:
         out.write("'{}','{}'\n".format(make.strip(), model.strip()))
 

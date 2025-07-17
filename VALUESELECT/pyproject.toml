@@ -1,6 +1,6 @@
 [project]
 name = "valueselect"
-version = "0.2.1"
+version = "0.3.0"
 description = "HTMX Cascading Dropdowns Example"
 requires-python = ">=3.8"
 dependencies = [
@@ -9,9 +9,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "rope"
+    "rope",
+    "flake8"
 ]
 data-retrieval = [
     "beautifulsoup4",
     "requests"
 ] 
+
+[tool.setuptools]
+packages = [] 

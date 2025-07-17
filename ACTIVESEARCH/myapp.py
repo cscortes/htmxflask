@@ -2,22 +2,25 @@ import flask
 
 app = flask.Flask(__name__, static_url_path='/static')
 
+
 class User:
     """Simple user class for demonstration purposes."""
     id = 0
-    def __init__(self, fname, lname, email ):
-        User.id  +=1
-        self.id = User.id 
+
+    def __init__(self, fname, lname, email):
+        User.id += 1
+        self.id = User.id
         self.fname = fname
-        self.lname = lname 
+        self.lname = lname
         self.email = email
 
-    def search( self, word ):
+    def search(self, word):
         """Archives user data for the given word across name and email."""
-        if (word is None):
+        if word is None:
             return False
-        all = self.fname + self.lname + self.email
-        return word.lower() in all.lower()
+        all_data = self.fname + self.lname + self.email
+        return word.lower() in all_data.lower()
+
 
 # Sample user data for demonstration - 24iverse users
 users = [
@@ -54,6 +57,7 @@ users = [
     User("Daniel", "White", "dwhite@strategic.org")
 ]
 
+
 @app.route('/')
 @app.route('/index.html')
 def root():
@@ -63,19 +67,24 @@ def root():
 
 @app.route('/search/', methods=['POST'])
 def search():
-    """Handles search requests and return filtered user results as HTML fragment."""
-    searchWord = flask.request.form.get('search', None)
-    
+    """
+    Handles search requests and return filtered user results as HTML fragment.
+    """
+    search_word = flask.request.form.get('search', None)
+
     # If search is empty, return all users
-    if not searchWord or searchWord.strip() == '':
-        matchusers = users
+    if not search_word or search_word.strip() == '':
+        match_users = users
     else:
-        matchusers = [user for user in users if user.search(searchWord)]
-    
+        match_users = [user for user in users if user.search(search_word)]
+
     # Handle no matching results (only when there was actually a search term)
-    if searchWord and searchWord.strip() != '' and not matchusers:
-        return '<tr><td colspan="4" class="no-results">No users found</td></tr>'
-    
+    if ((search_word) and (search_word.strip() != '') and (not match_users)):
+        return '''
+        <tr>
+        <td colspan="4" class="no-results">No users found</td>
+        </tr>'''
+
     templ = """
             {% for user in users %}
             <tr>
@@ -86,8 +95,8 @@ def search():
             </tr>
             {% endfor %}
     """
-    return flask.render_template_string(templ, users=matchusers)
+    return flask.render_template_string(templ, users=match_users)
 
 
 if __name__ == '__main__':
-   app.run(debug = True) 
+    app.run(debug=True)

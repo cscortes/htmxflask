@@ -1,3 +1,5 @@
 .vscode
 Pipfile.lock
 docs/FEATURES.md
+*.bak
+.cursorrules
