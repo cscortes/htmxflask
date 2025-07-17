@@ -14,9 +14,12 @@ As a user, I want to select a car make and see available models so that I can ch
 
 ## Try It Out
 1. `cd VALUESELECT`
-2. `pipenv install`
-3. `pipenv run python myapp.py`
-4. Visit http://localhost:5000
+2. Install [uv](https://github.com/astral-sh/uv) if you haven't already: `pip install uv`
+3. Install dependencies: `uv pip install -r requirements.txt` or `uv venv && uv pip install .`
+4. Run the server: `uv venv && source .venv/bin/activate && python myapp.py`
+5. Visit http://localhost:5000
+
+**Note:** This project now uses [uv](https://github.com/astral-sh/uv) for dependency management as the standard for all examples.
 
 ## Learning Points
 - Demonstrates dynamic dropdowns with HTMX
