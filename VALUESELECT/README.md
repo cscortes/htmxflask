@@ -68,10 +68,8 @@ VALUESELECT/
 ├── templates/
 │   └── index.html        # Main page with HTMX dropdowns
 ├── static/
-│   ├── css/
-│   │   └── style.css     # Styling and HTMX indicators
-│   └── js/
-│       └── htmx.js       # HTMX library
+│   └── css/
+│       └── style.css     # Styling and HTMX indicators
 ├── car.csv               # Car make-model database
 ├── getdata.py            # Sample data retrieval script
 └── pyproject.toml        # Dependencies

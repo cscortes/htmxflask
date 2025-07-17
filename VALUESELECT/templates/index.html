@@ -6,7 +6,13 @@
   <title>Cascading Dropdowns - HTMX Example</title>
   <!-- Link to external CSS for better organization -->
   <link rel="stylesheet" href="/static/css/style.css">
-  <script src="/static/js/htmx.js" type="text/javascript"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.6/dist/htmx.min.js"></script>
+  <script>
+    // Minimal configuration for educational examples
+    htmx.config.historyEnabled = false;
+    htmx.config.allowEval = false;
+    htmx.config.allowScriptTags = false;
+  </script>
 </head>
 <body>
   <div class="container">
