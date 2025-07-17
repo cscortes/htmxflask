@@ -4,52 +4,65 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Ply3</title>
+    <title>PLY3 - Interdependent Dropdowns</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/Contact-Form-Clean.css') }}">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/styles.css') }}">
     <script src="https://unpkg.com/htmx.org@1.6.1" integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW" crossorigin="anonymous"></script>
-
 </head>
 
 <body>
     <section class="contact-clean">
-        <form hx-post="/myform">
-            <h2 class="text-center">Numbers</h2>
-            <div  class="container">
-
-                <div id="idx_row" class="row">
-                    <div class="col-md-4">
-                        <select name="pos1" hx-post="/callback/1" hx-target="#idx_row" class="form-select">
-                            <option value="0" selected>&lt;None&gt;</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <select name="pos2" hx-post="/callback/2" hx-target="#idx_row" class="form-select">
-                            <option value="0" selected>&lt;None&gt;</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <select name="pos3" hx-post="/callback/3" hx-target="#idx_row" class="form-select">
-                            <option value="0" selected>&lt;None&gt;</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
+        <div class="container">
+            <h2 class="text-center">Interdependent Dropdowns</h2>
+            <p class="text-center text-muted">Select a value in any dropdown - only one can be selected at a time</p>
+            
+            <!-- 
+                HTMX Interdependent Dropdowns:
+                - Each dropdown triggers a POST request when changed
+                - hx-target="#idx_row" replaces the entire row with updated state
+                - Server ensures mutual exclusion (only one selection allowed)
+            -->
+            <div id="idx_row" class="row">
+                <div class="col-md-4">
+                    <label for="pos1" class="form-label">Position 1:</label>
+                    <select name="pos1" id="pos1" hx-post="/callback/1" hx-target="#idx_row" class="form-select">
+                        <option value="0" selected>&lt;None&gt;</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
                 </div>
-
+                <div class="col-md-4">
+                    <label for="pos2" class="form-label">Position 2:</label>
+                    <select name="pos2" id="pos2" hx-post="/callback/2" hx-target="#idx_row" class="form-select">
+                        <option value="0" selected>&lt;None&gt;</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="pos3" class="form-label">Position 3:</label>
+                    <select name="pos3" id="pos3" hx-post="/callback/3" hx-target="#idx_row" class="form-select">
+                        <option value="0" selected>&lt;None&gt;</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
             </div>
-            <div class="mb-3"></div>
-            <div class="text-center d-md-flex justify-content-center align-items-center align-content-center justify-content-md-center mb-3" style="text-align: center;color: var(--bs-blue);padding: 1px;"><button class="btn btn-primary" type="submit">send </button></div>
-        </form>
+
+            <!-- Selection display -->
+            <div class="mt-4 text-center">
+                <div class="alert alert-info">
+                    <strong>Current Selection:</strong> 
+                    <span id="current-selection">None</span>
+                </div>
+            </div>
+        </div>
     </section>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
