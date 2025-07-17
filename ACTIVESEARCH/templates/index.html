@@ -12,11 +12,11 @@
   <div class="container">
     <h1>Search Contacts</h1>
     <!--
-      The form provides graceful degradation: it works with or without JS.
-      hx-post: Send form data to /search/ on input (AJAX if JS enabled)
-      hx-trigger: Trigger on keyup or change, with 500s debounce
-      hx-target: Replace #search-results tbody with response
-      hx-indicator: Show .htmx-indicator while request is active
+      HTMX Live Search Form:
+      - hx-post="/search/": Send POST request to /search/ endpoint
+      - hx-trigger="keyup changed delay:500s": Trigger on keyup with 500s debounce
+      - hx-target=#search-results:Replace content in the tbody with id="search-results"
+      - hx-indicator=.htmx-indicator": Show loading indicator while request is active
     -->
     <form action="/search/" method="POST" class="search-form">
       <div class="form-group">
@@ -34,12 +34,12 @@
       </div>
     </form>
 
-    <!-- Loading indicator for HTMX requests -->
+    <!-- Loading indicator - shown during HTMX requests -->
     <div class="htmx-indicator">
       <img src="/static/img/bars.svg" alt="Loading" /> Searching...
     </div>
 
-    <!-- Results table -->
+    <!-- Results table - tbody gets replaced by HTMX responses -->
     <table class="table">
       <thead>
         <tr>

@@ -1,0 +1,10 @@
+# Cursor Rules for HTMX Flask Examples
+
+## Code Quality Rules
+
+- Always use clean_invisible_chars on all files before check in everytime
+- Follow the Development Guiding Light principles
+- Use standard HTML (not HTML5-specific elements)
+- Keep examples focused on HTMX functionality
+- Maintain minimal external dependencies
+- Write clear, educational code with proper comments 

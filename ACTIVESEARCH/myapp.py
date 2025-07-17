@@ -3,6 +3,7 @@ import flask
 app = flask.Flask(__name__, static_url_path='/static')
 
 class User:
+    """Simple user class for demonstration purposes."""
     id = 0
     def __init__(self, fname, lname, email ):
         User.id  +=1
@@ -12,11 +13,13 @@ class User:
         self.email = email
 
     def search( self, word ):
+        """Archives user data for the given word across name and email."""
         if (word is None):
             return False
         all = self.fname + self.lname + self.email
         return word.lower() in all.lower()
 
+# Sample user data for demonstration - 24iverse users
 users = [
     User("John", "Smith", "jsmith@company.com"),
     User("Jane", "Doe", "jane.doe@email.org"),
@@ -51,14 +54,18 @@ users = [
     User("Daniel", "White", "dwhite@strategic.org")
 ]
 
+@app.route('/')
 @app.route('/index.html')
 def root():
+    """Provides the main search page."""
     return flask.render_template("index.html")
 
 
 @app.route('/search/', methods=['POST'])
 def search():
-    templ =             {% for user in users %}
+    """Handles search requests and return filtered user results as HTML fragment."""
+    templ = """
+            {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.fname }}</td>
@@ -66,9 +73,10 @@ def search():
                 <td>{{ user.email }}</td>
             </tr>
             {% endfor %}
+    """
     searchWord = flask.request.form.get('search', None)
     matchusers = [user for user in users if user.search(searchWord)]
-    return flask.render_template_string(templ,users=matchusers)
+    return flask.render_template_string(templ, users=matchusers)
 
 
 if __name__ == '__main__':
