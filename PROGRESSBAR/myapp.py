@@ -10,7 +10,8 @@ from flask import Flask, render_template, make_response
 
 
 app = Flask(__name__)
-PROGRESS=0
+PROGRESS = 0
+
 
 @app.route('/')
 def index():
@@ -62,6 +63,7 @@ def job_progress():
     if PROGRESS >= 100:
         response.headers['HX-Trigger'] = 'done'
     return response
+
 
 @app.route('/job/done')
 def job():

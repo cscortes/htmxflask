@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: $NEW_VERSION**
+**Version: 0.7.2**
 
 A comprehensive collection of HTMX examples with Flask backend, designed to demonstrate modern web development patterns without JavaScript frameworks.
 
@@ -38,10 +38,11 @@ This project contains four educational HTMX examples:
 - Template-based HTML generation
 
 ### 4. **PROGRESSBAR** - Real-time Progress Bar
-- Background task processing with live progress updates
-- Demonstrates `hx-post`, `hx-trigger="every 600ms"`, `hx-target`
-- Self-polling HTMX pattern based on official HTMX example
-- Threading for long-running tasks with smooth CSS transitions
+- Self-polling progress bar with live updates every 600ms
+- Demonstrates `hx-post`, `hx-trigger="every 600ms"`, `hx-target`, `HX-Trigger`
+- Based on official HTMX progress bar example
+- Simple state management with 5% increments and smooth CSS transitions
+- Full accessibility support with ARIA attributes
 
 ## 🛠️ Development Tools
 
