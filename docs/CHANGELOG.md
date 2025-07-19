@@ -46,6 +46,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Refactored extension logic into reusable functions (`should_process_file`, `get_processable_files`)
   - Eliminated code duplication and improved maintainability
 
+## [0.5.0] - 2024-12-19
+
+### Added
+- **PROGRESSBAR Example** - Real-time progress bar with HTMX
+  - Based on official HTMX progress bar example (https://htmx.org/examples/progress-bar/)
+  - Self-polling HTMX pattern with proper DOM structure
+  - Background task processing with threading
+  - Real-time progress updates every 600ms with smooth CSS transitions
+  - Bootstrap-style progress bar with accessibility attributes
+  - Comprehensive test suite with 13 test cases
+  - Proper task lifecycle management and cleanup
+- **Critical HTMX Pattern Documentation** - Fixed polling implementation
+  - Documented the correct self-polling pattern for HTMX progress bars
+  - Explained proper HTML structure for smooth progress updates
+  - Added detailed implementation examples and troubleshooting guide
+  - Comprehensive debugging and testing tools
+
+### Fixed
+- **HTMX Progress Bar Implementation** - Complete rewrite based on working example
+  - Implemented exact HTML structure from official HTMX progress bar example
+  - Fixed polling frequency to 600ms (matching official example)
+  - Added proper CSS transitions for smooth visual updates
+  - Implemented correct task completion handling with restart functionality
+  - Fixed all syntax and indentation errors in Flask application
+- **Progress Bar CSS** - Updated to Bootstrap-style from official example
+  - Added proper accessibility attributes (aria-valuenow, aria-valuemin, etc.)
+  - Implemented smooth CSS transitions for progress bar updates
+  - Added proper button styling and hover effects
+
+### Changed
+- **Project Structure** - Added fourth example (PROGRESSBAR)
+- **Documentation** - Updated README.md to include progress bar example
+- **Testing** - Added comprehensive test suite for progress bar functionality
+- **Implementation** - Rewrote to match official HTMX example exactly
+
 ## [Unreleased]
 
 ### Added
@@ -83,7 +118,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **HTMX Implementation** - Switched from local files to CDN approach
   - Removed 492KB of local HTMX files (3 × 164KB files)
-  - Updated all examples to use `https://unpkg.com/htmx.org@2.0.6/dist/htmx.min.js`
+  - Updated all examples to use `https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js`
   - Simplified project structure by removing empty js directories
 - **ACTIVESEARCH Example**:
   - Added proper HTML structure with DOCTYPE and head section

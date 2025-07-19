@@ -6,7 +6,7 @@
   <title>Cascading Dropdowns - HTMX Example</title>
   <!-- Link to external CSS for better organization -->
   <link rel="stylesheet" href="/static/css/style.css">
-  <script src="https://unpkg.com/htmx.org@2.0.6/dist/htmx.min.js"></script>
+      <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
   <script>
     // Minimal configuration for educational examples
     htmx.config.historyEnabled = false;
@@ -18,9 +18,9 @@
   <div class="container">
     <h1>Car Selector</h1>
     <p class="description">Select a car make to see available models.</p>
-    
+
     <div class="dropdown-container">
-      <!-- 
+      <!--
         Make Dropdown with HTMX:
         - hx-get="/models/": Send GET request to /models/ endpoint
         - hx-target="#ddmodels": Replace content in the models dropdown
@@ -29,15 +29,15 @@
       -->
       <div class="form-group">
         <label for="make-select">Car Make:</label>
-        <select 
+        <select
           id="make-select"
-          name="makeselected" 
+          name="makeselected"
           class="form-control"
-          hx-get="/models/" 
-          hx-target="#ddmodels" 
+          hx-get="/models/"
+          hx-target="#ddmodels"
           hx-indicator=".htmx-indicator"
           hx-trigger="change">
-          
+
           <option value="">Select a make...</option>
           {% for amake in makers %}
             <option value="{{ amake }}">{{ amake }}</option>
@@ -50,7 +50,7 @@
         <img src="/static/img/bars.svg" alt="Loading" /> Loading models...
       </div>
 
-      <!-- 
+      <!--
         Models Dropdown:
         - Gets populated by HTMX responses from the make selection
         - Initially shows models for the first make in the list

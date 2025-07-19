@@ -1,0 +1,6 @@
+flask
+flask-restful
+
+[dev]
+rope
+flake8

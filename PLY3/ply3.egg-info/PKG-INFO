@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: ply3
+Version: 0.7.0
+Summary: HTMX PLY3 Example
+Requires-Python: >=3.10
+Requires-Dist: flask
+Provides-Extra: dev
+Requires-Dist: flake8; extra == "dev"

@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+valueselect.egg-info/PKG-INFO
+valueselect.egg-info/SOURCES.txt
+valueselect.egg-info/dependency_links.txt
+valueselect.egg-info/requires.txt
+valueselect.egg-info/top_level.txt

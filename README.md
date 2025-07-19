@@ -17,7 +17,7 @@ cd ACTIVESEARCH && python myapp.py
 
 ## 📁 Project Structure
 
-This project contains three educational HTMX examples:
+This project contains four educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -37,6 +37,12 @@ This project contains three educational HTMX examples:
 - Server-side state management
 - Template-based HTML generation
 
+### 4. **PROGRESSBAR** - Real-time Progress Bar
+- Background task processing with live progress updates
+- Demonstrates `hx-post`, `hx-trigger="every 600ms"`, `hx-target`
+- Self-polling HTMX pattern based on official HTMX example
+- Threading for long-running tasks with smooth CSS transitions
+
 ## 🛠️ Development Tools
 
 ### Makefile Commands
@@ -53,7 +59,7 @@ make pre-git-commit          # Clean invisible characters before commit
 All examples use a minimal HTMX configuration for educational purposes:
 
 ```html
-<script src="https://unpkg.com/htmx.org@2.0.6/dist/htmx.min.js"></script>
+<script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
 <script>
   // Minimal configuration for educational examples
   htmx.config.historyEnabled = false;

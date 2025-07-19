@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: activesearch
+Version: 0.7.0
+Summary: HTMX Active Search Example
+Requires-Python: >=3.8
+Requires-Dist: flask
+Requires-Dist: flask-restful
+Provides-Extra: dev
+Requires-Dist: rope; extra == "dev"
+Requires-Dist: flake8; extra == "dev"

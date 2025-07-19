@@ -6,7 +6,7 @@
   <title>Active Search - HTMX Example</title>
   <!-- Link to minimal CSS for demonstration (create static/css/style.css) -->
   <link rel="stylesheet" href="/static/css/style.css">
-  <script src="https://unpkg.com/htmx.org@2.0.6/dist/htmx.min.js"></script>
+      <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
   <script>
     // Minimal configuration for educational examples
     htmx.config.historyEnabled = false;
@@ -27,15 +27,15 @@
     <form action="/search/" method="POST" class="search-form">
       <div class="form-group">
         <label for="search-input">Search Users:</label>
-        <input 
+        <input
           id="search-input"
-          class="form-control" 
-          type="text" 
-          name="search" 
+          class="form-control"
+          type="text"
+          name="search"
           placeholder="Begin typing to search users..."
-          hx-post="/search/" 
-          hx-trigger="keyup changed delay:500" 
-          hx-target="#search-results" 
+          hx-post="/search/"
+          hx-trigger="keyup changed delay:500"
+          hx-target="#search-results"
           hx-indicator=".htmx-indicator">
       </div>
     </form>

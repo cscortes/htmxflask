@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: valueselect
+Version: 0.7.0
+Summary: HTMX Cascading Dropdowns Example
+Requires-Python: >=3.8
+Requires-Dist: flask
+Provides-Extra: dev
+Requires-Dist: rope; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Provides-Extra: data-retrieval
+Requires-Dist: beautifulsoup4; extra == "data-retrieval"
+Requires-Dist: requests; extra == "data-retrieval"

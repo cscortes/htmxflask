@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Bar - HTMX Example</title>
+  <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Progress Bar</h1>
+    <div hx-target="this" hx-swap="outerHTML">
+        <h3>Start Progress</h3>
+        <button class="btn primary" hx-post="/job/start">
+                  Start server side task
+        </button>
+    </div>
+</body>
+</html>

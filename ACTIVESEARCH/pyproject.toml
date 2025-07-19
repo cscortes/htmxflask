@@ -1,6 +1,6 @@
 [project]
 name = "activesearch"
-version = "$NEW_VERSION"
+version = "0.7.1"
 description = "HTMX Active Search Example"
 requires-python = ">=3.8"
 dependencies = [
@@ -12,7 +12,7 @@ dependencies = [
 dev = [
     "rope",
     "flake8"
-] 
+]
 
 [tool.setuptools]
-packages = [] 
+packages = []

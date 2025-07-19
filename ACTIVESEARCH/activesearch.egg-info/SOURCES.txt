@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+activesearch.egg-info/PKG-INFO
+activesearch.egg-info/SOURCES.txt
+activesearch.egg-info/dependency_links.txt
+activesearch.egg-info/requires.txt
+activesearch.egg-info/top_level.txt

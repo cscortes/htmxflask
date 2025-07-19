@@ -26,10 +26,13 @@ version: ## Update version to specified version (e.g., make version 0.2.0)
 	fi
 	@echo "Updating version to $(VERSION)..."
 	@echo "$(VERSION)" > VERSION
-	@sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$(VERSION)"/g' ACTIVESEARCH/pyproject.toml
-	@sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$(VERSION)"/g' VALUESELECT/pyproject.toml
-	@sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$(VERSION)"/g' PLY3/pyproject.toml
-	@sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: $(VERSION)\*\*/g' README.md
+	@echo "Reading version from VERSION file and updating all pyproject.toml files..."
+	@VERSION_FROM_FILE=$$(cat VERSION); \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' ACTIVESEARCH/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' VALUESELECT/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PLY3/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PROGRESSBAR/pyproject.toml; \
+	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: '$$VERSION_FROM_FILE'\*\*/g' README.md
 	@echo "Note: Remember to update docs/CHANGELOG.md with new version details"
 	@echo "Version updated to $(VERSION) in all files"
 	@echo "Creating git tag v$(VERSION)..."
@@ -72,10 +75,13 @@ version-update: ## Automatically bump version based on change type (make version
 	fi; \
 	echo "Updating version to $$NEW_VERSION..."; \
 	echo "$$NEW_VERSION" > VERSION; \
-	sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$$NEW_VERSION"/g' ACTIVESEARCH/pyproject.toml; \
-	sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$$NEW_VERSION"/g' VALUESELECT/pyproject.toml; \
-	sed -i 's/version = "0\.[0-9]\+\.[0-9]\+"/version = "$$NEW_VERSION"/g' PLY3/pyproject.toml; \
-	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: $$NEW_VERSION\*\*/g' README.md; \
+	echo "Reading version from VERSION file and updating all pyproject.toml files..."; \
+	VERSION_FROM_FILE=$$(cat VERSION); \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' ACTIVESEARCH/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' VALUESELECT/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PLY3/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PROGRESSBAR/pyproject.toml; \
+	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: '$$VERSION_FROM_FILE'\*\*/g' README.md; \
 	echo "Version updated to $$NEW_VERSION in all files"; \
 	echo "Note: Remember to update docs/CHANGELOG.md with new version details"
 
@@ -97,6 +103,8 @@ lint: ## Run flake8 linter on all examples
 	uv run -- flake8 --ignore=W391 --exclude=.venv VALUESELECT || true
 	@echo "Running flake8 on PLY3..."
 	uv run -- flake8 --ignore=W391 --exclude=.venv PLY3 || true
+	@echo "Running flake8 on PROGRESSBAR..."
+	uv run -- flake8 --ignore=W391 --exclude=.venv PROGRESSBAR || true
 	@echo "Linting complete!"
 
 test: lint ## Run tests on all examples (lint + tests)
@@ -112,6 +120,8 @@ install: ## Install dependencies for all examples
 	@cd VALUESELECT && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "PLY3:"
 	@cd PLY3 && uv pip install -e . || echo "  Failed to install (check if uv is available)"
+	@echo "PROGRESSBAR:"
+	@cd PROGRESSBAR && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "Installation complete!"
 
 pre-git-commit: ## Remove invisible characters from all files before git commit
