@@ -140,7 +140,7 @@ See [`.cursorrules`](.cursorrules) for complete development guidelines.
 ## 🏗️ Technology Stack
 
 - **Backend**: Flask (Python)
-- **Frontend**: HTMX 2.0.6 (CDN)
+- **Frontend**: HTMX 2.0.3 (CDN)
 - **Package Management**: uv
 - **Development**: Makefile automation
 - **Code Quality**: flake8 linting

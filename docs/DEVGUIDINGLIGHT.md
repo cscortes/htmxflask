@@ -22,7 +22,7 @@ This document serves as the **north star** for developing HTMX examples in this 
 - Prefer native browser APIs over third-party solutions
 - Only exception: Libraries that directly enhance HTMX (like HTMX extensions)
 
-**✅ Allowed**: HTMX core library (v2.0.6), HTMX extensions, Flask-SocketIO for WebSocket examples
+**✅ Allowed**: HTMX core library (v2.0.3), HTMX extensions, Flask-SocketIO for WebSocket examples
 **❌ Avoid**: jQuery, React, Vue, Alpine.js, Chart.js, etc.
 
 ### 3. **Vanilla HTML + Minimal Enhancements**
