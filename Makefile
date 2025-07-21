@@ -35,6 +35,7 @@ version: ## Update version to specified version (e.g., make version 0.2.0)
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PLY3/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PROGRESSBAR/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' CLICKEDIT/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' CLICKLOAD/pyproject.toml; \
 	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: '$$VERSION_FROM_FILE'\*\*/g' README.md
 	@echo "Note: Remember to update docs/CHANGELOG.md with new version details"
 	@echo "Version updated to $(VERSION) in all files"
@@ -111,6 +112,8 @@ lint: ## Run flake8 linter on all examples
 	uv run -- flake8 --ignore=W391 --exclude=.venv PROGRESSBAR || true
 	@echo "Running flake8 on CLICKEDIT..."
 	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKEDIT || true
+	@echo "Running flake8 on CLICKLOAD..."
+	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKLOAD || true
 	@echo "Linting complete!"
 
 test: lint ## Run tests on all examples (lint + tests)
@@ -125,13 +128,15 @@ test: lint ## Run tests on all examples (lint + tests)
 	@cd PROGRESSBAR && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
 	@echo "Running tests on CLICKEDIT..."
 	@cd CLICKEDIT && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@echo "Running tests on CLICKLOAD..."
+	@cd CLICKLOAD && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
 	@echo "Tests completed!"
 
 test-example: ## Run tests for a specific example (make test-example EXAMPLE=CLICKEDIT)
 	@if [ -z "$(EXAMPLE)" ]; then \
 		echo "Error: Please specify an example name"; \
 		echo "Usage: make test-example EXAMPLE=CLICKEDIT"; \
-		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT"; \
+		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT, CLICKLOAD"; \
 		exit 1; \
 	fi
 	@echo "Running tests for $(EXAMPLE)..."
@@ -159,6 +164,8 @@ install: ## Install dependencies for all examples
 	@cd PROGRESSBAR && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "CLICKEDIT:"
 	@cd CLICKEDIT && uv pip install -e . || echo "  Failed to install (check if uv is available)"
+	@echo "CLICKLOAD:"
+	@cd CLICKLOAD && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "Installation complete!"
 
 pre-git-commit: ## Remove invisible characters from all files before git commit

@@ -17,7 +17,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains four educational HTMX examples:
+This project contains six educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -43,6 +43,20 @@ This project contains four educational HTMX examples:
 - Based on official HTMX progress bar example
 - Simple state management with 5% increments and smooth CSS transitions
 - Full accessibility support with ARIA attributes
+
+### 5. **CLICKEDIT** - Inline Editing
+- Click-to-edit contact information with inline form replacement
+- Demonstrates `hx-get`, `hx-put`, `hx-target`, `hx-swap`
+- Based on official HTMX click-to-edit example
+- Form validation and cancel functionality
+- Educational code with comprehensive HTMX comments
+
+### 6. **CLICKLOAD** - Lazy Loading
+- Progressive loading of contacts with pagination
+- Demonstrates `hx-get`, `hx-target`, `hx-swap` for lazy loading
+- Based on official HTMX click-to-load example
+- Loading indicators and "Load More" functionality
+- Efficient pagination with 3 contacts per page (24 total contacts across 8 pages)
 
 ## 🛠️ Development Tools
 

@@ -41,12 +41,14 @@ This document serves as the **north star** for developing HTMX examples in this 
 - Keep Flask routes simple and focused
 - Use Jinja2 templates for server-side rendering
 - Demonstrate server-side thinking vs. client-side complexity
+- **Inline HTML for simple fragments**: For small, repetitive HTML fragments (like table rows, list items), consider generating HTML directly in Python code instead of using separate template files
 
 ### 5. **Educational Code Structure**
 - **Self-documenting**: Code should be readable without extensive comments
 - **Commented HTMX attributes**: Explain what each `hx-*` attribute does
 - **Clear naming**: Routes, templates, and variables should be descriptive
 - **Minimal abstractions**: Avoid over-engineering for the sake of DRY
+- **Inline HTML for fragments**: When generating HTML fragments in Python code, use f-strings with clear structure and maintain HTMX comments for educational value
 
 **✅ Example**:
 ```html
@@ -61,15 +63,45 @@ This document serves as the **north star** for developing HTMX examples in this 
 <div id="result"></div>
 ```
 
+**✅ Inline HTML Example**:
+```python
+# Generate HTML fragment inline for HTMX partial updates
+html_parts = []
+
+# Add contact rows
+for contact in contacts:
+    html_parts.append(f'''<tr>
+    <td>{contact['id']}</td>
+    <td>{contact['name']}</td>
+    <td>{contact['email']}</td>
+    <td class="status-{contact['status'].lower()}">{contact['status']}</td>
+</tr>''')
+
+# Add load more button with HTMX attributes
+if has_more:
+    html_parts.append(f'''<!-- hx-target="this": Update this row -->
+<!-- hx-swap="outerHTML": Replace entire row with server response -->
+<tr id="replaceMe">
+    <td colspan="4">
+        <button class="btn primary" hx-get="/contacts/?page={page + 1}"
+                hx-target="#replaceMe" hx-swap="outerHTML">
+            Load More Contacts...
+            <span class="htmx-indicator">Loading...</span>
+        </button>
+    </td>
+</tr>''')
+
+return '\n'.join(html_parts)
+```
+
 ## 🏗️ Implementation Standards
 
 ### File Organization
 ```
 example-name/
-├── myapp.py          # Flask routes and logic
+├── myapp.py          # Flask routes and logic (may include inline HTML generation)
 ├── templates/
-│   ├── index.html    # Main page template
-│   └── fragments/    # HTMX partial templates
+│   └── index.html    # Main page template
 ├── static/
 │   ├── css/
 │   │   └── style.css # Minimal styling
@@ -77,6 +109,8 @@ example-name/
 │       └── htmx.js   # HTMX library
 └── Pipfile          # Dependencies
 ```
+
+**Note**: For simple, repetitive HTML fragments (table rows, list items, etc.), consider generating HTML inline in Python code rather than using separate template files. This reduces file count and improves performance for small fragments.
 
 ### Naming Conventions
 - **Routes**: `/example-name/`, `/example-name/action`
@@ -177,6 +211,7 @@ Before considering an example complete, verify:
 - [ ] Minimal JavaScript (ideally 0 lines beyond HTMX)
 - [ ] Fast server responses
 - [ ] Efficient HTMX usage (right attributes for the job)
+- [ ] Consider inline HTML generation for simple fragments to reduce template overhead
 
 ## 🎨 Design Philosophy
 
@@ -211,12 +246,14 @@ Before considering an example complete, verify:
 - **Heavy frameworks**: Including React/Vue/etc. "just for one small part"
 - **Complex build processes**: Webpack, bundlers, or preprocessing when simple files work
 - **Non-semantic HTML**: `<div>` buttons, missing form labels, etc.
+- **Template overuse**: Creating separate template files for simple, repetitive HTML fragments
 
 ### ✅ Do This Instead
 - **Server-side thinking**: Handle state and logic on the server when possible
 - **Semantic HTML**: Use proper elements for their intended purpose
 - **Simple file structure**: Direct file serving without build steps
 - **Clear separation**: HTMX for interaction, CSS for presentation, minimal JS for edge cases
+- **Inline HTML for fragments**: Generate simple HTML fragments directly in Python code when they're repetitive and don't require complex template logic
 
 ## 🎯 Success Metrics
 

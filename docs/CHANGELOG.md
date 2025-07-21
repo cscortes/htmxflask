@@ -5,6 +5,29 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2024-12-19
+
+### Added
+- **Inline HTML Generation for Fragments** - New development pattern and recommendations
+  - **CLICKLOAD Example Enhancement**: Moved fragment HTML generation inline into Flask routes
+  - **Performance Improvement**: Eliminated template overhead for simple, repetitive HTML fragments
+  - **Development Guiding Light Updates**: Added comprehensive recommendations for inline HTML generation
+  - **Educational Value**: Maintained HTMX comments and clear code structure in inline generation
+  - **File Structure Simplification**: Reduced template file count while maintaining functionality
+- **Development Guiding Light Enhancements** - New architectural recommendations
+  - Added guidance for inline HTML generation for simple fragments (table rows, list items)
+  - Updated file organization standards to reflect inline HTML approach
+  - Added practical code examples showing recommended inline HTML patterns
+  - Enhanced performance guidelines to consider inline generation for simple fragments
+  - Added anti-pattern guidance to avoid template overuse for repetitive HTML
+  - Updated best practices to include inline HTML generation as preferred approach
+- **CLICKLOAD Architecture Improvement** - Simplified and optimized implementation
+  - Moved `contacts_fragment.html` content inline into `myapp.py`
+  - Eliminated separate template file while maintaining all functionality
+  - Preserved educational HTMX comments in inline code generation
+  - Maintained proper pagination logic and HTMX attribute handling
+  - All tests passing (9/9) with improved performance characteristics
+
 ## [0.3.0] - 2024-12-19
 
 ### Added

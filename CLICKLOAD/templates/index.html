@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Click-to-Load Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>HTMX Click-to-Load Example</h1>
+        <p>Click "Load More" to load additional contacts. Demonstrates
+            <code>hx-get</code>, <code>hx-target</code>, and <code>hx-swap</code>.</p>
+
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>Click to load</strong>: Uses <code>hx-get</code> to load more content</li>
+                <li><strong>Pagination</strong>: Loads 3 contacts at a time</li>
+                <li><strong>Progressive loading</strong>: No page refresh required</li>
+            </ul>
+        </div>
+
+        <table class="contacts-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td class="status-{{ contact.status.lower() }}">{{ contact.status }}</td>
+                </tr>
+                {% endfor %}
+
+                <!-- hx-target="this": Update this row -->
+                <!-- hx-swap="outerHTML": Replace entire row with server response -->
+                <tr id="replaceMe">
+                    <td colspan="4">
+                        <!-- hx-get="/contacts/?page={{ page }}": Load next page when clicked -->
+                        <button class="btn primary" hx-get="/contacts/?page={{ page }}"
+                                hx-target="#replaceMe" hx-swap="outerHTML">
+                            Load More Contacts...
+                            <span class="htmx-indicator">Loading...</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
