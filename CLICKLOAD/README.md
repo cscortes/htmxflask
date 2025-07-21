@@ -2,11 +2,17 @@
 
 **Version**: 0.7.3
 
-A demonstration of lazy loading content using HTMX patterns. This example shows how to implement progressive loading of data without page refreshes, based on the [official HTMX click-to-load example](https://htmx.org/examples/click-to-load/).
+A demonstration of lazy loading content using HTMX patterns.
+This example shows how to implement progressive loading of data
+without page refreshes, based on the
+[official HTMX click-to-load example]
+(https://htmx.org/examples/click-to-load/).
 
 ## 🎯 User Story
 
-**As a user**, I want to browse through a large list of contacts without waiting for all data to load at once, so that I can see content quickly and load more as needed.
+**As a user**, I want to browse through a large list of contacts
+without waiting for all data to load at once, so that I can see
+content quickly and load more as needed.
 
 ## 🚀 Quick Start
 
@@ -22,13 +28,15 @@ uv run myapp.py
 
 ## 🔧 How It Works
 
-This example demonstrates the click-to-load pattern with the following workflow:
+This example demonstrates the click-to-load pattern
+with the following workflow:
 
 1. **Initial Load**: Page displays first 3 contacts with a "Load More" button
 2. **User Interaction**: User clicks "Load More Contacts..." button
 3. **HTMX Request**: `hx-get="/contacts/?page=2"` sends request to server
 4. **Server Response**: Returns HTML fragment with next 3 contacts
-5. **DOM Update**: `hx-target="#replaceMe"` and `hx-swap="outerHTML"` replace the button row with new content
+5. **DOM Update**: `hx-target="#replaceMe"` and `hx-swap="outerHTML"`
+replace the button row with new content
 6. **Progressive Loading**: Process continues until all contacts are loaded
 
 ## 🎨 HTMX Features Demonstrated
@@ -86,7 +94,8 @@ Modify the `CONTACTS` list in `myapp.py` to use your own data:
 
 ```python
 CONTACTS = [
-    {"id": 1, "name": "Your Name", "email": "your@email.com", "status": "Active"},
+    {"id": 1, "name": "Your Name", "email": "your@email.com",
+    "status": "Active"},
     # Add more contacts...
 ]
 ```
@@ -114,7 +123,8 @@ Customize the appearance by modifying `static/css/style.css`:
 
 ### Server-Side Logic
 - **Pagination**: Calculates start/end indices based on page number
-- **Unified Template**: Single template handles both full page and fragment responses
+- **Unified Template**: Single template handles both full page and fragment
+ responses
 - **State Management**: Tracks current page and remaining data
 
 ### Client-Side Behavior
@@ -129,13 +139,15 @@ Customize the appearance by modifying `static/css/style.css`:
 
 ## 📚 Learning Resources
 
-- [Official HTMX Click-to-Load Example](https://htmx.org/examples/click-to-load/)
+- [Official HTMX Click-to-Load Example]
+(https://htmx.org/examples/click-to-load/)
 - [HTMX Documentation](https://htmx.org/docs/)
 - [Flask Documentation](https://flask.palletsprojects.com/)
 
 ## 🤝 Contributing
 
-This example follows the [Development Guiding Light](../docs/DEVGUIDINGLIGHT.md) principles:
+This example follows the [Development Guiding Light]
+(../docs/DEVGUIDINGLIGHT.md) principles:
 - Minimal dependencies (Flask + HTMX only)
 - Educational code with clear comments
 - Comprehensive testing
@@ -144,4 +156,5 @@ This example follows the [Development Guiding Light](../docs/DEVGUIDINGLIGHT.md)
 
 ## 📄 License
 
-This example is part of the HTMX Flask Examples project. See [LICENSE](../LICENSE) for details.
+This example is part of the HTMX Flask Examples project. See [LICENSE]
+(../LICENSE) for details.
