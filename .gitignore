@@ -1,6 +1,7 @@
 .vscode
 Pipfile.lock
-docs/FEATURES.md
 *.bak
 .cursorrules
 __pycache__/
+.docs
+FEATURES.md
