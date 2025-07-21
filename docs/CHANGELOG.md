@@ -61,11 +61,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **GitHub Actions CI/CD Pipeline** - Comprehensive automated testing and deployment
   - **CI Workflow** (`.github/workflows/ci.yml`): Main continuous integration pipeline
     - Runs on every push to main/master and pull requests
-    - Python 3.11 with uv package manager
+    - Python 3.9 with uv package manager
     - Executes `make test` for all examples with detailed summaries
     - Validates all HTMX patterns and functionality
   - **Test Suite Workflow** (`.github/workflows/test.yml`): Multi-Python version testing
-    - Matrix testing on Python 3.9, 3.10, and 3.11
+    - Matrix testing on Python 3.9
     - Caches dependencies for faster builds
     - Uploads test artifacts for debugging
     - Comprehensive compatibility validation

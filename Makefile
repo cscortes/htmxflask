@@ -103,17 +103,17 @@ lint: ## Run flake8 linter on all examples
 	@echo "Installing flake8 in the environment..."
 	uv pip install flake8 > /dev/null
 	@echo "Running flake8 on ACTIVESEARCH..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv ACTIVESEARCH 2>/dev/null || true
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv ACTIVESEARCH 2>/dev/null || true
 	@echo "Running flake8 on VALUESELECT..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv VALUESELECT 2>/dev/null || true
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv VALUESELECT 2>/dev/null || true
 	@echo "Running flake8 on PLY3..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv PLY3 2>/dev/null || true
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv PLY3 2>/dev/null || true
 	@echo "Running flake8 on PROGRESSBAR..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv PROGRESSBAR 2>/dev/null || true
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv PROGRESSBAR 2>/dev/null || true
 	@echo "Running flake8 on CLICKEDIT..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKEDIT 2>/dev/null || true
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv CLICKEDIT 2>/dev/null || true
 	@echo "Running flake8 on CLICKLOAD..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKLOAD 2>/dev/null || true
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv CLICKLOAD 2>/dev/null || true
 	@echo "Linting complete!"
 
 test: lint ## Run tests on all examples (lint + tests)

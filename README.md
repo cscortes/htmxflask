@@ -106,13 +106,13 @@ This project uses GitHub Actions for continuous integration and testing:
 
 ### Automated Testing
 - **Trigger**: Runs on every push to main/master and pull requests
-- **Environment**: Ubuntu with Python 3.11 and uv package manager
+- **Environment**: Ubuntu with Python 3.9 and uv package manager
 - **Tests**: All 6 HTMX examples with comprehensive test suites
 - **Linting**: Automated code quality checks with flake8
 
 ### Workflow Files
 - **`.github/workflows/ci.yml`**: Main CI pipeline with test summary
-- **`.github/workflows/test.yml`**: Multi-Python version testing (3.9, 3.10, 3.11)
+- **`.github/workflows/test.yml`**: Python 3.9 testing
 
 ### Test Coverage
 The CI pipeline validates:

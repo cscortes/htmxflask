@@ -11,7 +11,7 @@ This project uses GitHub Actions for continuous integration, testing, and deploy
 - Pull requests to main/master branch
 
 **Features**:
-- Runs on Python 3.11 with uv package manager
+- Runs on Python 3.9 with uv package manager
 - Executes `make test` for all examples
 - Provides detailed test summary in GitHub UI
 - Validates all HTMX patterns and functionality
@@ -23,7 +23,7 @@ This project uses GitHub Actions for continuous integration, testing, and deploy
 - Pull requests to main/master branch
 
 **Features**:
-- Tests on Python 3.9, 3.10, and 3.11
+- Tests on Python 3.9
 - Matrix strategy for comprehensive compatibility
 - Caches dependencies for faster builds
 - Uploads test artifacts for debugging
@@ -95,7 +95,7 @@ All workflows validate:
 No environment variables required for basic testing.
 
 ### Dependencies
-- **Python**: 3.9, 3.10, 3.11 (matrix testing)
+- **Python**: 3.9 (matrix testing)
 - **Package Manager**: uv (fast Python package management)
 - **Testing**: unittest framework
 - **Linting**: flake8
