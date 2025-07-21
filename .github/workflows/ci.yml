@@ -26,7 +26,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        uv sync
+        # Install Flask globally for the project
+        uv pip install flask flake8
 
     - name: Run linting and tests
       run: |
