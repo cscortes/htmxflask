@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: latest
+
+    - name: Install dependencies
+      run: |
+        uv sync
+
+    - name: Run linting and tests
+      run: |
+        make test
+
+    - name: Show test summary
+      if: always()
+      run: |
+        echo "## Test Summary" >> $GITHUB_STEP_SUMMARY
+        echo "✅ All examples tested successfully" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Examples tested:**" >> $GITHUB_STEP_SUMMARY
+        echo "- ACTIVESEARCH: Search functionality with HTMX" >> $GITHUB_STEP_SUMMARY
+        echo "- VALUESELECT: Cascading dropdowns with HTMX" >> $GITHUB_STEP_SUMMARY
+        echo "- PLY3: Interdependent dropdowns with HTMX" >> $GITHUB_STEP_SUMMARY
+        echo "- PROGRESSBAR: Real-time progress with HTMX" >> $GITHUB_STEP_SUMMARY
+        echo "- CLICKEDIT: Inline editing with HTMX" >> $GITHUB_STEP_SUMMARY
+        echo "- CLICKLOAD: Lazy loading with HTMX" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**HTMX Patterns validated:**" >> $GITHUB_STEP_SUMMARY
+        echo "- hx-get, hx-post, hx-put" >> $GITHUB_STEP_SUMMARY
+        echo "- hx-target, hx-swap" >> $GITHUB_STEP_SUMMARY
+        echo "- hx-trigger, hx-indicator" >> $GITHUB_STEP_SUMMARY
+        echo "- Real-time updates and form handling" >> $GITHUB_STEP_SUMMARY

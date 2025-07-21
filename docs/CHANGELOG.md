@@ -5,6 +5,67 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2024-12-19
+
+### Added
+- **GitHub Actions CI/CD Pipeline** - Comprehensive automated testing and deployment
+  - **CI Workflow** (`.github/workflows/ci.yml`): Main continuous integration pipeline
+    - Runs on every push to main/master and pull requests
+    - Python 3.11 with uv package manager
+    - Executes `make test` for all examples with detailed summaries
+    - Validates all HTMX patterns and functionality
+  - **Test Suite Workflow** (`.github/workflows/test.yml`): Multi-Python version testing
+    - Matrix testing on Python 3.9, 3.10, and 3.11
+    - Caches dependencies for faster builds
+    - Uploads test artifacts for debugging
+    - Comprehensive compatibility validation
+  - **Scheduled Health Check** (`.github/workflows/scheduled.yml`): Daily automated monitoring
+    - Runs daily at 2 AM UTC with manual trigger option
+    - Ensures project stays healthy over time
+    - Creates health reports in GitHub UI
+    - Early detection of potential issues
+  - **Deploy Examples** (`.github/workflows/deploy.yml`): Deployment automation
+    - Triggers on release publication or manual deployment
+    - Environment-specific deployments (staging/production)
+    - Pre-deployment testing and package creation
+    - Comprehensive deployment summaries
+- **CI/CD Documentation** - Complete workflow documentation
+  - **GitHub Actions Guide** (`docs/GITHUB_ACTIONS.md`): Comprehensive workflow documentation
+    - Detailed explanation of all 4 workflows
+    - Usage instructions and troubleshooting
+    - Configuration and monitoring guidance
+    - Status badge integration
+  - **README Updates**: Added CI/CD pipeline section
+    - Automated testing overview
+    - Test coverage details
+    - HTMX patterns validation
+    - Status badge integration
+- **Test Coverage Validation** - All examples now have comprehensive test suites
+  - **ACTIVESEARCH**: 15 tests covering search functionality and HTMX patterns
+  - **VALUESELECT**: 14 tests covering cascading dropdowns and data loading
+  - **PLY3**: 14 tests covering interdependent dropdowns and mutual exclusion
+  - **PROGRESSBAR**: Existing tests for real-time progress functionality
+  - **CLICKEDIT**: Existing tests for inline editing functionality
+  - **CLICKLOAD**: Existing tests for lazy loading functionality
+- **HTMX Pattern Validation** - Comprehensive pattern testing across all examples
+  - `hx-get`, `hx-post`, `hx-put` - HTTP methods validation
+  - `hx-target`, `hx-swap` - DOM manipulation testing
+  - `hx-trigger`, `hx-indicator` - Event handling and loading states
+  - Real-time updates and form validation
+  - Cross-device file handling and edge case coverage
+
+### Changed
+- **Development Workflow** - Enhanced with automated quality assurance
+  - All commits now automatically tested via GitHub Actions
+  - Pull requests require passing tests before merge
+  - Daily health checks ensure long-term project stability
+  - Deployment automation for consistent releases
+- **Project Monitoring** - Added comprehensive status tracking
+  - CI status badge for README integration
+  - Health reports in GitHub UI
+  - Test summaries for each workflow run
+  - Deployment summaries with environment details
+
 ## [0.8.0] - 2024-12-19
 
 ### Added

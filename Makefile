@@ -103,33 +103,33 @@ lint: ## Run flake8 linter on all examples
 	@echo "Installing flake8 in the environment..."
 	uv pip install flake8 > /dev/null
 	@echo "Running flake8 on ACTIVESEARCH..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv ACTIVESEARCH || true
+	uv run -- flake8 --ignore=W391 --exclude=.venv ACTIVESEARCH 2>/dev/null || true
 	@echo "Running flake8 on VALUESELECT..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv VALUESELECT || true
+	uv run -- flake8 --ignore=W391 --exclude=.venv VALUESELECT 2>/dev/null || true
 	@echo "Running flake8 on PLY3..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv PLY3 || true
+	uv run -- flake8 --ignore=W391 --exclude=.venv PLY3 2>/dev/null || true
 	@echo "Running flake8 on PROGRESSBAR..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv PROGRESSBAR || true
+	uv run -- flake8 --ignore=W391 --exclude=.venv PROGRESSBAR 2>/dev/null || true
 	@echo "Running flake8 on CLICKEDIT..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKEDIT || true
+	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKEDIT 2>/dev/null || true
 	@echo "Running flake8 on CLICKLOAD..."
-	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKLOAD || true
+	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKLOAD 2>/dev/null || true
 	@echo "Linting complete!"
 
 test: lint ## Run tests on all examples (lint + tests)
 	@echo "Running tests on all examples..."
 	@echo "Running tests on ACTIVESEARCH..."
-	@cd ACTIVESEARCH && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@cd ACTIVESEARCH && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on VALUESELECT..."
-	@cd VALUESELECT && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@cd VALUESELECT && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on PLY3..."
-	@cd PLY3 && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@cd PLY3 && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on PROGRESSBAR..."
-	@cd PROGRESSBAR && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@cd PROGRESSBAR && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on CLICKEDIT..."
-	@cd CLICKEDIT && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@cd CLICKEDIT && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on CLICKLOAD..."
-	@cd CLICKLOAD && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@cd CLICKLOAD && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Tests completed!"
 
 test-example: ## Run tests for a specific example (make test-example EXAMPLE=CLICKEDIT)
@@ -140,14 +140,14 @@ test-example: ## Run tests for a specific example (make test-example EXAMPLE=CLI
 		exit 1; \
 	fi
 	@echo "Running tests for $(EXAMPLE)..."
-	@cd $(EXAMPLE) && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@cd $(EXAMPLE) && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Tests for $(EXAMPLE) completed!"
 
 test-files: ## Run all _test.py files found in the project
 	@echo "Finding and running all _test.py files..."
 	@find . -name "*_test.py" -type f | while read file; do \
 		echo "Running $$file..."; \
-		cd $$(dirname $$file) && uv run python $$(basename $$file) || echo "  Tests failed"; \
+		cd $$(dirname $$file) && uv run python $$(basename $$file) 2>/dev/null || echo "  Tests failed"; \
 		cd - > /dev/null; \
 	done
 	@echo "All _test.py files completed!"

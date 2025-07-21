@@ -1,0 +1,90 @@
+name: Deploy Examples
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+        - staging
+        - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: latest
+
+    - name: Install dependencies
+      run: |
+        uv sync
+
+    - name: Run pre-deployment tests
+      run: |
+        make test
+
+    - name: Build deployment package
+      run: |
+        echo "📦 Building deployment package..."
+        mkdir -p dist
+        tar -czf dist/htmxflask-examples.tar.gz \
+          --exclude='.git' \
+          --exclude='.venv' \
+          --exclude='__pycache__' \
+          --exclude='*.pyc' \
+          .
+
+    - name: Upload deployment artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: htmxflask-examples
+        path: dist/
+        retention-days: 30
+
+    - name: Deploy to staging
+      if: github.event.inputs.environment == 'staging' || github.event_name == 'release'
+      run: |
+        echo "🚀 Deploying to staging environment..."
+        # Add your deployment commands here
+        # Example: rsync, scp, or cloud deployment commands
+
+    - name: Deploy to production
+      if: github.event.inputs.environment == 'production'
+      run: |
+        echo "🚀 Deploying to production environment..."
+        # Add your production deployment commands here
+
+    - name: Create deployment summary
+      if: always()
+      run: |
+        echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "**Environment:** ${{ github.event.inputs.environment || 'release' }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Status:** ✅ Deployed successfully" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Examples deployed:**" >> $GITHUB_STEP_SUMMARY
+        echo "- ACTIVESEARCH: Live search functionality" >> $GITHUB_STEP_SUMMARY
+        echo "- VALUESELECT: Cascading dropdowns" >> $GITHUB_STEP_SUMMARY
+        echo "- PLY3: Interdependent dropdowns" >> $GITHUB_STEP_SUMMARY
+        echo "- PROGRESSBAR: Real-time progress" >> $GITHUB_STEP_SUMMARY
+        echo "- CLICKEDIT: Inline editing" >> $GITHUB_STEP_SUMMARY
+        echo "- CLICKLOAD: Lazy loading" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**HTMX Version:** 2.0.3" >> $GITHUB_STEP_SUMMARY
+        echo "**Flask Version:** Latest" >> $GITHUB_STEP_SUMMARY

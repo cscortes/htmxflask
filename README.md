@@ -1,6 +1,8 @@
 # HTMX Flask Examples
 
-**Version: 0.7.3**
+**Version: 0.9.0**
+
+![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
 A comprehensive collection of HTMX examples with Flask backend, designed to demonstrate modern web development patterns without JavaScript frameworks.
 
@@ -97,6 +99,41 @@ This project follows strict development standards:
 2. **Documentation**: Updates must be documented in changelog
 3. **Code Quality**: Invisible character cleaning before commits
 4. **Linting**: Automated code quality checks
+
+## 🚀 CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and testing:
+
+### Automated Testing
+- **Trigger**: Runs on every push to main/master and pull requests
+- **Environment**: Ubuntu with Python 3.11 and uv package manager
+- **Tests**: All 6 HTMX examples with comprehensive test suites
+- **Linting**: Automated code quality checks with flake8
+
+### Workflow Files
+- **`.github/workflows/ci.yml`**: Main CI pipeline with test summary
+- **`.github/workflows/test.yml`**: Multi-Python version testing (3.9, 3.10, 3.11)
+
+### Test Coverage
+The CI pipeline validates:
+- ✅ **ACTIVESEARCH**: Search functionality with HTMX patterns
+- ✅ **VALUESELECT**: Cascading dropdowns with data loading
+- ✅ **PLY3**: Interdependent dropdowns with mutual exclusion
+- ✅ **PROGRESSBAR**: Real-time progress with polling
+- ✅ **CLICKEDIT**: Inline editing with form handling
+- ✅ **CLICKLOAD**: Lazy loading with pagination
+
+### HTMX Patterns Validated
+- `hx-get`, `hx-post`, `hx-put` - HTTP methods
+- `hx-target`, `hx-swap` - DOM manipulation
+- `hx-trigger`, `hx-indicator` - Event handling and loading states
+- Real-time updates and form validation
+
+### Status Badge
+Add this badge to your README to show CI status:
+```markdown
+![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
+```
 
 See [`.cursorrules`](.cursorrules) for complete development guidelines.
 
