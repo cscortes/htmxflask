@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.9.0**
+**Version: 0.9.1**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 

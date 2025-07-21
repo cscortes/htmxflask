@@ -5,6 +5,14 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] - 2024-12-19
+
+### Fixed
+- **GitHub Actions Workflow**
+  - Fixed CI, test, scheduled, and deploy workflows to install dependencies correctly for project structure without a root `pyproject.toml`.
+  - Now uses `uv pip install flask flake8` globally so Makefile and tests work for all examples.
+  - Ensures all workflows run successfully on GitHub Actions.
+
 ## [0.9.0] - 2024-12-19
 
 ### Added
