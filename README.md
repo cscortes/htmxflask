@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.7.2**
+**Version: 0.7.3**
 
 A comprehensive collection of HTMX examples with Flask backend, designed to demonstrate modern web development patterns without JavaScript frameworks.
 
@@ -11,7 +11,7 @@ A comprehensive collection of HTMX examples with Flask backend, designed to demo
 make install
 
 # Run a specific example
-cd ACTIVESEARCH && python myapp.py
+cd ACTIVESEARCH && uv run myapp.py
 # Then visit http://localhost:5000
 ```
 

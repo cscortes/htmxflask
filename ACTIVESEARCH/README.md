@@ -17,7 +17,7 @@ As a user, I want to search contacts as I type so that I can quickly find people
 1. `cd ACTIVESEARCH`
 2. Install [uv](https://github.com/astral-sh/uv) if you haven't already: `pip install uv`
 3. Install dependencies: `uv pip install -r requirements.txt` or `uv venv && uv pip install .`
-4. Run the server: `uv venv && source .venv/bin/activate && python myapp.py`
+4. Run the server: `uv run myapp.py`
 5. Visit http://localhost:5000
 
 **Note:** This project now uses [uv](https://github.com/astral-sh/uv) for dependency management as the standard for all examples.
@@ -26,4 +26,4 @@ As a user, I want to search contacts as I type so that I can quickly find people
 - Demonstrates live search pattern with HTMX
 - Shows how to use loading indicators
 - Example of progressive enhancement
-- Minimal Flask backend logic 
+- Minimal Flask backend logic

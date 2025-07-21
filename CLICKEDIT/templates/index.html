@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Click-to-Edit Example</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>HTMX Click-to-Edit Example</h1>
+        <p>Click on any contact to edit it inline. Demonstrates
+            <code>hx-get</code>, <code>hx-put</code>, and <code>hx-target</code>.</p>
+
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>Click to edit</strong>: Uses
+                    <code>hx-get</code> to load edit form</li>
+            </ul>
+        </div>
+
+        <!-- hx-target="this": Update this element -->
+        <!-- hx-swap="outerHTML": Replace entire element with server response -->
+        <div hx-target="this" hx-swap="outerHTML">
+            <div><label>First Name</label>: Manny</div>
+            <div><label>Last Name</label>: Pacquiao</div>
+            <div><label>Email</label>: manny@pacquiao.com</div>
+            <!-- hx-get="/contact/edit": Load edit form when button is clicked -->
+            <button hx-get="/contact/edit" class="btn primary">
+            Click To Edit
+            </button>
+        </div>
+
+    </div>
+</body>
+</html>

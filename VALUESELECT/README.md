@@ -25,7 +25,7 @@ This example demonstrates the **cascading dropdown** pattern:
 1. `cd VALUESELECT`
 2. Install [uv](https://github.com/astral-sh/uv) if you haven't already: `pip install uv`
 3. Install dependencies: `uv pip install -r requirements.txt` or `uv venv && uv pip install .`
-4. Run the server: `uv venv && source .venv/bin/activate && python myapp.py`
+4. Run the server: `uv run myapp.py`
 5. Visit http://localhost:5000
 
 **Note:** This project now uses [uv](https://github.com/astral-sh/uv) for dependency management as the standard for all examples.
@@ -73,4 +73,4 @@ VALUESELECT/
 ├── car.csv               # Car make-model database
 ├── getdata.py            # Sample data retrieval script
 └── pyproject.toml        # Dependencies
-``` 
+```

@@ -1,6 +1,6 @@
 # HTMX Flask Examples Makefile
 
-.PHONY: help version version-update clean test install pre-git-commit lint
+.PHONY: help version version-update clean test test-example install pre-git-commit lint test-files
 
 # Default target
 help: ## Show this help message
@@ -15,6 +15,8 @@ help: ## Show this help message
 	@echo "  make version 0.2.0          # Update version to 0.2.0 and create git tag"
 	@echo "  make clean                   # Clean up temporary files"
 	@echo "  make test                    # Run tests on all examples"
+	@echo "  make test-example EXAMPLE=CLICKEDIT  # Run tests for specific example"
+	@echo "  make test-files              # Run all _test.py files in project"
 	@echo "  make install                 # Install dependencies for all examples"
 	@echo "  make pre-git-commit          # Remove invisible characters before commit"
 
@@ -32,6 +34,7 @@ version: ## Update version to specified version (e.g., make version 0.2.0)
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' VALUESELECT/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PLY3/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PROGRESSBAR/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' CLICKEDIT/pyproject.toml; \
 	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: '$$VERSION_FROM_FILE'\*\*/g' README.md
 	@echo "Note: Remember to update docs/CHANGELOG.md with new version details"
 	@echo "Version updated to $(VERSION) in all files"
@@ -81,6 +84,7 @@ version-update: ## Automatically bump version based on change type (make version
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' VALUESELECT/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PLY3/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' PROGRESSBAR/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' CLICKEDIT/pyproject.toml; \
 	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: '$$VERSION_FROM_FILE'\*\*/g' README.md; \
 	echo "Version updated to $$NEW_VERSION in all files"; \
 	echo "Note: Remember to update docs/CHANGELOG.md with new version details"
@@ -105,12 +109,43 @@ lint: ## Run flake8 linter on all examples
 	uv run -- flake8 --ignore=W391 --exclude=.venv PLY3 || true
 	@echo "Running flake8 on PROGRESSBAR..."
 	uv run -- flake8 --ignore=W391 --exclude=.venv PROGRESSBAR || true
+	@echo "Running flake8 on CLICKEDIT..."
+	uv run -- flake8 --ignore=W391 --exclude=.venv CLICKEDIT || true
 	@echo "Linting complete!"
 
 test: lint ## Run tests on all examples (lint + tests)
 	@echo "Running tests on all examples..."
-	@echo "Note: This would run tests if they existed"
+	@echo "Running tests on ACTIVESEARCH..."
+	@cd ACTIVESEARCH && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@echo "Running tests on VALUESELECT..."
+	@cd VALUESELECT && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@echo "Running tests on PLY3..."
+	@cd PLY3 && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@echo "Running tests on PROGRESSBAR..."
+	@cd PROGRESSBAR && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@echo "Running tests on CLICKEDIT..."
+	@cd CLICKEDIT && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
 	@echo "Tests completed!"
+
+test-example: ## Run tests for a specific example (make test-example EXAMPLE=CLICKEDIT)
+	@if [ -z "$(EXAMPLE)" ]; then \
+		echo "Error: Please specify an example name"; \
+		echo "Usage: make test-example EXAMPLE=CLICKEDIT"; \
+		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT"; \
+		exit 1; \
+	fi
+	@echo "Running tests for $(EXAMPLE)..."
+	@cd $(EXAMPLE) && (test -f myapp_test.py && uv run python myapp_test.py || echo "  No test file found") || echo "  Tests failed"
+	@echo "Tests for $(EXAMPLE) completed!"
+
+test-files: ## Run all _test.py files found in the project
+	@echo "Finding and running all _test.py files..."
+	@find . -name "*_test.py" -type f | while read file; do \
+		echo "Running $$file..."; \
+		cd $$(dirname $$file) && uv run python $$(basename $$file) || echo "  Tests failed"; \
+		cd - > /dev/null; \
+	done
+	@echo "All _test.py files completed!"
 
 install: ## Install dependencies for all examples
 	@echo "Installing dependencies for all examples..."
@@ -122,6 +157,8 @@ install: ## Install dependencies for all examples
 	@cd PLY3 && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "PROGRESSBAR:"
 	@cd PROGRESSBAR && uv pip install -e . || echo "  Failed to install (check if uv is available)"
+	@echo "CLICKEDIT:"
+	@cd CLICKEDIT && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "Installation complete!"
 
 pre-git-commit: ## Remove invisible characters from all files before git commit

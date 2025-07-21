@@ -14,7 +14,7 @@ This document serves as the **north star** for developing HTMX examples in this 
 - Avoid feature mixing that could confuse learners
 - If multiple features are needed, clearly document the primary vs. supporting features
 
-**✅ Good**: Click-to-Edit example focuses on `hx-get` and `hx-swap`  
+**✅ Good**: Click-to-Edit example focuses on `hx-get` and `hx-swap`
 **❌ Bad**: Click-to-Edit that also includes file upload, validation, and real-time updates
 
 ### 2. **Minimal External Dependencies**
@@ -22,7 +22,7 @@ This document serves as the **north star** for developing HTMX examples in this 
 - Prefer native browser APIs over third-party solutions
 - Only exception: Libraries that directly enhance HTMX (like HTMX extensions)
 
-**✅ Allowed**: HTMX core library (v2.0.6), HTMX extensions, Flask-SocketIO for WebSocket examples  
+**✅ Allowed**: HTMX core library (v2.0.6), HTMX extensions, Flask-SocketIO for WebSocket examples
 **❌ Avoid**: jQuery, React, Vue, Alpine.js, Chart.js, etc.
 
 ### 3. **Vanilla HTML + Minimal Enhancements**
@@ -135,8 +135,8 @@ As a user, I want to [action] so that [benefit].
 
 ## Try It Out
 1. `cd example-name`
-2. `pipenv install`
-3. `pipenv run python myapp.py`
+2. `uv sync`
+3. `uv run myapp.py`
 4. Visit http://localhost:5000
 
 ## Learning Points
@@ -229,4 +229,4 @@ An example is successful when:
 
 ---
 
-**Remember**: We're building a reference library, not a production application. Prioritize **clarity**, **education**, and **simplicity** over **completeness** or **real-world complexity**. 
+**Remember**: We're building a reference library, not a production application. Prioritize **clarity**, **education**, and **simplicity** over **completeness** or **real-world complexity**.
