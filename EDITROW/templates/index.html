@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Edit Row Example</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Row Example</h1>
+        <p>Click the edit button on any row to make it editable. Only one row can be edited at a time.</p>
+
+        <!-- hx-target="closest tr": Target the closest table row for updates -->
+        <!-- hx-swap="outerHTML": Replace entire row with server response -->
+        <table class="table edit-row-example">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody hx-target="closest tr" hx-swap="outerHTML">
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>
+                        <!-- hx-get="/contact/{{ contact.id }}/edit": Load edit form -->
+                        <!-- hx-trigger="edit": Trigger on custom 'edit' event -->
+                        <button class="btn primary" 
+                                hx-get="/contact/{{ contact.id }}/edit" 
+                                hx-trigger="edit"
+                                onclick="let editing = document.querySelector('.editing'); 
+                                         if(editing) {
+                                             if(confirm('Already editing! Cancel and continue?')) {
+                                                 htmx.trigger(editing, 'cancel');
+                                                 htmx.trigger(this, 'edit');
+                                             }
+                                         } else {
+                                             htmx.trigger(this, 'edit');
+                                         }">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>hx-target="closest tr"</strong>: Targets the closest table row to the clicked button</li>
+                <li><strong>hx-swap="outerHTML"</strong>: Replaces the entire row with the server response</li>
+                <li><strong>hx-trigger="edit"</strong>: Uses custom event to trigger edit mode</li>
+                <li><strong>hx-include="closest tr"</strong>: Includes all form inputs from the row when saving</li>
+                <li><strong>JavaScript integration</strong>: Prevents multiple rows from being edited simultaneously</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

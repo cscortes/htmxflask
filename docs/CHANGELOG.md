@@ -5,6 +5,21 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2024-12-19
+
+### Added
+- **EDITROW Example** - Editable Table Rows
+  - Edit table rows inline with single-instance editing
+  - Demonstrates `hx-get`, `hx-put`, `hx-target="closest tr"`, `hx-swap="outerHTML"`
+  - Custom event triggers (`hx-trigger="edit"`) with JavaScript integration
+  - Form data handling with `hx-include="closest tr"`
+  - Cancel functionality with `hx-trigger="cancel"`
+  - Based on official HTMX edit-row example
+  - Visual feedback with highlighted editing rows
+  - Comprehensive test suite with 6 test methods
+  - Filipino boxers dataset with 5 contacts
+  - Educational code with detailed HTMX comments
+
 ## [0.10.0] - 2024-12-19
 
 ### Added

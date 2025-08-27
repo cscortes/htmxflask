@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.10.0**
+**Version: 0.11.0**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
@@ -117,7 +117,7 @@ This project uses GitHub Actions for continuous integration and testing:
 ### Automated Testing
 - **Trigger**: Runs on every push to main/master and pull requests
 - **Environment**: Ubuntu with Python 3.9 and uv package manager
-- **Tests**: All 7 HTMX examples with comprehensive test suites
+- **Tests**: All 8 HTMX examples with comprehensive test suites
 - **Linting**: Automated code quality checks with flake8
 
 ### Workflow Files
@@ -133,6 +133,7 @@ The CI pipeline validates:
 - ✅ **CLICKEDIT**: Inline editing with form handling
 - ✅ **CLICKLOAD**: Lazy loading with pagination
 - ✅ **DELETEROW**: Row deletion with animation and confirmation
+- ✅ **EDITROW**: Editable table rows with single-instance editing
 
 ### HTMX Patterns Validated
 - `hx-get`, `hx-post`, `hx-put` - HTTP methods

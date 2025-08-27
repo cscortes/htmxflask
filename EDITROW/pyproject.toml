@@ -1,7 +1,7 @@
 [project]
-name = "htmx-click-to-edit"
-version = "0.11.0"
-description = "HTMX Click-to-Edit Example - Inline editing with hx-get, hx-put, hx-target"
+name = "htmx-edit-row"
+version = "0.10.0"
+description = "HTMX Edit Row Example - Editable table rows with hx-get, hx-put, hx-target"
 authors = [
     {name = "HTMX Flask Examples", email = "examples@htmxflask.com"}
 ]
@@ -9,6 +9,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
     "flask>=3.0.0",
+    "pytest>=8.3.5",
 ]
 
 [build-system]
