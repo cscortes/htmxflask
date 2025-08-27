@@ -19,7 +19,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains seven educational HTMX examples:
+This project contains eight educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -66,6 +66,15 @@ This project contains seven educational HTMX examples:
 - Based on official HTMX delete-row example
 - Smooth 1-second fade-out animation before row removal
 - RESTful DELETE endpoints with proper HTTP methods
+
+### 8. **EDITROW** - Editable Table Rows
+- Edit table rows inline with single-instance editing
+- Demonstrates `hx-get`, `hx-put`, `hx-target="closest tr"`, `hx-swap="outerHTML"`
+- Custom event triggers (`hx-trigger="edit"`) with JavaScript integration
+- Form data handling with `hx-include="closest tr"`
+- Cancel functionality with `hx-trigger="cancel"`
+- Based on official HTMX edit-row example
+- Visual feedback with highlighted editing rows
 
 ## 🛠️ Development Tools
 
