@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.9.6**
+**Version: 0.10.0**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
@@ -19,7 +19,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains six educational HTMX examples:
+This project contains seven educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -59,6 +59,13 @@ This project contains six educational HTMX examples:
 - Based on official HTMX click-to-load example
 - Loading indicators and "Load More" functionality
 - Efficient pagination with 3 contacts per page (24 total contacts across 8 pages)
+
+### 7. **DELETEROW** - Row Deletion with Animation
+- Delete table rows with confirmation and fade-out animation
+- Demonstrates `hx-delete`, `hx-confirm`, `hx-target="closest tr"`, `hx-swap="outerHTML swap:1s"`
+- Based on official HTMX delete-row example
+- Smooth 1-second fade-out animation before row removal
+- RESTful DELETE endpoints with proper HTTP methods
 
 ## 🛠️ Development Tools
 

@@ -87,6 +87,7 @@ jobs:
         echo "- PROGRESSBAR: Real-time progress" >> $GITHUB_STEP_SUMMARY
         echo "- CLICKEDIT: Inline editing" >> $GITHUB_STEP_SUMMARY
         echo "- CLICKLOAD: Lazy loading" >> $GITHUB_STEP_SUMMARY
+        echo "- DELETEROW: Row deletion with animation" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**HTMX Version:** 2.0.3" >> $GITHUB_STEP_SUMMARY
         echo "**Flask Version:** Latest" >> $GITHUB_STEP_SUMMARY

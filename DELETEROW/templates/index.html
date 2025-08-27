@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Delete Row Example</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Row Example</h1>
+        <p>Click the delete button on any row to remove it with confirmation and fade-out animation.</p>
+
+        <!-- hx-confirm="Are you sure?": Show confirmation dialog before deletion -->
+        <!-- hx-target="closest tr": Target the closest table row for removal -->
+        <!-- hx-swap="outerHTML swap:1s": Replace entire row and wait 1 second for fade-out -->
+        <table class="table delete-row-example">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s">
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td class="status-{{ contact.status.lower() }}">{{ contact.status }}</td>
+                    <td>
+                        <!-- hx-delete="/contact/{{ contact.id }}": Send DELETE request to remove this contact -->
+                        <button class="btn danger" hx-delete="/contact/{{ contact.id }}">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>hx-confirm</strong>: Shows a browser confirmation dialog before deletion</li>
+                <li><strong>hx-target="closest tr"</strong>: Targets the closest table row to the clicked button</li>
+                <li><strong>hx-swap="outerHTML swap:1s"</strong>: Replaces the entire row and waits 1 second for CSS fade-out</li>
+                <li><strong>hx-delete</strong>: Sends a DELETE request to remove the contact from the server</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

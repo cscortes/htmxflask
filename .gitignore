@@ -5,3 +5,5 @@ Pipfile.lock
 __pycache__/
 .docs
 FEATURES.md
+.venv
+*egg-info*

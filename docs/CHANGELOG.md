@@ -5,6 +5,25 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2024-12-19
+
+### Added
+- **DELETEROW Example** - Row Deletion with Animation
+  - Delete table rows with confirmation and fade-out animation
+  - Demonstrates `hx-delete`, `hx-confirm`, `hx-target="closest tr"`, `hx-swap="outerHTML swap:1s"`
+  - Based on official HTMX delete-row example
+  - Smooth 1-second fade-out animation before row removal
+  - RESTful DELETE endpoints with proper HTTP methods
+  - Comprehensive test suite with 8 test methods
+  - Filipino boxers dataset with 10 contacts
+  - Educational code with detailed HTMX comments
+
+### Fixed
+- **HTMX Version Consistency**
+  - Updated DELETEROW to use HTMX 2.0.3 (matching other examples)
+  - Ensures consistent behavior across all examples
+  - Fixed from `htmx.org@1.9.10` to `htmx.org@2.0.3/dist/htmx.min.js`
+
 ## [0.9.6] - 2024-12-19
 
 ### Fixed

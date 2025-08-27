@@ -82,11 +82,13 @@ All workflows validate:
 - ✅ **PROGRESSBAR**: Real-time progress with polling
 - ✅ **CLICKEDIT**: Inline editing with form handling
 - ✅ **CLICKLOAD**: Lazy loading with pagination
+- ✅ **DELETEROW**: Row deletion with animation
 
 ### HTMX Patterns Validated
 - `hx-get`, `hx-post`, `hx-put` - HTTP methods
 - `hx-target`, `hx-swap` - DOM manipulation
 - `hx-trigger`, `hx-indicator` - Event handling and loading states
+- `hx-delete`, `hx-confirm` - Row deletion and confirmation
 - Real-time updates and form validation
 
 ## 🔧 Configuration

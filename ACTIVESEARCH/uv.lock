@@ -3,7 +3,7 @@ requires-python = ">=3.8"
 
 [[package]]
 name = "activesearch"
-version = "0.7.2"
+version = "0.10.0"
 source = { virtual = "." }
 dependencies = [
     { name = "flask" },
