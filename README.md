@@ -77,6 +77,7 @@ make test                    # Run linting and tests
 make clean                   # Clean up temporary files
 make version VERSION=0.4.0   # Update version and create git tag
 make pre-git-commit          # Clean invisible characters before commit
+make test-example EXAMPLE=DELETEROW  # Test specific example
 ```
 
 ### HTMX Configuration
@@ -96,7 +97,8 @@ All examples use a minimal HTMX configuration for educational purposes:
 
 - **[Changelog](docs/CHANGELOG.md)** - Version history and changes
 - **[Development Guiding Light](docs/DEVGUIDINGLIGHT.md)** - Development standards
-- **[Features Documentation](docs/FEATURES.md)** - Detailed feature descriptions
+- **[Features Documentation](.docs/FEATURES.md)** - Detailed feature descriptions and roadmap
+- **[GitHub Actions Guide](docs/GITHUB_ACTIONS.md)** - CI/CD pipeline documentation
 
 ## 🔧 Development Workflow
 
@@ -106,6 +108,7 @@ This project follows strict development standards:
 2. **Documentation**: Updates must be documented in changelog
 3. **Code Quality**: Invisible character cleaning before commits
 4. **Linting**: Automated code quality checks
+5. **Pre-commit Hooks**: Automatic validation before commits
 
 ## 🚀 CI/CD Pipeline
 
@@ -114,7 +117,7 @@ This project uses GitHub Actions for continuous integration and testing:
 ### Automated Testing
 - **Trigger**: Runs on every push to main/master and pull requests
 - **Environment**: Ubuntu with Python 3.9 and uv package manager
-- **Tests**: All 6 HTMX examples with comprehensive test suites
+- **Tests**: All 7 HTMX examples with comprehensive test suites
 - **Linting**: Automated code quality checks with flake8
 
 ### Workflow Files
@@ -129,11 +132,13 @@ The CI pipeline validates:
 - ✅ **PROGRESSBAR**: Real-time progress with polling
 - ✅ **CLICKEDIT**: Inline editing with form handling
 - ✅ **CLICKLOAD**: Lazy loading with pagination
+- ✅ **DELETEROW**: Row deletion with animation and confirmation
 
 ### HTMX Patterns Validated
 - `hx-get`, `hx-post`, `hx-put` - HTTP methods
 - `hx-target`, `hx-swap` - DOM manipulation
 - `hx-trigger`, `hx-indicator` - Event handling and loading states
+- `hx-delete`, `hx-confirm` - Row deletion and confirmation
 - Real-time updates and form validation
 
 ### Status Badge
@@ -151,6 +156,8 @@ See [`.cursorrules`](.cursorrules) for complete development guidelines.
 - **Package Management**: uv
 - **Development**: Makefile automation
 - **Code Quality**: flake8 linting
+- **Testing**: unittest framework with comprehensive test suites
+- **CI/CD**: GitHub Actions with automated testing and deployment
 
 ## 🎯 Learning Objectives
 
@@ -160,6 +167,8 @@ Each example demonstrates specific HTMX patterns:
 - **Real-time interactions** using HTMX attributes
 - **Error handling** and user feedback
 - **Responsive design** with CSS
+- **RESTful operations** with proper HTTP methods (GET, POST, PUT, DELETE)
+- **User confirmation** and smooth animations
 
 ## 📖 Original Examples
 
