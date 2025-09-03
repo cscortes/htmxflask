@@ -5,7 +5,13 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.13.0] - 2024-12-19
+## [0.14.0] - 2024-12-19
+
+### Fixed
+- **BULKUPDATE Bug Fix**: Corrected logic to only update checked contacts
+- **Contact Status Management**: Fixed issue where unchecked contacts were incorrectly processed
+- **Update Count Accuracy**: Now correctly counts only contacts that actually change status
+- **Form Data Processing**: Improved checkbox handling to respect user selections
 
 ### Enhanced
 - **Development Guiding Light Principles**: Applied to BULKUPDATE example
