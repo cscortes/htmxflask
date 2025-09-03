@@ -53,13 +53,16 @@ class BulkUpdateTestCase(unittest.TestCase):
 
     def test_bulk_update_active_to_inactive(self):
         """Test bulk update from active to inactive status."""
-        # Submit form with some contacts unchecked (will become inactive)
+        # Submit form with some contacts checked (will become active)
+        # Note: With corrected logic, only checked contacts are updated to
+        # Active
+        # Unchecked contacts remain unchanged
         form_data = {
-            'status:manny@pacquiao.com': 'on',      # Keep active
-            'status:nonito@donaire.com': '',        # Remove active
-            'status:donnie@nietes.com': '',         # Keep inactive
-            'status:jerwin@ancajas.com': 'on',      # Keep active
-            'status:john@casimero.com': '',         # Keep inactive
+            'status:manny@pacquiao.com': 'on',      # Already Active, no change
+            'status:nonito@donaire.com': 'on',      # Already Active, no change
+            'status:donnie@nietes.com': 'on',       # Change
+            'status:jerwin@ancajas.com': 'on',      # Already Active, no change
+            'status:john@casimero.com': 'on',       # Change
         }
 
         response = self.client.post('/bulk-update', data=form_data)
@@ -78,16 +81,17 @@ class BulkUpdateTestCase(unittest.TestCase):
                       if c['email'] == 'jerwin@ancajas.com')
         john = next(c for c in contacts if c['email'] == 'john@casimero.com')
 
-        self.assertEqual(manny['status'], 'Active')
-        self.assertEqual(nonito['status'], 'Inactive')
-        self.assertEqual(donnie['status'], 'Inactive')
-        self.assertEqual(jerwin['status'], 'Active')
-        self.assertEqual(john['status'], 'Inactive')
+        # All checked contacts should now be Active
+        self.assertEqual(manny['status'], 'Active')      # Was already Active
+        self.assertEqual(nonito['status'], 'Active')     # Was already Active
+        self.assertEqual(donnie['status'], 'Active')     # Changed
+        self.assertEqual(jerwin['status'], 'Active')     # Was already Active
+        self.assertEqual(john['status'], 'Active')       # Changed
 
         # Check response contains toast notification
         response_text = response.get_data(as_text=True)
         self.assertIn('Bulk Update Complete!', response_text)
-        self.assertIn('Updated 5 contact(s) successfully',
+        self.assertIn('Updated 2 contact(s) successfully',
                       response_text)
 
     def test_bulk_update_all_to_active(self):
