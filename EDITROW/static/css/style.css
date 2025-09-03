@@ -217,22 +217,22 @@ p {
         padding: 20px;
         margin: 10px;
     }
-    
+
     .table {
         font-size: 14px;
     }
-    
+
     .table th,
     .table td {
         padding: 8px 10px;
     }
-    
+
     .btn {
         padding: 6px 12px;
         font-size: 13px;
         margin-bottom: 5px;
     }
-    
+
     h1 {
         font-size: 1.5rem;
     }
@@ -261,7 +261,7 @@ p {
         --text-color: #000000;
         --bg-color: #ffffff;
     }
-    
+
     .editing {
         border-color: #000000;
     }

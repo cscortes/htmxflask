@@ -8,7 +8,7 @@ The DELETEROW example follows the **Development Guiding Light** principles to de
 
 ### 1. **Pure HTMX Implementation**
 **Decision**: No JavaScript required for core functionality
-**Rationale**: 
+**Rationale**:
 - Demonstrates HTMX's power for simple interactions
 - Reduces complexity and maintenance overhead
 - Better performance without JavaScript execution
@@ -70,10 +70,10 @@ Global CONTACTS list → In-memory data storage
 ### **HTMX Pattern Implementation**
 ```html
 <!-- Inherited attributes for all child elements -->
-<tbody hx-confirm="Are you sure?" 
-       hx-target="closest tr" 
+<tbody hx-confirm="Are you sure?"
+       hx-target="closest tr"
        hx-swap="outerHTML swap:1s">
-    
+
     <!-- Individual delete buttons inherit tbody attributes -->
     <button hx-delete="/contact/{{ contact.id }}">
         Delete
@@ -116,16 +116,16 @@ Visual hover    User decision      HTMX request   CSS fade    DOM cleanup
 def delete_contact(contact_id):
     """Delete a contact by ID with validation and error handling."""
     global CONTACTS
-    
+
     # Find the contact to be deleted
     contact_to_delete = next((c for c in CONTACTS if c['id'] == contact_id), None)
-    
+
     if not contact_to_delete:
         return "Contact not found", 404
-    
+
     # Remove the contact from the list
     CONTACTS = [contact for contact in CONTACTS if contact['id'] != contact_id]
-    
+
     # Return empty response - HTMX will remove the row
     return ''
 ```

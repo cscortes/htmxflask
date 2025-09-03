@@ -39,7 +39,7 @@
                         <!-- hx-target="closest tr": Target this row for removal -->
                         <!-- hx-swap="outerHTML swap:1s": Replace with empty response after fade-out -->
                         <!-- hx-confirm: Inherited from tbody - shows confirmation dialog -->
-                        <button class="btn danger" 
+                        <button class="btn danger"
                                 hx-delete="/contact/{{ contact.id }}"
                                 aria-label="Delete {{ contact.name }}'s contact information">
                             Delete
@@ -59,7 +59,7 @@
                 <li><strong>hx-swap="outerHTML swap:1s"</strong>: Replaces the entire row and waits 1 second for CSS fade-out</li>
                 <li><strong>hx-delete</strong>: Sends a DELETE request to remove the contact from the server</li>
             </ul>
-            
+
             <h3>HTMX Patterns demonstrated:</h3>
             <ul>
                 <li><strong>hx-delete</strong>: RESTful DELETE method for resource removal</li>
@@ -68,7 +68,7 @@
                 <li><strong>hx-swap</strong>: Controlled content replacement with timing</li>
                 <li><strong>Empty responses</strong>: HTMX gracefully handles empty server responses</li>
             </ul>
-            
+
             <h3>Animation details:</h3>
             <ul>
                 <li><strong>Fade-out effect</strong>: CSS transition reduces opacity over 1 second</li>

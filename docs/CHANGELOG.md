@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive test suite with 6 test methods
   - Filipino boxers dataset with 5 contacts
   - Educational code with detailed HTMX comments
+  - Single-instance editing to prevent multiple rows being edited simultaneously
+  - Form validation and error handling
+  - Responsive design with proper table styling
 
 ## [0.10.0] - 2024-12-19
 

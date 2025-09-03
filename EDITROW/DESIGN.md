@@ -8,7 +8,7 @@ The EDITROW example follows the **Development Guiding Light** principles to demo
 
 ### 1. **Single-Instance Editing**
 **Decision**: Only one row can be edited at a time
-**Rationale**: 
+**Rationale**:
 - Prevents user confusion and data conflicts
 - Simplifies state management on both client and server
 - Follows common UX patterns in spreadsheet applications

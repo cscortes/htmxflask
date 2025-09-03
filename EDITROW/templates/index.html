@@ -34,8 +34,8 @@
                         <!-- hx-get: Load edit form for this contact -->
                         <!-- hx-trigger="edit": Trigger on custom 'edit' event -->
                         <!-- hx-target="closest tr": Target this row for updates -->
-                        <button class="btn primary" 
-                                hx-get="/contact/{{ contact.id }}/edit" 
+                        <button class="btn primary"
+                                hx-get="/contact/{{ contact.id }}/edit"
                                 hx-trigger="edit"
                                 hx-target="closest tr"
                                 data-contact-id="{{ contact.id }}"
@@ -58,7 +58,7 @@
                 <li><strong>hx-include="closest tr"</strong>: Includes all form inputs from the row when saving</li>
                 <li><strong>Single-instance editing</strong>: Prevents multiple rows from being edited simultaneously</li>
             </ul>
-            
+
             <h3>HTMX Patterns demonstrated:</h3>
             <ul>
                 <li><strong>hx-get</strong>: Load edit forms and contact data</li>

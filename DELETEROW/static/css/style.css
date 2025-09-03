@@ -181,22 +181,22 @@ tr.htmx-swapping {
         padding: 20px;
         margin: 10px;
     }
-    
+
     .table {
         font-size: 14px;
     }
-    
+
     .table th,
     .table td {
         padding: 8px 10px;
     }
-    
+
     .btn {
         padding: 6px 12px;
         font-size: 13px;
         margin-bottom: 5px;
     }
-    
+
     h1 {
         font-size: 1.5rem;
     }
@@ -225,7 +225,7 @@ tr.htmx-swapping {
         --bg-color: #ffffff;
         --hover-bg: #f0f0f0;
     }
-    
+
     .btn.danger {
         background-color: #000000;
         color: #ffffff;
@@ -237,11 +237,11 @@ tr.htmx-swapping {
     .btn {
         display: none;
     }
-    
+
     .info {
         display: none;
     }
-    
+
     .table {
         box-shadow: none;
         border: 1px solid var(--border-color);

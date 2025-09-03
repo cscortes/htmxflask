@@ -48,10 +48,12 @@ jobs:
         echo "- CLICKEDIT: Inline editing with HTMX" >> $GITHUB_STEP_SUMMARY
         echo "- CLICKLOAD: Lazy loading with HTMX" >> $GITHUB_STEP_SUMMARY
         echo "- DELETEROW: Row deletion with HTMX" >> $GITHUB_STEP_SUMMARY
+        echo "- EDITROW: Editable table rows with HTMX" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**HTMX Patterns validated:**" >> $GITHUB_STEP_SUMMARY
         echo "- hx-get, hx-post, hx-put" >> $GITHUB_STEP_SUMMARY
         echo "- hx-target, hx-swap" >> $GITHUB_STEP_SUMMARY
         echo "- hx-trigger, hx-indicator" >> $GITHUB_STEP_SUMMARY
         echo "- hx-delete, hx-confirm" >> $GITHUB_STEP_SUMMARY
+        echo "- hx-include, custom event triggers" >> $GITHUB_STEP_SUMMARY
         echo "- Real-time updates and form handling" >> $GITHUB_STEP_SUMMARY

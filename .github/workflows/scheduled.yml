@@ -45,7 +45,7 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Tests Run:**" >> $GITHUB_STEP_SUMMARY
         echo "- Linting: All examples" >> $GITHUB_STEP_SUMMARY
-        echo "- Unit Tests: All 7 examples" >> $GITHUB_STEP_SUMMARY
+        echo "- Unit Tests: All 8 examples" >> $GITHUB_STEP_SUMMARY
         echo "- HTMX Patterns: Validated" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Examples Verified:**" >> $GITHUB_STEP_SUMMARY

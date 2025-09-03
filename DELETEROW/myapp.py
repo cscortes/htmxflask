@@ -57,7 +57,7 @@ def delete_contact(contact_id):
 
     # Find the contact to be deleted
     contact_to_delete = next((c for c in CONTACTS if c['id'] == contact_id), None)
-    
+
     if not contact_to_delete:
         # Return error response if contact not found
         return "Contact not found", 404
