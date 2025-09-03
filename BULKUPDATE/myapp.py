@@ -66,7 +66,7 @@ def bulk_update():
 
     # Process checkbox selections for status updates
     # Demonstrates efficient server-side processing of form data
-    # Only checked checkboxes are sent in form data, so we only set to Active
+    # This implements true bulk update: form represents complete desired state
     updated_count = 0
 
     # Get all emails that were explicitly checked (sent as 'on')
@@ -76,15 +76,19 @@ def bulk_update():
             email = key.split(':', 1)[1]
             checked_emails.add(email)
 
-    # Update only the checked contacts to Active
-    # Leave unchecked contacts unchanged (don't set to Inactive)
+    # Update ALL contacts based on checkbox state
+    # This is a true bulk update where form represents complete system state
     for contact in CONTACTS:
         if contact['email'] in checked_emails:
+            # Checkbox is checked - should be Active
             if contact['status'] != 'Active':
                 contact['status'] = 'Active'
                 updated_count += 1
-        # Note: We don't change contacts that weren't checked
-        # This preserves their current status
+        else:
+            # Checkbox is unchecked - should be Inactive
+            if contact['status'] != 'Inactive':
+                contact['status'] = 'Inactive'
+                updated_count += 1
 
     # Generate toast notification HTML fragment
     # This demonstrates inline HTML generation for simple, repetitive fragments
