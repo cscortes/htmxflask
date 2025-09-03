@@ -4,7 +4,7 @@ HTMX Edit Row Example
 
 This example demonstrates editable table rows using HTMX patterns:
 - hx-get: Load edit form for a specific row
-- hx-put: Submit edited row data  
+- hx-put: Submit edited row data
 - hx-target: Target the closest table row for updates
 - hx-swap: Control how content is replaced
 - hx-trigger: Custom event handling for edit/cancel
@@ -65,7 +65,7 @@ def get_contact(contact_id):
         </button>
     </td>
 </tr>'''
-    
+
     return html_fragment
 
 
@@ -80,29 +80,29 @@ def edit_contact(contact_id):
     # Demonstrates form handling and event management
     html_fragment = f'''
 <!-- hx-trigger="cancel": Respond to cancel event -->
-<!-- hx-get: Load original row when cancelled -->
+<!-- hx-get: Load original row -->
 <!-- hx-target="closest tr": Target this row for updates -->
 <!-- hx-swap="outerHTML": Replace entire row with server response -->
-<tr hx-trigger="cancel" 
+<tr hx-trigger="cancel"
     hx-get="/contact/{contact['id']}"
     hx-target="closest tr"
     hx-swap="outerHTML"
-    class="editing" 
+    class="editing"
     data-contact-id="{contact['id']}">
-    
+
     <!-- Form inputs with proper labels and validation -->
     <td>
-        <input type="text" 
-               name="name" 
-               value="{contact['name']}" 
+        <input type="text"
+               name="name"
+               value="{contact['name']}"
                autofocus
                required
                aria-label="Contact name">
     </td>
     <td>
-        <input type="email" 
-               name="email" 
-               value="{contact['email']}" 
+        <input type="email"
+               name="email"
+               value="{contact['email']}"
                required
                aria-label="Contact email">
     </td>
@@ -110,13 +110,13 @@ def edit_contact(contact_id):
         <!-- Cancel button: Return to read-only view -->
         <!-- hx-get: Load original contact data -->
         <!-- hx-target: Update this row -->
-        <button class="btn secondary" 
+        <button class="btn secondary"
                 hx-get="/contact/{contact['id']}"
                 hx-target="closest tr"
                 hx-swap="outerHTML">
             Cancel
         </button>
-        
+
         <!-- Save button: Submit updated data -->
         <!-- hx-put: Use PUT method for updates (RESTful) -->
         <!-- hx-include="closest tr": Include all form inputs from this row -->
@@ -130,7 +130,7 @@ def edit_contact(contact_id):
         </button>
     </td>
 </tr>'''
-    
+
     return html_fragment
 
 
@@ -146,17 +146,20 @@ def update_contact(contact_id):
     # Get and validate form data
     name = request.form.get('name', '').strip()
     email = request.form.get('email', '').strip()
-    
+
     # Basic validation
     if not name or not email:
         return "Name and email are required", 400
-    
+
     if '@' not in email:
         return "Invalid email format", 400
 
-    # Update contact data
-    contact['name'] = name
-    contact['email'] = email
+    # Update contact data in the global list
+    for c in CONTACTS:
+        if c['id'] == contact_id:
+            c['name'] = name
+            c['email'] = email
+            break
 
     # Return updated read-only row HTML fragment
     # Demonstrates successful update with visual feedback
@@ -179,7 +182,7 @@ def update_contact(contact_id):
         </button>
     </td>
 </tr>'''
-    
+
     return html_fragment
 
 
