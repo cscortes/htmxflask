@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.11.0**
+**Version: 0.13.0**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
@@ -19,7 +19,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains eight educational HTMX examples:
+This project contains nine educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -68,6 +68,7 @@ This project contains eight educational HTMX examples:
 - RESTful DELETE endpoints with proper HTTP methods
 
 ### 8. **EDITROW** - Editable Table Rows
+### 9. **BULKUPDATE** - Bulk Operations with Checkboxes
 - Edit table rows inline with single-instance editing
 - Demonstrates `hx-get`, `hx-put`, `hx-target="closest tr"`, `hx-swap="outerHTML"`
 - Custom event triggers (`hx-trigger="edit"`) with JavaScript integration
@@ -87,6 +88,7 @@ make clean                   # Clean up temporary files
 make version VERSION=0.4.0   # Update version and create git tag
 make pre-git-commit          # Clean invisible characters before commit
 make test-example EXAMPLE=DELETEROW  # Test specific example
+make test-example EXAMPLE=BULKUPDATE  # Test specific example
 ```
 
 ### HTMX Configuration
@@ -126,7 +128,7 @@ This project uses GitHub Actions for continuous integration and testing:
 ### Automated Testing
 - **Trigger**: Runs on every push to main/master and pull requests
 - **Environment**: Ubuntu with Python 3.9 and uv package manager
-- **Tests**: All 8 HTMX examples with comprehensive test suites
+- **Tests**: All 9 HTMX examples with comprehensive test suites
 - **Linting**: Automated code quality checks with flake8
 
 ### Workflow Files
@@ -143,12 +145,14 @@ The CI pipeline validates:
 - ✅ **CLICKLOAD**: Lazy loading with pagination
 - ✅ **DELETEROW**: Row deletion with animation and confirmation
 - ✅ **EDITROW**: Editable table rows with single-instance editing
+- ✅ **BULKUPDATE**: Bulk operations with checkboxes and form handling
 
 ### HTMX Patterns Validated
 - `hx-get`, `hx-post`, `hx-put` - HTTP methods
 - `hx-target`, `hx-swap` - DOM manipulation
 - `hx-trigger`, `hx-indicator` - Event handling and loading states
 - `hx-delete`, `hx-confirm` - Row deletion and confirmation
+- `hx-swap="innerHTML settle:3s"` - Bulk operations with settling animations
 - Real-time updates and form validation
 
 ### Status Badge

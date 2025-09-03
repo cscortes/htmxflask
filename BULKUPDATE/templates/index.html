@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Bulk Update Example</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bulk Update Example</h1>
+        <p>Select multiple contacts using checkboxes and update their status in bulk. This demonstrates form handling with multiple selections.</p>
+
+        <!-- Main form with comprehensive HTMX attributes -->
+        <!-- This demonstrates the Development Guiding Light principle of using -->
+        <!-- standard HTML forms with HTMX for complex operations -->
+        <!-- hx-post="/bulk-update": Send form data for bulk processing -->
+        <!-- hx-target="#toast": Update the toast notification element -->
+        <!-- hx-swap="innerHTML settle:3s": Replace content with 3-second settling -->
+        <form id="bulk-update-form" 
+              hx-post="/bulk-update" 
+              hx-target="#toast" 
+              hx-swap="innerHTML settle:3s">
+            
+            <!-- Bulk update controls -->
+            <div class="bulk-controls">
+                <button type="submit" class="btn primary">
+                    Update Selected Contacts
+                </button>
+                <span class="selection-info">
+                    <span id="selected-count">0</span> contacts selected
+                </span>
+            </div>
+
+            <!-- Contact table with checkboxes -->
+            <table class="table bulk-update-table" role="table" aria-label="Contacts table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <!-- Select all checkbox -->
+                            <input type="checkbox" id="select-all" class="checkbox-select-all">
+                            <label for="select-all" class="sr-only">Select all contacts</label>
+                        </th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td>
+                            <!-- Individual contact checkbox -->
+                            <!-- name="status:email": Form data key for bulk processing -->
+                            <input type="checkbox" 
+                                   name="status:{{ contact.email }}" 
+                                   class="contact-checkbox"
+                                   data-contact-id="{{ contact.id }}"
+                                   {% if contact.status == 'Active' %}checked{% endif %}>
+                            <label for="status:{{ contact.email }}" class="sr-only">
+                                Select {{ contact.name }}
+                            </label>
+                        </td>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td class="status-{{ contact.status.lower() }}">
+                            {{ contact.status }}
+                        </td>
+                        <td>
+                            <!-- Individual status toggle button -->
+                            <!-- hx-post: Send individual update request -->
+                            <!-- hx-target: Update this specific row -->
+                            <!-- hx-swap: Replace entire row with response -->
+                            <button class="btn secondary toggle-status"
+                                    hx-post="/toggle-status/{{ contact.id }}"
+                                    hx-target="closest tr"
+                                    hx-swap="outerHTML">
+                                Toggle Status
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+
+        <!-- Toast notification area -->
+        <!-- hx-target="#toast": This element receives bulk update responses -->
+        <div id="toast" class="toast-container" role="region" aria-live="polite"></div>
+
+        <!-- Educational information section -->
+        <!-- This section demonstrates the Development Guiding Light principle of -->
+        <!-- providing comprehensive educational content for developers -->
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>Checkbox Selection</strong>: Use checkboxes to select multiple contacts</li>
+                <li><strong>Bulk Update</strong>: Submit form to update all selected contacts at once</li>
+                <li><strong>Form Handling</strong>: Server processes checkbox names (status:email@domain)</li>
+                <li><strong>Toast Notifications</strong>: User feedback with smooth animations</li>
+                <li><strong>Individual Toggle</strong>: Toggle individual contact statuses</li>
+            </ul>
+            
+            <h3>HTMX Patterns demonstrated:</h3>
+            <ul>
+                <li><strong>hx-post</strong>: Form submission for bulk operations</li>
+                <li><strong>hx-target</strong>: Precise targeting of notification elements</li>
+                <li><strong>hx-swap</strong>: Controlled content replacement with timing</li>
+                <li><strong>Form Integration</strong>: HTMX with standard HTML forms</li>
+                <li><strong>Checkbox Handling</strong>: Multiple selection processing</li>
+            </ul>
+            
+            <h3>Development Guiding Light Principles:</h3>
+            <ul>
+                <li><strong>Hypermedia-first</strong>: Standard HTML forms with HTMX enhancement</li>
+                <li><strong>JavaScript-last</strong>: Minimal JavaScript for checkbox management</li>
+                <li><strong>Inline HTML</strong>: Toast notifications generated server-side</li>
+                <li><strong>Educational Code</strong>: Comprehensive HTMX comments and documentation</li>
+                <li><strong>Accessibility</strong>: Built-in ARIA attributes and screen reader support</li>
+            </ul>
+            
+            <h3>Technical details:</h3>
+            <ul>
+                <li><strong>Checkbox Names</strong>: Format "status:email@domain" for easy parsing</li>
+                <li><strong>Form Data</strong>: Automatic collection of all checked checkboxes</li>
+                <li><strong>Server Processing</strong>: Iterate through form data to update contacts</li>
+                <li><strong>Response Handling</strong>: Toast notifications with settling animations</li>
+                <li><strong>State Management</strong>: Global contact list with status updates</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Minimal JavaScript for checkbox selection management
+        // Following Development Guiding Light principles of JavaScript-last approach
+        // This demonstrates how minimal JavaScript can enhance HTMX functionality
+        // without replacing the core hypermedia-driven behavior
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectAllCheckbox = document.getElementById('select-all');
+            const contactCheckboxes = document.querySelectorAll('.contact-checkbox');
+            const selectedCountSpan = document.getElementById('selected-count');
+            
+            // Update select all checkbox state
+            function updateSelectAllState() {
+                const checkedCount = document.querySelectorAll('.contact-checkbox:checked').length;
+                const totalCount = contactCheckboxes.length;
+                
+                selectAllCheckbox.checked = checkedCount === totalCount;
+                selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < totalCount;
+                
+                selectedCountSpan.textContent = checkedCount;
+            }
+            
+            // Handle select all checkbox
+            selectAllCheckbox.addEventListener('change', function() {
+                contactCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+                updateSelectAllState();
+            });
+            
+            // Handle individual checkboxes
+            contactCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateSelectAllState);
+            });
+            
+            // Initialize state
+            updateSelectAllState();
+        });
+    </script>
+</body>
+</html>
+

@@ -5,6 +5,31 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - 2024-12-19
+
+### Enhanced
+- **Development Guiding Light Principles**: Applied to BULKUPDATE example
+- **Comprehensive Documentation**: Enhanced README.md and DESIGN.md with guiding light principles
+- **Educational Content**: Added detailed explanations of HTMX patterns and design decisions
+- **Code Quality**: Improved inline HTML generation and server-side processing documentation
+- **Accessibility Features**: Enhanced ARIA attributes and screen reader support documentation
+
+## [0.12.0] - 2024-12-19
+
+### Added
+- **BULKUPDATE Example** - Bulk Operations with Checkboxes
+  - Bulk update contact statuses using checkbox selections
+  - Demonstrates `hx-post`, `hx-target="#toast"`, `hx-swap="innerHTML settle:3s"`
+  - Form-based bulk operations with standard HTML checkboxes
+  - Toast notifications with settling animations
+  - Select all functionality and selection counting
+  - Server-side processing of multiple checkbox selections
+  - Comprehensive test suite with 9 test methods
+  - Filipino boxers dataset with 5 contacts
+  - Educational code with detailed HTMX comments
+  - Based on official HTMX bulk-update example
+  - Accessibility features with ARIA attributes and screen reader support
+
 ## [0.11.0] - 2024-12-19
 
 ### Added
