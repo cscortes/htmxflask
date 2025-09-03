@@ -9,10 +9,12 @@ This example demonstrates row deletion using HTMX patterns:
 - hx-swap: Control how content is replaced with fade-out animation
 
 Based on the official HTMX delete-row example.
+Follows Development Guiding Light principles for educational clarity.
 """
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 import os
+
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 static_dir = os.path.join(os.path.dirname(__file__), 'static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
@@ -50,15 +52,35 @@ def index():
 
 @app.route('/contact/<int:contact_id>', methods=['DELETE'])
 def delete_contact(contact_id):
-    """Delete a contact by ID."""
+    """Delete a contact by ID with validation and error handling."""
     global CONTACTS
 
-    # Find and remove the contact
+    # Find the contact to be deleted
+    contact_to_delete = next((c for c in CONTACTS if c['id'] == contact_id), None)
+    
+    if not contact_to_delete:
+        # Return error response if contact not found
+        return "Contact not found", 404
+
+    # Remove the contact from the list
     CONTACTS = [contact for contact in CONTACTS if contact['id'] != contact_id]
 
     # Return empty response - HTMX will remove the row
-    # The hx-swap="outerHTML swap:1s" will handle the fade-out animation
+    # hx-swap="outerHTML swap:1s" handles the fade-out animation
+    # This demonstrates how HTMX handles empty responses gracefully
     return ''
+
+
+@app.route('/api/contacts')
+def api_contacts():
+    """API endpoint to get all contacts (for potential future enhancements)."""
+    return jsonify(CONTACTS)
+
+
+@app.route('/api/contacts/count')
+def api_contacts_count():
+    """API endpoint to get contact count (useful for UI updates)."""
+    return jsonify({"count": len(CONTACTS)})
 
 
 if __name__ == '__main__':

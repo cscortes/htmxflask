@@ -12,17 +12,18 @@
         <h1>Delete Row Example</h1>
         <p>Click the delete button on any row to remove it with confirmation and fade-out animation.</p>
 
+        <!-- Main table with comprehensive HTMX attributes -->
         <!-- hx-confirm="Are you sure?": Show confirmation dialog before deletion -->
         <!-- hx-target="closest tr": Target the closest table row for removal -->
         <!-- hx-swap="outerHTML swap:1s": Replace entire row and wait 1 second for fade-out -->
-        <table class="table delete-row-example">
+        <table class="table delete-row-example" role="table" aria-label="Contacts table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th></th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s">
@@ -33,8 +34,14 @@
                     <td>{{ contact.email }}</td>
                     <td class="status-{{ contact.status.lower() }}">{{ contact.status }}</td>
                     <td>
-                        <!-- hx-delete="/contact/{{ contact.id }}": Send DELETE request to remove this contact -->
-                        <button class="btn danger" hx-delete="/contact/{{ contact.id }}">
+                        <!-- Delete button with comprehensive HTMX attributes -->
+                        <!-- hx-delete: Send DELETE request to remove this contact -->
+                        <!-- hx-target="closest tr": Target this row for removal -->
+                        <!-- hx-swap="outerHTML swap:1s": Replace with empty response after fade-out -->
+                        <!-- hx-confirm: Inherited from tbody - shows confirmation dialog -->
+                        <button class="btn danger" 
+                                hx-delete="/contact/{{ contact.id }}"
+                                aria-label="Delete {{ contact.name }}'s contact information">
                             Delete
                         </button>
                     </td>
@@ -43,13 +50,30 @@
             </tbody>
         </table>
 
+        <!-- Educational information section -->
         <div class="info">
             <h3>How it works:</h3>
             <ul>
-                <li><strong>hx-confirm</strong>: Shows a browser confirmation dialog before deletion</li>
+                <li><strong>hx-confirm="Are you sure?"</strong>: Shows a browser confirmation dialog before deletion</li>
                 <li><strong>hx-target="closest tr"</strong>: Targets the closest table row to the clicked button</li>
                 <li><strong>hx-swap="outerHTML swap:1s"</strong>: Replaces the entire row and waits 1 second for CSS fade-out</li>
                 <li><strong>hx-delete</strong>: Sends a DELETE request to remove the contact from the server</li>
+            </ul>
+            
+            <h3>HTMX Patterns demonstrated:</h3>
+            <ul>
+                <li><strong>hx-delete</strong>: RESTful DELETE method for resource removal</li>
+                <li><strong>hx-confirm</strong>: User confirmation before destructive actions</li>
+                <li><strong>hx-target</strong>: Precise targeting of table rows</li>
+                <li><strong>hx-swap</strong>: Controlled content replacement with timing</li>
+                <li><strong>Empty responses</strong>: HTMX gracefully handles empty server responses</li>
+            </ul>
+            
+            <h3>Animation details:</h3>
+            <ul>
+                <li><strong>Fade-out effect</strong>: CSS transition reduces opacity over 1 second</li>
+                <li><strong>Timing coordination</strong>: hx-swap delay matches CSS transition duration</li>
+                <li><strong>Smooth removal</strong>: Row disappears after animation completes</li>
             </ul>
         </div>
     </div>

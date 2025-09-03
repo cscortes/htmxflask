@@ -74,8 +74,8 @@ class DeleteRowTestCase(unittest.TestCase):
         """Test deletion of non-existent contact."""
         # Try to delete contact with ID 999
         response = self.client.delete('/contact/999')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_data(), b'')
+        self.assertEqual(response.status_code, 404)  # Not Found
+        self.assertEqual(response.get_data(), b'Contact not found')
 
         # Verify all contacts still exist
         response = self.client.get('/')
@@ -134,12 +134,12 @@ class DeleteRowTestCase(unittest.TestCase):
         response = self.client.get('/')
         html = response.get_data(as_text=True)
 
-        # Check for table headers
-        self.assertIn('<th>ID</th>', html)
-        self.assertIn('<th>Name</th>', html)
-        self.assertIn('<th>Email</th>', html)
-        self.assertIn('<th>Status</th>', html)
-        self.assertIn('<th></th>', html)  # Action column
+        # Check for table headers with scope attributes
+        self.assertIn('<th scope="col">ID</th>', html)
+        self.assertIn('<th scope="col">Name</th>', html)
+        self.assertIn('<th scope="col">Email</th>', html)
+        self.assertIn('<th scope="col">Status</th>', html)
+        self.assertIn('<th scope="col">Actions</th>', html)  # Action column
 
     def test_contact_data_display(self):
         """Test that contact data is displayed correctly."""
