@@ -1,74 +1,41 @@
-# Edit Row Example
+# EDITROW Example
 
 ## HTMX Features Demonstrated
 
-- **Primary**: `hx-get`, `hx-put`, `hx-target="closest tr"`
-- **Secondary**: `hx-swap="outerHTML"`, `hx-trigger="edit"`, `hx-include="closest tr"`
+**Primary**: `hx-get`, `hx-put`, `hx-target="closest tr"`, `hx-swap="outerHTML"`
+**Secondary**: `hx-trigger="edit"`, `hx-include="closest tr"`, custom event handling
 
 ## User Story
 
-As a user, I want to edit table rows inline so that I can quickly update data without navigating to a separate edit page.
+As a user, I want to edit contact information directly in a table row so that I can quickly update data without navigating to a separate page or form.
 
 ## How It Works
 
-1. User clicks "Edit" button on any table row
-2. HTMX sends GET request to `/contact/{id}/edit`
-3. Server returns HTML fragment with input fields
-4. HTMX replaces the row with the edit form
-5. User modifies data and clicks "Save"
-6. HTMX sends PUT request with form data
-7. Server updates the contact and returns read-only row
-8. HTMX replaces the edit form with updated data
+1. **Initial State**: Table displays contacts in read-only format with edit buttons
+2. **Edit Mode**: User clicks edit button → HTMX loads edit form inline
+3. **Form Display**: Row transforms into editable inputs with save/cancel buttons
+4. **Data Update**: User modifies data and clicks save → HTMX sends PUT request
+5. **Row Update**: Server validates data and returns updated read-only row
+6. **Single Instance**: Only one row can be edited at a time (JavaScript managed)
 
-## Key Features
+## HTMX Patterns Explained
 
-- **Single Row Editing**: Only one row can be edited at a time
-- **Inline Editing**: No page navigation required
-- **Form Data Handling**: Uses `hx-include="closest tr"` to collect input data
-- **Cancel Functionality**: Users can cancel edits and return to read-only view
-- **Visual Feedback**: Editing rows are highlighted with special styling
+### Core Attributes
+- **`hx-get="/contact/{id}/edit"`**: Loads edit form for specific contact
+- **`hx-put="/contact/{id}"`**: Submits updated data using RESTful PUT method
+- **`hx-target="closest tr"`**: Targets the table row containing the button
+- **`hx-swap="outerHTML"`**: Replaces entire row with server response
 
-## HTMX Patterns Used
+### Advanced Features
+- **`hx-trigger="edit"`**: Custom event trigger for edit mode
+- **`hx-include="closest tr"`**: Includes all form inputs when submitting
+- **`hx-trigger="cancel"`**: Responds to cancel events from JavaScript
 
-### Row Targeting
-```html
-<tbody hx-target="closest tr" hx-swap="outerHTML">
-```
-All requests from within the table target the closest table row and replace the entire row.
-
-### Custom Event Triggers
-```html
-<button hx-get="/contact/1/edit" hx-trigger="edit">
-```
-Uses custom `edit` event instead of default click to allow JavaScript integration.
-
-### Form Data Inclusion
-```html
-<button hx-put="/contact/1" hx-include="closest tr">
-```
-Includes all form inputs from the closest table row when submitting.
-
-### Cancel Event Handling
-```html
-<tr hx-trigger="cancel" class="editing" hx-get="/contact/1">
-```
-Row responds to `cancel` event to return to read-only state.
-
-## JavaScript Integration
-
-The example includes minimal JavaScript to prevent multiple rows from being edited simultaneously:
-
-```javascript
-let editing = document.querySelector('.editing');
-if(editing) {
-    if(confirm('Already editing! Cancel and continue?')) {
-        htmx.trigger(editing, 'cancel');
-        htmx.trigger(this, 'edit');
-    }
-} else {
-    htmx.trigger(this, 'edit');
-}
-```
+### JavaScript Integration
+- **Single-instance editing**: Prevents multiple rows from being edited
+- **User confirmation**: Asks before canceling current edit
+- **Visual feedback**: Success styling for updated rows
+- **Focus management**: Automatically focuses edit inputs
 
 ## Try It Out
 
@@ -79,12 +46,92 @@ if(editing) {
 
 ## Learning Points
 
-- Demonstrates complex HTMX interactions with custom events
-- Shows how to handle form data without traditional forms
-- Example of JavaScript integration for enhanced UX
-- Pattern for single-instance editing in tables
-- Server-side HTML generation for dynamic content
+### HTMX Best Practices
+- **Row-level targeting**: Use `closest tr` for precise table row updates
+- **Form data inclusion**: `hx-include="closest tr"` captures all inputs
+- **Custom events**: `hx-trigger="edit"` enables complex interaction patterns
+- **RESTful methods**: PUT for updates, GET for data retrieval
 
-## Based On
+### Server-Side Patterns
+- **Inline HTML generation**: Generate HTML fragments directly in Python
+- **Validation**: Server-side data validation before updates
+- **Error handling**: Proper HTTP status codes and error messages
+- **State management**: Global data structure with proper updates
 
-This example is based on the official HTMX [Edit Row example](https://htmx.org/examples/edit-row/).
+### User Experience
+- **Immediate feedback**: Visual indicators for editing state
+- **Confirmation dialogs**: Prevent accidental data loss
+- **Responsive design**: Mobile-friendly table and form elements
+- **Accessibility**: ARIA labels, semantic HTML, keyboard navigation
+
+## Code Structure
+
+```
+EDITROW/
+├── myapp.py              # Flask routes with inline HTML generation
+├── templates/
+│   └── index.html        # Main template with HTMX attributes
+├── static/
+│   ├── css/
+│   │   └── style.css     # Responsive styling with CSS custom properties
+│   └── js/
+│       └── editrow.js    # Minimal JavaScript for single-instance editing
+└── README.md             # This documentation
+```
+
+## Technical Implementation
+
+### Flask Routes
+- **`/`**: Main page with contact table
+- **`/contact/<id>`**: Get read-only contact row
+- **`/contact/<id>/edit`**: Get edit form for contact
+- **`/contact/<id>` (PUT)**: Update contact data
+- **`/api/contacts`**: JSON endpoint for future enhancements
+
+### Data Flow
+1. **Template Rendering**: Jinja2 renders initial table with contacts
+2. **HTMX Request**: Edit button triggers GET request for edit form
+3. **Server Response**: Flask returns HTML fragment with form inputs
+4. **Form Submission**: Save button triggers PUT request with form data
+5. **Data Update**: Server validates and updates contact data
+6. **Row Refresh**: Updated read-only row replaces edit form
+
+### Error Handling
+- **Validation**: Required fields and email format checking
+- **HTTP Status**: Proper 400/404 responses for errors
+- **User Feedback**: Clear error messages and visual indicators
+
+## Browser Compatibility
+
+- **Modern Browsers**: Chrome, Firefox, Safari, Edge
+- **HTMX Version**: 2.0.3 (latest stable)
+- **CSS Features**: CSS Grid, Flexbox, Custom Properties
+- **JavaScript**: ES6+ features with fallbacks
+
+## Performance Considerations
+
+- **Minimal JavaScript**: Only essential functionality beyond HTMX
+- **Efficient Targeting**: `closest tr` for precise DOM updates
+- **Inline HTML**: Reduces template overhead for simple fragments
+- **CSS Optimization**: Custom properties for consistent theming
+
+## Accessibility Features
+
+- **Semantic HTML**: Proper table structure with `<th>` and `<td>`
+- **ARIA Labels**: Descriptive labels for form inputs
+- **Keyboard Navigation**: Focus management and keyboard shortcuts
+- **Screen Reader Support**: Proper heading hierarchy and table roles
+- **High Contrast**: Support for high contrast mode preferences
+- **Reduced Motion**: Respects user motion preferences
+
+## Future Enhancements
+
+- **Real-time validation**: Server-side field validation with immediate feedback
+- **Bulk operations**: Select multiple rows for batch updates
+- **Search/filtering**: Add contact search and filtering capabilities
+- **Data persistence**: Database integration for persistent storage
+- **User authentication**: Add user management and access control
+
+---
+
+**Note**: This example follows the Development Guiding Light principles, demonstrating how to build complex interactions with minimal JavaScript while maintaining excellent user experience and educational value.
