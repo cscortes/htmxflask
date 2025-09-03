@@ -5,6 +5,20 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.1] - 2024-12-19
+
+### Fixed
+- **BULKUPDATE Test Cases**: Fixed all failing test cases in BULKUPDATE example
+- **Test Expectations**: Corrected test assertions to match actual bulk update logic
+- **State Management**: Fixed test state pollution between test runs
+- **Dataset Consistency**: Updated tests to work with full 10-contact dataset
+- **Update Count Validation**: Fixed expected counts for various test scenarios
+
+### Technical
+- **Test Suite Reliability**: Improved test isolation and state reset mechanisms
+- **Assertion Accuracy**: Updated test expectations to match correct HTMX bulk update behavior
+- **Documentation Sync**: Ensured all test descriptions match actual functionality
+
 ## [0.14.0] - 2024-12-19
 
 ### Fixed
