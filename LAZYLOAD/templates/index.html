@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Lazy Loading Example</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Lazy Loading Example</h1>
+        <p>This example demonstrates lazy loading content using HTMX. The graph below loads automatically when the page loads.</p>
+
+        <!-- Lazy loading container -->
+        <!-- hx-get="/graph": Load content from /graph endpoint -->
+        <!-- hx-trigger="load": Trigger request when this element loads -->
+        <!-- hx-indicator="#loading": Show loading indicator during request -->
+        <div id="graph-container" hx-get="/graph" hx-trigger="load" hx-indicator="#loading">
+            <!-- Initial loading state -->
+            <div id="loading" class="loading-indicator htmx-indicator">
+                <img alt="Loading analytics data..." width="150" src="{{ url_for('static', filename='img/bars.svg') }}" />
+                <p>Loading revenue analytics...</p>
+            </div>
+        </div>
+
+        <!-- Educational information section -->
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>hx-get="/graph"</strong>: Sends GET request to load graph content</li>
+                <li><strong>hx-trigger="load"</strong>: Triggers request when the container element loads</li>
+                <li><strong>hx-indicator="#loading"</strong>: Shows loading state during the request</li>
+                <li><strong>time.sleep(1.5)</strong>: Simulates server processing delay</li>
+            </ul>
+
+            <h3>HTMX Patterns demonstrated:</h3>
+            <ul>
+                <li><strong>hx-get</strong>: Load content from server endpoint</li>
+                <li><strong>hx-trigger="load"</strong>: Automatic loading on element load</li>
+                <li><strong>hx-indicator</strong>: Loading state management</li>
+                <li><strong>CSS transitions</strong>: Smooth fade-in with .htmx-settling</li>
+                <li><strong>Progressive enhancement</strong>: Content loads without JavaScript</li>
+            </ul>
+
+            <h3>Animation details:</h3>
+            <ul>
+                <li><strong>Fade-in effect</strong>: CSS transition reduces opacity during settling</li>
+                <li><strong>Timing coordination</strong>: 300ms transition matches HTMX settling</li>
+                <li><strong>Smooth appearance</strong>: Content fades in gracefully after loading</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

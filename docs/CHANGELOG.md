@@ -5,6 +5,26 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.0] - 2024-12-19
+
+### Added
+- **LAZYLOAD Example**: New automatic content loading example
+- **Template Rendering**: Refactored HTML generation to use Jinja2 templates
+- **HTMX Lazy Loading**: Demonstrates `hx-trigger="load"` pattern
+- **Revenue Analytics**: Interactive dashboard with charts and tables
+- **Fade-in Animations**: Smooth `.htmx-settling` CSS transitions
+
+### Enhanced
+- **Template Architecture**: Separated HTML from Python business logic
+- **Educational Content**: Comprehensive documentation for lazy loading patterns
+- **Test Coverage**: 14 test cases for LAZYLOAD functionality
+- **Code Quality**: Improved maintainability with template-based rendering
+
+### Technical
+- **Jinja2 Integration**: Full Flask template rendering for HTML fragments
+- **Data Processing**: Clean separation of data preparation and presentation
+- **Performance**: Optimized template rendering with minimal overhead
+
 ## [0.14.1] - 2024-12-19
 
 ### Fixed

@@ -1,0 +1,37 @@
+<div class="graph-container">
+    <h2 class="graph-title">📊 Monthly Revenue Analytics</h2>
+    <p class="graph-description">Interactive chart showing revenue trends over the past 12 months</p>
+
+    <div class="metrics-table">
+        <table class="data-table" role="table" aria-label="Revenue metrics">
+            <thead>
+                <tr>
+                    <th scope="col">Month</th>
+                    <th scope="col">Revenue ($)</th>
+                    <th scope="col">Growth</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for metric in metrics %}
+                <tr>
+                    <td>{{ metric.month }}</td>
+                    <td class="revenue">${{ "{:,}".format(metric.revenue) }}</td>
+                    <td class="growth {{ 'growth-positive' if metric.growth.startswith('+') else 'growth-negative' }}">{{ metric.growth }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="chart-container">
+        <h3>Revenue Trend</h3>
+        <div class="bar-chart">
+            {% for metric in metrics %}
+            <div class="bar-item">
+                <div class="bar" style="height: {{ "%.1f"|format((metric.revenue / max_revenue) * 100) }}%"></div>
+                <div class="bar-label">{{ metric.month }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

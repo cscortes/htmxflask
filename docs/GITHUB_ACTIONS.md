@@ -84,12 +84,14 @@ All workflows validate:
 - ✅ **CLICKLOAD**: Lazy loading with pagination
 - ✅ **DELETEROW**: Row deletion with animation
 - ✅ **EDITROW**: Editable table rows with single-instance editing
+- ✅ **LAZYLOAD**: Automatic content loading with fade-in animations
 
 ### HTMX Patterns Validated
 - `hx-get`, `hx-post`, `hx-put` - HTTP methods
 - `hx-target`, `hx-swap` - DOM manipulation
 - `hx-trigger`, `hx-indicator` - Event handling and loading states
 - `hx-delete`, `hx-confirm` - Row deletion and confirmation
+- `hx-trigger="load"`, `hx-indicator` - Automatic loading and loading states
 - `hx-include` - Form data inclusion for targeted updates
 - Real-time updates and form validation
 
