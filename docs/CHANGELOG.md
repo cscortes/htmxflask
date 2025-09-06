@@ -5,6 +5,29 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.0] - 2024-12-19
+
+### Added
+- **INLINVALIDATION Example**: New real-time form validation example
+- **Debounced Validation**: 300ms delay prevents excessive server requests
+- **Multi-field Validation**: Username, email, password, confirm password, age
+- **Server-side Security**: All validation logic runs server-side
+- **Visual Feedback**: Success/error/warning states with animations
+
+### Enhanced
+- **Form UX Patterns**: Real-time validation feedback improves completion rates
+- **HTMX Validation**: Comprehensive `hx-trigger="input"` patterns
+- **Template Architecture**: Reusable validation message components
+- **Accessibility**: ARIA live regions and screen reader support
+- **Test Coverage**: 19 test cases covering all validation scenarios
+
+### Technical
+- **Validation Logic**: Custom validators with business rules
+- **Cross-field Validation**: Password confirmation matching
+- **Debouncing Strategy**: Optimized server request patterns
+- **Response Optimization**: Fast validation response times
+- **Template Components**: Modular validation message rendering
+
 ## [0.15.0] - 2024-12-19
 
 ### Added

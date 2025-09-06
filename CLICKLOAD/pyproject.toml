@@ -1,6 +1,6 @@
 [project]
 name = "htmx-click-to-load"
-version = "0.15.0"
+version = "0.16.0"
 description = "HTMX Click-to-Load Example - Lazy loading with hx-get, hx-target, hx-swap"
 authors = [
     {name = "HTMX Flask Examples", email = "examples@htmxflask.com"}

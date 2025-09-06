@@ -1,6 +1,6 @@
 [project]
 name = "htmx-edit-row"
-version = "0.15.0"
+version = "0.16.0"
 description = "HTMX Edit Row Example - Editable table rows with hx-get, hx-put, hx-target"
 authors = [
     {name = "HTMX Flask Examples", email = "examples@htmxflask.com"}

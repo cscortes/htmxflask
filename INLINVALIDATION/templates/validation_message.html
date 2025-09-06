@@ -1,0 +1,16 @@
+{% if field_type == 'success' %}
+<div class="validation-success" role="alert">
+    <span class="validation-icon">✓</span>
+    <span class="validation-text">{{ message }}</span>
+</div>
+{% elif field_type == 'warning' %}
+<div class="validation-warning" role="alert">
+    <span class="validation-icon">⚠</span>
+    <span class="validation-text">{{ message }}</span>
+</div>
+{% elif field_type == 'error' %}
+<div class="validation-error" role="alert">
+    <span class="validation-icon">✗</span>
+    <span class="validation-text">{{ message }}</span>
+</div>
+{% endif %}

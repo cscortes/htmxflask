@@ -1,0 +1,373 @@
+/* HTMX Inline Validation Example Styles */
+
+/* CSS Custom Properties for consistent theming */
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #6b7280;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --border-color: #d1d5db;
+    --text-color: #374151;
+    --bg-color: #ffffff;
+    --hover-bg: #f3f4f6;
+    --focus-ring: rgba(59, 130, 246, 0.25);
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --validation-success-bg: rgba(16, 185, 129, 0.1);
+    --validation-error-bg: rgba(239, 68, 68, 0.1);
+    --validation-warning-bg: rgba(245, 158, 11, 0.1);
+}
+
+/* Base styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--bg-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow-light);
+}
+
+/* Typography */
+h1 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+h3 {
+    color: var(--text-color);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+p {
+    color: var(--secondary-color);
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+input.htmx-request {
+    border-color: var(--primary-color);
+    background-color: var(--hover-bg);
+}
+
+/* Validation message styles */
+.validation-message {
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 20px;
+}
+
+.validation-success {
+    background-color: var(--validation-success-bg);
+    border: 1px solid var(--success-color);
+    color: var(--success-color);
+}
+
+.validation-error {
+    background-color: var(--validation-error-bg);
+    border: 1px solid var(--error-color);
+    color: var(--error-color);
+}
+
+.validation-warning {
+    background-color: var(--validation-warning-bg);
+    border: 1px solid var(--warning-color);
+    color: var(--warning-color);
+}
+
+.validation-icon {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.validation-text {
+    flex: 1;
+}
+
+/* Loading states */
+.validation-loading {
+    color: var(--secondary-color);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.htmx-indicator {
+    display: none;
+}
+
+.htmx-request .htmx-indicator {
+    display: flex;
+}
+
+/* Spinner animation */
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--secondary-color);
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Button styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    background-color: var(--primary-color);
+    color: white;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-text {
+    flex: 1;
+}
+
+/* Result area */
+.result-area {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    min-height: 50px;
+}
+
+.result-area:empty {
+    display: none;
+}
+
+/* Info section */
+.info {
+    background-color: var(--hover-bg);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    margin-top: 30px;
+}
+
+.info ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.info li {
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.info strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* HTMX-specific states */
+.htmx-request {
+    opacity: 0.8;
+}
+
+.htmx-request .btn-text {
+    display: none;
+}
+
+.htmx-request #submit-spinner {
+    display: flex;
+}
+
+/* Field validation states */
+input.validation-success {
+    border-color: var(--success-color);
+    background-color: var(--validation-success-bg);
+}
+
+input.validation-error {
+    border-color: var(--error-color);
+    background-color: var(--validation-error-bg);
+}
+
+input.validation-warning {
+    border-color: var(--warning-color);
+    background-color: var(--validation-warning-bg);
+}
+
+/* Animation for validation messages */
+.validation-message {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+
+    .btn {
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .spinner,
+    .validation-message,
+    .btn {
+        animation: none;
+        transition: none;
+    }
+}
+
+/* Focus indicators for keyboard navigation */
+input:focus,
+.btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #000000;
+        --text-color: #000000;
+        --bg-color: #ffffff;
+        --hover-bg: #f0f0f0;
+    }
+
+    .validation-success {
+        background-color: #ffffff;
+        border-color: #000000;
+        color: #000000;
+    }
+
+    .validation-error {
+        background-color: #ffffff;
+        border-color: #000000;
+        color: #000000;
+    }
+}
+
+/* Print styles */
+@media print {
+    .btn,
+    .info {
+        display: none;
+    }
+
+    .validation-message {
+        border: 1px solid #000;
+        background: #fff;
+    }
+}

@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.15.0**
+**Version: 0.16.0**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
@@ -19,7 +19,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains eleven educational HTMX examples:
+This project contains twelve educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -67,14 +67,21 @@ This project contains eleven educational HTMX examples:
 - Smooth fade-in animations using CSS transitions
 - Revenue analytics dashboard with 12 months of data
 
-### 8. **DELETEROW** - Row Deletion with Animation
+### 8. **INLINVALIDATION** - Real-time Form Validation
+- Real-time form field validation with server feedback
+- Demonstrates `hx-post`, `hx-trigger="input changed delay:300ms"`, `hx-target`, `hx-indicator`
+- Based on official HTMX inline-validation example
+- Debounced validation to prevent excessive requests
+- Comprehensive validation for username, email, password, and age
+
+### 9. **DELETEROW** - Row Deletion with Animation
 - Delete table rows with confirmation and fade-out animation
 - Demonstrates `hx-delete`, `hx-confirm`, `hx-target="closest tr"`, `hx-swap="outerHTML swap:1s"`
 - Based on official HTMX delete-row example
 - Smooth 1-second fade-out animation before row removal
 - RESTful DELETE endpoints with proper HTTP methods
 
-### 9. **EDITROW** - Editable Table Rows
+### 10. **EDITROW** - Editable Table Rows
 - Edit table rows inline with single-instance editing
 - Demonstrates `hx-get`, `hx-put`, `hx-target="closest tr"`, `hx-swap="outerHTML"`
 - Custom event triggers (`hx-trigger="edit"`) with JavaScript integration
@@ -83,7 +90,7 @@ This project contains eleven educational HTMX examples:
 - Based on official HTMX edit-row example
 - Visual feedback with highlighted editing rows
 
-### 10. **BULKUPDATE** - Bulk Operations with Checkboxes
+### 11. **BULKUPDATE** - Bulk Operations with Checkboxes
 
 ## 🛠️ Development Tools
 
@@ -136,7 +143,7 @@ This project uses GitHub Actions for continuous integration and testing:
 ### Automated Testing
 - **Trigger**: Runs on every push to main/master and pull requests
 - **Environment**: Ubuntu with Python 3.9 and uv package manager
-- **Tests**: All 11 HTMX examples with comprehensive test suites
+- **Tests**: All 12 HTMX examples with comprehensive test suites
 - **Linting**: Automated code quality checks with flake8
 
 ### Workflow Files

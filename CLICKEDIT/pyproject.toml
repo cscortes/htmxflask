@@ -1,6 +1,6 @@
 [project]
 name = "htmx-click-to-edit"
-version = "0.15.0"
+version = "0.16.0"
 description = "HTMX Click-to-Edit Example - Inline editing with hx-get, hx-put, hx-target"
 authors = [
     {name = "HTMX Flask Examples", email = "examples@htmxflask.com"}

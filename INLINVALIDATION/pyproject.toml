@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "htmx-delete-row"
+name = "htmx-inline-validation"
 version = "0.16.0"
-description = "HTMX Delete Row Example - Demonstrates row deletion with confirmation and fade-out animation"
+description = "HTMX Inline Validation Example - Demonstrates real-time form field validation with debouncing"
 authors = [{name = "HTMX Flask Examples", email = "examples@htmx.org"}]
 readme = "README.md"
 requires-python = ">=3.9"

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Inline Validation Example</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Inline Validation Example</h1>
+        <p>This example demonstrates real-time form field validation using HTMX. Fields are validated as you type with server-side feedback.</p>
+
+        <!-- Registration Form with Inline Validation -->
+        <form id="registration-form" hx-post="/submit-form" hx-target="#result" hx-swap="innerHTML">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"
+                       hx-post="/validate/username"
+                       hx-trigger="input changed delay:300ms"
+                       hx-target="#username-validation"
+                       hx-indicator="#username-spinner"
+                       placeholder="Choose a username (3-20 characters)"
+                       autocomplete="username">
+                <div id="username-spinner" class="htmx-indicator validation-loading">
+                    <span class="spinner"></span> Checking availability...
+                </div>
+                <div id="username-validation" class="validation-message" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email"
+                       hx-post="/validate/email"
+                       hx-trigger="input changed delay:300ms"
+                       hx-target="#email-validation"
+                       hx-indicator="#email-spinner"
+                       placeholder="your.email@example.com"
+                       autocomplete="email">
+                <div id="email-spinner" class="htmx-indicator validation-loading">
+                    <span class="spinner"></span> Validating email...
+                </div>
+                <div id="email-validation" class="validation-message" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       hx-post="/validate/password"
+                       hx-trigger="input changed delay:300ms"
+                       hx-target="#password-validation"
+                       hx-indicator="#password-spinner"
+                       placeholder="Create a strong password"
+                       autocomplete="new-password">
+                <div id="password-spinner" class="htmx-indicator validation-loading">
+                    <span class="spinner"></span> Checking strength...
+                </div>
+                <div id="password-validation" class="validation-message" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password"
+                       hx-post="/validate/confirm-password"
+                       hx-trigger="input changed delay:300ms"
+                       hx-target="#confirm-validation"
+                       hx-indicator="#confirm-spinner"
+                       placeholder="Confirm your password"
+                       autocomplete="new-password">
+                <div id="confirm-spinner" class="htmx-indicator validation-loading">
+                    <span class="spinner"></span> Verifying match...
+                </div>
+                <div id="confirm-validation" class="validation-message" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="13" max="120"
+                       hx-post="/validate/age"
+                       hx-trigger="input changed delay:300ms"
+                       hx-target="#age-validation"
+                       hx-indicator="#age-spinner"
+                       placeholder="Enter your age"
+                       autocomplete="age">
+                <div id="age-spinner" class="htmx-indicator validation-loading">
+                    <span class="spinner"></span> Verifying age...
+                </div>
+                <div id="age-validation" class="validation-message" role="alert" aria-live="polite"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+                <span class="btn-text">Register Account</span>
+                <div class="htmx-indicator" id="submit-spinner">
+                    <span class="spinner"></span> Processing...
+                </div>
+            </button>
+        </form>
+
+        <!-- Result area for form submission -->
+        <div id="result" class="result-area" role="alert" aria-live="assertive"></div>
+
+        <!-- Educational information section -->
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>hx-trigger="input changed delay:300ms"</strong>: Validates on user input with 300ms debouncing</li>
+                <li><strong>hx-post="/validate/field"</strong>: Sends validation requests to specific endpoints</li>
+                <li><strong>hx-target="#field-validation"</strong>: Updates specific validation message areas</li>
+                <li><strong>hx-indicator</strong>: Shows loading states during validation</li>
+            </ul>
+
+            <h3>Validation Features:</h3>
+            <ul>
+                <li><strong>Real-time feedback</strong>: Instant validation as you type</li>
+                <li><strong>Server-side validation</strong>: All logic runs on the backend</li>
+                <li><strong>Multiple field types</strong>: Username, email, password, age validation</li>
+                <li><strong>Cross-field validation</strong>: Confirm password matching</li>
+                <li><strong>Accessibility</strong>: ARIA labels and screen reader support</li>
+            </ul>
+
+            <h3>Debouncing Strategy:</h3>
+            <ul>
+                <li><strong>300ms delay</strong>: Prevents excessive server requests</li>
+                <li><strong>Input changed</strong>: Only triggers on actual content changes</li>
+                <li><strong>Per-field optimization</strong>: Different delays for different field types</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
