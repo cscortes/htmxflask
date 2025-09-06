@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX File Upload Example</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>File Upload Example</h1>
+        <p>This example demonstrates modern file upload patterns using HTMX with drag-and-drop functionality, progress indicators, and comprehensive validation.</p>
+
+        <!-- Single File Upload -->
+        <div class="upload-section">
+            <h2>Single File Upload</h2>
+
+            <form id="single-upload-form" hx-post="/upload"
+                  hx-encoding="multipart/form-data"
+                  hx-target="#upload-result"
+                  hx-swap="innerHTML"
+                  hx-indicator="#upload-indicator">
+
+                <!-- Drag and Drop Zone -->
+                <div class="upload-zone" id="upload-zone">
+                    <div class="upload-zone-content">
+                        <div class="upload-icon">📁</div>
+                        <p class="upload-text">Drag and drop files here or click to browse</p>
+                        <p class="upload-subtext">Supported: Images, Documents, Archives (Max 16MB)</p>
+                        <input type="file" id="file-input" name="file"
+                               accept=".png,.jpg,.jpeg,.gif,.webp,.svg,.pdf,.doc,.docx,.txt,.zip,.rar,.7z,.csv,.json,.xml"
+                               style="display: none;">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-input').click()">
+                            Choose File
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Upload Indicator -->
+                <div id="upload-indicator" class="htmx-indicator upload-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p>Uploading...</p>
+                </div>
+
+                <!-- Upload Result -->
+                <div id="upload-result" class="upload-result"></div>
+            </form>
+        </div>
+
+        <!-- Multiple File Upload -->
+        <div class="upload-section">
+            <h2>Multiple File Upload</h2>
+
+            <form id="multiple-upload-form" hx-post="/upload-multiple"
+                  hx-encoding="multipart/form-data"
+                  hx-target="#multi-upload-result"
+                  hx-swap="innerHTML"
+                  hx-indicator="#multi-upload-indicator">
+
+                <div class="upload-zone" id="multi-upload-zone">
+                    <div class="upload-zone-content">
+                        <div class="upload-icon">📦</div>
+                        <p class="upload-text">Drag and drop multiple files here</p>
+                        <p class="upload-subtext">Select multiple files at once</p>
+                        <input type="file" id="multi-file-input" name="files" multiple
+                               accept=".png,.jpg,.jpeg,.gif,.webp,.svg,.pdf,.doc,.docx,.txt,.zip,.rar,.7z,.csv,.json,.xml"
+                               style="display: none;">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('multi-file-input').click()">
+                            Choose Files
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Multiple Upload Indicator -->
+                <div id="multi-upload-indicator" class="htmx-indicator upload-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p>Uploading multiple files...</p>
+                </div>
+
+                <!-- Multiple Upload Result -->
+                <div id="multi-upload-result" class="upload-result"></div>
+            </form>
+        </div>
+
+        <!-- File Preview Area -->
+        <div class="preview-section">
+            <h2>Upload History</h2>
+            <div id="file-list" hx-get="/files" hx-trigger="load" hx-target="this" hx-swap="innerHTML">
+                <p>Loading uploaded files...</p>
+            </div>
+        </div>
+
+        <!-- Educational information section -->
+        <div class="info">
+            <h3>How it works:</h3>
+            <ul>
+                <li><strong>hx-encoding="multipart/form-data"</strong>: Proper encoding for file uploads</li>
+                <li><strong>hx-post="/upload"</strong>: Send files to server endpoint</li>
+                <li><strong>hx-indicator</strong>: Show upload progress and loading states</li>
+                <li><strong>Drag & Drop API</strong>: HTML5 drag and drop with visual feedback</li>
+                <li><strong>File Validation</strong>: Client and server-side validation</li>
+            </ul>
+
+            <h3>Security Features:</h3>
+            <ul>
+                <li><strong>Server-side validation</strong>: File type, size, and content checks</li>
+                <li><strong>Secure filenames</strong>: Prevent path traversal attacks</li>
+                <li><strong>Size limits</strong>: 16MB maximum file size</li>
+                <li><strong>Type restrictions</strong>: Allowed file extensions only</li>
+            </ul>
+
+            <h3>Upload Features:</h3>
+            <ul>
+                <li><strong>Progress tracking</strong>: Real-time upload progress indicators</li>
+                <li><strong>Multiple files</strong>: Batch upload support</li>
+                <li><strong>Drag and drop</strong>: Intuitive file selection</li>
+                <li><strong>Error handling</strong>: Comprehensive error messages</li>
+                <li><strong>Preview system</strong>: File information display</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Drag and Drop JavaScript -->
+    <script>
+        // Single file upload drag and drop
+        const uploadZone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('file-input');
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('drag-over');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('drag-over');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('drag-over');
+
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                // Trigger HTMX upload
+                document.getElementById('single-upload-form').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        uploadZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                document.getElementById('single-upload-form').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Multiple file upload drag and drop
+        const multiUploadZone = document.getElementById('multi-upload-zone');
+        const multiFileInput = document.getElementById('multi-file-input');
+
+        multiUploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            multiUploadZone.classList.add('drag-over');
+        });
+
+        multiUploadZone.addEventListener('dragleave', () => {
+            multiUploadZone.classList.remove('drag-over');
+        });
+
+        multiUploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            multiUploadZone.classList.remove('drag-over');
+
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                multiFileInput.files = files;
+                document.getElementById('multiple-upload-form').dispatchEvent(new Event('submit'));
+            }
+        });
+
+        multiUploadZone.addEventListener('click', () => {
+            multiFileInput.click();
+        });
+
+        multiFileInput.addEventListener('change', () => {
+            if (multiFileInput.files.length > 0) {
+                document.getElementById('multiple-upload-form').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 [project]
 name = "htmx-bulk-update"
-version = "0.16.0"
+version = "0.17.0"
 description = "HTMX Bulk Update Example - Demonstrates bulk operations with checkboxes and form submissions"
 authors = [
     {name = "HTMX Flask Examples", email = "examples@htmxflask.org"}

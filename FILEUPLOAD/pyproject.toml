@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "htmx-lazy-load"
+name = "htmx-file-upload"
 version = "0.17.0"
-description = "HTMX Lazy Loading Example - Demonstrates automatic content loading with smooth animations"
+description = "HTMX File Upload Example - Demonstrates drag-and-drop file uploads with progress tracking"
 authors = [{name = "HTMX Flask Examples", email = "examples@htmx.org"}]
 readme = "README.md"
 requires-python = ">=3.9"

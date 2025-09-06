@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.16.0**
+**Version: 0.17.0**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
@@ -74,14 +74,21 @@ This project contains twelve educational HTMX examples:
 - Debounced validation to prevent excessive requests
 - Comprehensive validation for username, email, password, and age
 
-### 9. **DELETEROW** - Row Deletion with Animation
+### 9. **FILEUPLOAD** - Drag-and-Drop File Upload
+- Modern file upload with drag-and-drop interface
+- Demonstrates `hx-post`, `hx-encoding="multipart/form-data"`, `hx-indicator`, progress tracking
+- Based on official HTMX file-upload example
+- Real-time progress indicators and multiple file support
+- Comprehensive security validation and error handling
+
+### 10. **DELETEROW** - Row Deletion with Animation
 - Delete table rows with confirmation and fade-out animation
 - Demonstrates `hx-delete`, `hx-confirm`, `hx-target="closest tr"`, `hx-swap="outerHTML swap:1s"`
 - Based on official HTMX delete-row example
 - Smooth 1-second fade-out animation before row removal
 - RESTful DELETE endpoints with proper HTTP methods
 
-### 10. **EDITROW** - Editable Table Rows
+### 11. **EDITROW** - Editable Table Rows
 - Edit table rows inline with single-instance editing
 - Demonstrates `hx-get`, `hx-put`, `hx-target="closest tr"`, `hx-swap="outerHTML"`
 - Custom event triggers (`hx-trigger="edit"`) with JavaScript integration
@@ -90,7 +97,7 @@ This project contains twelve educational HTMX examples:
 - Based on official HTMX edit-row example
 - Visual feedback with highlighted editing rows
 
-### 11. **BULKUPDATE** - Bulk Operations with Checkboxes
+### 12. **BULKUPDATE** - Bulk Operations with Checkboxes
 
 ## 🛠️ Development Tools
 
@@ -143,7 +150,7 @@ This project uses GitHub Actions for continuous integration and testing:
 ### Automated Testing
 - **Trigger**: Runs on every push to main/master and pull requests
 - **Environment**: Ubuntu with Python 3.9 and uv package manager
-- **Tests**: All 12 HTMX examples with comprehensive test suites
+- **Tests**: All 13 HTMX examples with comprehensive test suites
 - **Linting**: Automated code quality checks with flake8
 
 ### Workflow Files

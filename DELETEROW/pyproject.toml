@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "htmx-delete-row"
-version = "0.16.0"
+version = "0.17.0"
 description = "HTMX Delete Row Example - Demonstrates row deletion with confirmation and fade-out animation"
 authors = [{name = "HTMX Flask Examples", email = "examples@htmx.org"}]
 readme = "README.md"

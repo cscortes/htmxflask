@@ -5,6 +5,30 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.0] - 2024-12-19
+
+### Added
+- **FILEUPLOAD Example**: New drag-and-drop file upload example
+- **Drag & Drop Interface**: HTML5 drag and drop with visual feedback
+- **Progress Tracking**: Real-time upload progress indicators
+- **Multiple File Support**: Batch upload functionality
+- **Security Validation**: Comprehensive file type and size checks
+- **File Management**: Upload history and delete functionality
+
+### Enhanced
+- **Upload UX Patterns**: Modern file upload with intuitive interface
+- **HTMX File Handling**: `hx-encoding="multipart/form-data"` patterns
+- **Progress Indicators**: Visual feedback during upload process
+- **Error Handling**: Comprehensive upload error management
+- **Template Architecture**: Modular file upload components
+
+### Technical
+- **File Security**: Server-side validation and sanitization
+- **Drag & Drop API**: Native browser drag and drop integration
+- **Progress Tracking**: Real-time upload status monitoring
+- **Multiple Uploads**: Concurrent file processing
+- **Storage Management**: Secure file handling and cleanup
+
 ## [0.16.0] - 2024-12-19
 
 ### Added
