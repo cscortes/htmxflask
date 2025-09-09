@@ -204,8 +204,3 @@ Each example demonstrates specific HTMX patterns:
 For the original HTMX examples, visit: https://htmx.org/examples/
 
 This project reimplements those examples with Flask backends to show the complete server-side implementation required.
-
-
-
-
-# Force new workflow run
