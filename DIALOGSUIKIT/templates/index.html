@@ -19,7 +19,7 @@
     <div class="uk-container uk-margin-top">
         <h1 class="uk-heading-medium">HTMX UIKit Modal Dialogs Example</h1>
 
-        <p>This is an example of using HTMX to remotely load modal dialogs using UIKit. In this example we will use Hyperscript to demonstrate how cleanly that scripting language allows you to glue htmx and other libraries together.</p>
+        <p>This is an example of using HTMX to remotely load modal dialogs using UIKit. The modal features enhanced CSS animations that fade in from the top with a backdrop blur effect. We use Hyperscript to demonstrate how cleanly that scripting language allows you to glue htmx and other libraries together.</p>
 
         <!-- Modal Trigger Button - Following original example structure -->
         <button
@@ -40,6 +40,14 @@
             <p>This button uses a <code>GET</code> request to <code>/modal</code> when this button is clicked. The contents of this file will be added to the DOM underneath the <code>#modals-here</code> DIV.</p>
 
             <p>Rather than using the standard UIKit Javascript library we are using a bit of Hyperscript, which triggers UIKit's smooth animations. It is delayed by 10ms so that UIKit's animations will run correctly.</p>
+
+            <p>The modal features enhanced CSS animations including:</p>
+            <ul>
+                <li><strong>Fade-in from top:</strong> Modal slides down from above with opacity transition</li>
+                <li><strong>Backdrop blur:</strong> Background content is blurred when modal is open</li>
+                <li><strong>Smooth transitions:</strong> All animations use CSS transitions for smooth effects</li>
+                <li><strong>Enhanced styling:</strong> Modern button and input styling with hover effects</li>
+            </ul>
 
             <p>Finally, the server responds with a slightly modified version of UIKit's standard modal.</p>
         </div>

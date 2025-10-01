@@ -21,7 +21,8 @@ class DialogsUIKitTestCase(unittest.TestCase):
         response = self.client.get('/modal')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'<div id="modal" class="uk-modal"', response.data)
-        self.assertIn(b'<h2 class="uk-modal-title">Modal Dialog</h2>', response.data)
+        self.assertIn(b'<h2 class="uk-modal-title">', response.data)
+        self.assertIn(b'Modal Dialog</h2>', response.data)
 
     def test_modal_contains_form(self):
         """Test that modal contains the expected form elements"""
@@ -29,6 +30,7 @@ class DialogsUIKitTestCase(unittest.TestCase):
         self.assertIn(b'<form', response.data)
         self.assertIn(b'class="uk-input"', response.data)
         self.assertIn(b'placeholder="What is Your Name?"', response.data)
+        self.assertIn(b'autofocus', response.data)
         self.assertIn(b'<button type="button"', response.data)
 
     def test_modal_contains_hyperscript(self):

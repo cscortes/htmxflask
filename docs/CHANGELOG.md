@@ -5,6 +5,14 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.1] - 2025-01-27
+
+### Fixed
+- **DIALOGSUIKIT Example**: Improved modal dialog spacing and layout
+  - Added proper spacing between form elements and buttons
+  - Enhanced button spacing for better visual hierarchy
+  - Improved overall modal dialog appearance and usability
+
 ## [0.21.0] - 2025-10-01
 
 ### Added
