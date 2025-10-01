@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Dialogs Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon-emoji.svg') }}">
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 HTMX Dialogs</h1>
+            <p>Native browser dialogs with <code>hx-prompt</code> and <code>hx-confirm</code></p>
+        </header>
+
+        <div class="dialog-section">
+            <h2>📝 Prompt Dialog Example</h2>
+            <p>Click the button below to see a native browser prompt dialog. The value you enter will be sent to the server via the <code>HX-Prompt</code> header.</p>
+
+            <div class="example">
+                <button class="btn btn-primary"
+                        hx-post="/submit"
+                        hx-prompt="Enter a string"
+                        hx-target="#response">
+                    Prompt Submission
+                </button>
+                <div id="response" class="response-area"></div>
+            </div>
+        </div>
+
+        <div class="dialog-section">
+            <h2>✅ Confirmation Dialog Example</h2>
+            <p>Click the button below to see a native browser confirmation dialog. The request will only be sent if you confirm.</p>
+
+            <div class="example">
+                <button class="btn btn-secondary"
+                        hx-post="/submit"
+                        hx-confirm="Are you sure you want to submit?"
+                        hx-prompt="Enter your name"
+                        hx-target="#response">
+                    Confirm & Prompt Submission
+                </button>
+            </div>
+        </div>
+
+        <div class="dialog-section">
+            <h2>🗑️ Delete with Confirmation</h2>
+            <p>This button will clear all responses, but only after you confirm the action.</p>
+
+            <div class="example">
+                <button class="btn btn-danger"
+                        hx-post="/delete"
+                        hx-confirm="Are you sure you want to delete all responses? This action cannot be undone."
+                        hx-target="#response">
+                    Delete All Responses
+                </button>
+            </div>
+        </div>
+
+        <div class="responses-section">
+            <h2>📋 Response History</h2>
+            <p>All responses from dialog interactions will appear below:</p>
+
+            <div id="responses-list" class="responses-list">
+                {% if responses %}
+                    {% for response in responses %}
+                        <div class="response-item">
+                            <div class="response-text">{{ response.text|safe }}</div>
+                            <div class="response-timestamp">{{ response.timestamp }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-responses">
+                        <p>No responses yet. Try the dialog examples above!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="how-it-works">
+            <h2>🔧 How It Works</h2>
+            <div class="method">
+                <h3>Prompt Dialog (<code>hx-prompt</code>)</h3>
+                <ul>
+                    <li><strong>hx-prompt</strong>: Shows native browser prompt dialog</li>
+                    <li><strong>User Input</strong>: Value entered is sent via <code>HX-Prompt</code> header</li>
+                    <li><strong>Server Processing</strong>: Flask receives input in <code>request.headers.get('HX-Prompt')</code></li>
+                    <li><strong>Response</strong>: Server echoes back the user input</li>
+                </ul>
+            </div>
+
+            <div class="method">
+                <h3>Confirmation Dialog (<code>hx-confirm</code>)</h3>
+                <ul>
+                    <li><strong>hx-confirm</strong>: Shows native browser confirmation dialog</li>
+                    <li><strong>User Choice</strong>: Request only sent if user clicks "OK"</li>
+                    <li><strong>Cancellation</strong>: If user clicks "Cancel", no request is made</li>
+                    <li><strong>Combined</strong>: Can be used together with <code>hx-prompt</code></li>
+                </ul>
+            </div>
+
+            <div class="method">
+                <h3>HTMX Headers</h3>
+                <ul>
+                    <li><strong>HX-Prompt</strong>: Contains user input from prompt dialog</li>
+                    <li><strong>HX-Request</strong>: Indicates HTMX request</li>
+                    <li><strong>HX-Target</strong>: Target element for response</li>
+                    <li><strong>HX-Trigger</strong>: Element that triggered the request</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="debugging-instructions">
+            <h3>🐛 Debugging Instructions</h3>
+            <ol>
+                <li><strong>Open Developer Tools</strong> (F12) and go to the <strong>Console</strong> tab</li>
+                <li><strong>Click a dialog button</strong> and watch the console output</li>
+                <li><strong>Check Network tab</strong> to see the HTMX request headers</li>
+                <li><strong>Look for HX-Prompt header</strong> in the request</li>
+                <li><strong>Expected behavior</strong>: Dialog appears, input is sent to server, response updates</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Add debugging for HTMX events
+        document.body.addEventListener('htmx:beforeRequest', function(evt) {
+            console.log('HTMX Request starting:', {
+                method: evt.detail.verb,
+                url: evt.detail.xhr.responseURL,
+                headers: evt.detail.xhr.getAllResponseHeaders()
+            });
+        });
+
+        document.body.addEventListener('htmx:afterRequest', function(evt) {
+            console.log('HTMX Request completed:', {
+                successful: evt.detail.successful,
+                xhr: evt.detail.xhr.status,
+                statusText: evt.detail.xhr.statusText
+            });
+        });
+    </script>
+</body>
+</html>

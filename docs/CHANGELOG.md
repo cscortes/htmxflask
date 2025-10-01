@@ -5,6 +5,26 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.21.0] - 2025-10-01
+
+### Added
+- **DIALOGS Example**: New example demonstrating native browser dialogs using `hx-prompt` and `hx-confirm`
+  - Based on official HTMX dialogs example (https://htmx.org/examples/dialogs/)
+  - Native browser prompt and confirmation dialogs
+  - Server receives user input via `HX-Prompt` header
+  - Combined dialog functionality with confirmation and input
+  - 21 comprehensive unit tests covering all functionality
+  - Minimal CSS following Development Guiding Light principles
+  - Educational documentation with debugging guide
+  - Security-compliant implementation with proper headers
+
+### Changed
+- **Documentation**: Updated README.md to include DIALOGS example
+- **Project Count**: Updated from fourteen to fifteen examples
+- **Makefile**: Added DIALOGS to all targets (version, lint, test, install)
+- **FEATURES.md**: Updated completion count to 15/47 examples
+
+
 ## [0.20.0] - 2025-10-01
 
 ### Added

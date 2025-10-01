@@ -50,7 +50,7 @@ wheels = [
 
 [[package]]
 name = "htmx-click-to-edit"
-version = "0.20.0"
+version = "0.21.0"
 source = { editable = "." }
 dependencies = [
     { name = "flask" },

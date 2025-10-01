@@ -19,7 +19,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains fourteen educational HTMX examples:
+This project contains fifteen educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -107,6 +107,18 @@ This project contains fourteen educational HTMX examples:
 - Server-side validation with file input preservation
 
 ### 14. **RESETINPUT** - Reset User Input
+- Automatically reset form inputs after successful requests
+- Demonstrates `hx-on::after-request`, `hx-post`, `hx-target`, `hx-swap="afterbegin"`
+- Based on official HTMX reset-user-input example
+- Dual method demonstration (form reset vs individual input reset)
+- Event listener approach to avoid `htmx:evalDisallowedError`
+
+### 15. **DIALOGS** - Native Browser Dialogs
+- Native browser prompt and confirmation dialogs
+- Demonstrates `hx-prompt`, `hx-confirm`, `hx-post`, `hx-target`
+- Based on official HTMX dialogs example
+- Server receives user input via `HX-Prompt` header
+- Combined dialog functionality with confirmation and input
 - Automatically reset form inputs after successful requests
 - Demonstrates `hx-on::after-request`, `hx-post`, `hx-target`, `hx-swap="afterbegin"`
 - Based on official HTMX reset-user-input example

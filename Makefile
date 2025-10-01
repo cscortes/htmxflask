@@ -163,6 +163,8 @@ lint: ## Run flake8 linter on all examples
 	@echo "Running flake8 on FILEUPLOADPRESERVE..."
 	uv run -- flake8 --ignore=W391,E128 --exclude=.venv FILEUPLOADPRESERVE 2>/dev/null || true
 	@echo "Running flake8 on RESETINPUT..."
+	@echo "Running flake8 on DIALOGS..."
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv DIALOGS 2>/dev/null || true
 	uv run -- flake8 --ignore=W391,E128 --exclude=.venv RESETINPUT 2>/dev/null || true
 	@echo "Linting complete!"
 
@@ -195,6 +197,8 @@ test: lint ## Run tests on all examples (lint + tests)
 	@echo "Running tests on FILEUPLOADPRESERVE..."
 	@cd FILEUPLOADPRESERVE && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on RESETINPUT..."
+	@echo "Running tests on DIALOGS..."
+	@cd DIALOGS && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@cd RESETINPUT && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Tests completed!"
 
@@ -202,7 +206,7 @@ test-example: ## Run tests for a specific example (make test-example EXAMPLE=CLI
 	@if [ -z "$(EXAMPLE)" ]; then \
 		echo "Error: Please specify an example name"; \
 		echo "Usage: make test-example EXAMPLE=CLICKEDIT"; \
-		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT, CLICKLOAD, DELETEROW, BULKUPDATE, EDITROW, LAZYLOAD, INLINVALIDATION, FILEUPLOAD, FILEUPLOADPRESERVE, RESETINPUT"; \
+		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT, CLICKLOAD, DELETEROW, BULKUPDATE, EDITROW, LAZYLOAD, INLINVALIDATION, FILEUPLOAD, FILEUPLOADPRESERVE, RESETINPUT, DIALOGS"; \
 		exit 1; \
 	fi
 	@echo "Running tests for $(EXAMPLE)..."
@@ -247,6 +251,8 @@ install: ## Install dependencies for all examples
 	@echo "FILEUPLOADPRESERVE:"
 	@cd FILEUPLOADPRESERVE && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "RESETINPUT:"
+	@echo "DIALOGS:"
+	@cd DIALOGS && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@cd RESETINPUT && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "Installation complete!"
 
