@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h5 class="modal-title">🎭 Bootstrap Modal Dialog</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <p>This modal content was loaded dynamically using HTMX!</p>
+    <p>The modal uses Bootstrap's native functionality combined with HTMX for dynamic content loading.</p>
+
+    <div class="alert alert-info">
+        <strong>Key Features:</strong>
+        <ul class="mb-0 mt-2">
+            <li>Content loaded via <code>hx-get="/modal"</code></li>
+            <li>Bootstrap modal shown with <code>data-bs-toggle="modal"</code></li>
+            <li>Content targeted to <code>.modal-content</code> div</li>
+            <li>Responsive design with centered dialog</li>
+            <li>Native Bootstrap close functionality</li>
+        </ul>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>

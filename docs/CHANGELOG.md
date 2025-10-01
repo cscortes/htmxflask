@@ -5,6 +5,20 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.22.0] - 2025-10-01
+
+### Added
+- **DIALOGSBOOTSTRAP Example**: New example demonstrating Bootstrap modal dialogs with HTMX integration
+  - Based on official HTMX Bootstrap modal example (https://htmx.org/examples/modal-bootstrap/)
+  - Combines HTMX dynamic content loading with Bootstrap's native modal functionality
+  - Uses dual trigger approach: `hx-get` for content loading + `data-bs-toggle="modal"` for modal display
+  - HTMX Patterns: `hx-get`, `hx-target`, `hx-trigger`, with Bootstrap integration
+  - 19 comprehensive unit tests covering all functionality
+  - Minimal custom CSS with Bootstrap 5 framework
+  - Fixed CSP headers to allow both unpkg.com (HTMX) and cdn.jsdelivr.net (Bootstrap)
+  - Enhanced with backdrop blur effect and responsive design
+  - Educational documentation with implementation details
+
 ## [0.21.1] - 2025-01-27
 
 ### Fixed

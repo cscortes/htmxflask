@@ -135,7 +135,7 @@ This feature has been successfully implemented with the FEATURE_NAME example:
 ## Implementation Details:
 - **Directory**: FEATURE_NAME/
 - **HTMX Patterns**: hx-pattern1, hx-pattern2, hx-pattern3
-- **Features**: 
+- **Features**:
   - Feature description 1
   - Feature description 2
   - X comprehensive unit tests
@@ -349,7 +349,7 @@ This feature has been successfully implemented with the FEATURE_NAME example:
 ## Implementation Details:
 - **Directory**: FEATURE_NAME/
 - **HTMX Patterns**: hx-pattern1, hx-pattern2, hx-pattern3
-- **Features**: 
+- **Features**:
   - Feature description 1
   - Feature description 2
   - X comprehensive unit tests

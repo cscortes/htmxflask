@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Bootstrap Modal Dialogs Example</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="text-center mb-4">🎭 HTMX Bootstrap Modal Dialogs</h1>
+
+                <div class="text-center mb-5">
+                    <button
+                        hx-get="/modal"
+                        hx-target="#modals-here .modal-content"
+                        hx-trigger="click"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modals-here"
+                        class="btn btn-primary btn-lg">
+                        Open Bootstrap Modal
+                    </button>
+                </div>
+
+                <!-- Modal Container -->
+                <div id="modals-here"
+                    class="modal modal-blur fade"
+                    tabindex="-1"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content"></div>
+                    </div>
+                </div>
+
+                <!-- How It Works Section -->
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h3>How It Works</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>This example demonstrates Bootstrap modal dialogs with HTMX integration:</p>
+                        <ul>
+                            <li><strong>HTMX Integration</strong>: Uses <code>hx-get="/modal"</code> to load modal content dynamically</li>
+                            <li><strong>Bootstrap Modal</strong>: Uses <code>data-bs-toggle="modal"</code> to show the modal</li>
+                            <li><strong>Dynamic Content</strong>: Modal content is loaded from the server via HTMX</li>
+                            <li><strong>Targeted Loading</strong>: Uses <code>hx-target="#modals-here .modal-content"</code> to load content into the modal-content div</li>
+                        </ul>
+
+                        <h5>HTMX Patterns Used:</h5>
+                        <ul>
+                            <li><code>hx-get</code> - Load modal content from server</li>
+                            <li><code>hx-target</code> - Target the modal container</li>
+                            <li><code>hx-trigger="click"</code> - Trigger on button click</li>
+                        </ul>
+
+                        <h5>Bootstrap Features:</h5>
+                        <ul>
+                            <li>Native modal trigger with <code>data-bs-toggle="modal"</code></li>
+                            <li>Responsive modal dialog with <code>modal-lg modal-dialog-centered</code></li>
+                            <li>Backdrop blur effect with <code>modal-blur</code> class</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

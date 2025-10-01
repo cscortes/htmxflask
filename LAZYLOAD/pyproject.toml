@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "htmx-lazy-load"
-version = "0.21.1"
+version = "0.22.0"
 description = "HTMX Lazy Loading Example - Demonstrates automatic content loading with smooth animations"
 authors = [{name = "HTMX Flask Examples", email = "examples@htmx.org"}]
 readme = "README.md"

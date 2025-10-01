@@ -101,9 +101,9 @@ version-update: ## Automatically bump version based on change type (make version
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' FILEUPLOAD/pyproject.toml; \
 
 create-tag: ## Create and push git tag for release (make create-tag VERSION=v0.20.0)
-	@if [ -z "$(VERSION)" ]; then 
-		echo "Error: VERSION is required. Usage: make create-tag VERSION=v0.20.0"; 
-		exit 1; 
+	@if [ -z "$(VERSION)" ]; then
+		echo "Error: VERSION is required. Usage: make create-tag VERSION=v0.20.0";
+		exit 1;
 	fi
 	@echo "Creating git tag $(VERSION)..."
 	@git tag -a $(VERSION) -m "Release $(VERSION): $(shell cat VERSION | sed "s/v//")"
@@ -167,6 +167,8 @@ lint: ## Run flake8 linter on all examples
 	uv run -- flake8 --ignore=W391,E128 --exclude=.venv DIALOGSBROWSER 2>/dev/null || true
 	@echo "Running flake8 on DIALOGSUIKIT..."
 	uv run -- flake8 --ignore=W391,E128 --exclude=.venv DIALOGSUIKIT 2>/dev/null || true
+	@echo "Running flake8 on DIALOGSBOOTSTRAP..."
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv DIALOGSBOOTSTRAP 2>/dev/null || true
 	uv run -- flake8 --ignore=W391,E128 --exclude=.venv RESETINPUT 2>/dev/null || true
 	@echo "Linting complete!"
 
@@ -203,6 +205,8 @@ test: lint ## Run tests on all examples (lint + tests)
 	@cd DIALOGSBROWSER && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on DIALOGSUIKIT..."
 	@cd DIALOGSUIKIT && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
+	@echo "Running tests on DIALOGSBOOTSTRAP..."
+	@cd DIALOGSBOOTSTRAP && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@cd RESETINPUT && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Tests completed!"
 
@@ -210,7 +214,7 @@ test-example: ## Run tests for a specific example (make test-example EXAMPLE=CLI
 	@if [ -z "$(EXAMPLE)" ]; then \
 		echo "Error: Please specify an example name"; \
 		echo "Usage: make test-example EXAMPLE=CLICKEDIT"; \
-		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT, CLICKLOAD, DELETEROW, BULKUPDATE, EDITROW, LAZYLOAD, INLINVALIDATION, FILEUPLOAD, FILEUPLOADPRESERVE, RESETINPUT, DIALOGSBROWSER, DIALOGSUIKIT"; \
+		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT, CLICKLOAD, DELETEROW, BULKUPDATE, EDITROW, LAZYLOAD, INLINVALIDATION, FILEUPLOAD, FILEUPLOADPRESERVE, RESETINPUT, DIALOGSBROWSER, DIALOGSUIKIT, DIALOGSBOOTSTRAP"; \
 		exit 1; \
 	fi
 	@echo "Running tests for $(EXAMPLE)..."
@@ -259,6 +263,8 @@ install: ## Install dependencies for all examples
 	@cd DIALOGSBROWSER && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "DIALOGSUIKIT:"
 	@cd DIALOGSUIKIT && uv pip install -e . || echo "  Failed to install (check if uv is available)"
+	@echo "DIALOGSBOOTSTRAP:"
+	@cd DIALOGSBOOTSTRAP && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@cd RESETINPUT && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "Installation complete!"
 

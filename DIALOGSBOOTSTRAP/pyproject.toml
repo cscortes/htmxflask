@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dialogsbootstrap"
+version = "0.21.1"
+description = "HTMX Bootstrap Modal Dialogs Example"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "flask>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-flask>=1.2.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
