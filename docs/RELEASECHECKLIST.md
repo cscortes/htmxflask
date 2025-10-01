@@ -50,8 +50,14 @@ This document provides a comprehensive checklist for creating releases of the HT
 - [ ] **All examples follow consistent structure**
 - [ ] **pyproject.toml files are updated** with new version
 - [ ] **Makefile includes new examples** (if applicable)
-- [ ] **GitHub issues are closed** (if applicable)
 - [ ] **Dependencies are up to date**
+
+### GitHub Issue Management
+- [ ] **Check if release resolves any open issues**: `gh issue list --state open`
+- [ ] **Close resolved issues** with detailed completion comments
+- [ ] **Update issue labels** (if applicable)
+- [ ] **Link issues to releases** in commit messages
+- [ ] **Create new issues** for future work (if applicable)
 
 ## 🚀 Release Process
 
@@ -110,7 +116,44 @@ Examples: X/47 completed (Y%)
 HTMX Patterns: hx-get, hx-post, hx-target, hx-swap"
 ```
 
-### Step 5: Create Git Tag
+### Step 5: GitHub Issue Management
+```bash
+# 1. Check if any open issues are resolved by this release
+gh issue list --state open
+
+# 2. Close resolved issues with detailed comments
+gh issue close ISSUE_NUMBER --comment "✅ **COMPLETED** - This feature has been implemented in the FEATURE_NAME example (v$VERSION).
+
+## Implementation Details:
+- **Example**: FEATURE_NAME/ directory
+- **HTMX Patterns**: hx-pattern1, hx-pattern2, hx-pattern3
+- **Features**: 
+  - Feature description 1
+  - Feature description 2
+  - X comprehensive unit tests
+  - Educational documentation
+  - Security-compliant implementation
+
+## Files Created:
+- FEATURE_NAME/myapp.py - Flask application
+- FEATURE_NAME/templates/index.html - HTML template
+- FEATURE_NAME/static/css/style.css - Styling
+- FEATURE_NAME/myapp_test.py - Test suite
+- FEATURE_NAME/README.md - Documentation
+- FEATURE_NAME/DESIGN.md - Design decisions
+
+## Testing:
+- All X tests pass
+- Manual testing confirmed working
+- Server-side processing verified
+
+This example demonstrates the exact patterns requested in this issue and is ready for production use."
+
+# 3. Verify issues are closed
+gh issue view ISSUE_NUMBER
+```
+
+### Step 6: Create Git Tag
 ```bash
 # 1. Create annotated tag
 VERSION=$(cat VERSION)
@@ -129,7 +172,7 @@ git push origin main
 git push origin $VERSION
 ```
 
-### Step 6: Automated Release (Alternative)
+### Step 7: Automated Release (Alternative)
 ```bash
 # Use the automated release command
 make release TYPE=feature
@@ -197,6 +240,8 @@ HTMX Patterns: All major HTMX attributes and patterns covered"
 
 ### Community Notification
 - [ ] **GitHub issues are updated** with release information
+- [ ] **Resolved issues are properly closed** with completion comments
+- [ ] **Issue status is verified**: `gh issue view ISSUE_NUMBER`
 - [ ] **Community is notified** (if applicable)
 - [ ] **Social media announcements** (if applicable)
 
@@ -297,6 +342,14 @@ make create-tag VERSION=$(cat VERSION)
 make version-update TYPE=patch
 git add . && git commit -m "fix: Critical bug fix"
 make create-tag VERSION=$(cat VERSION)
+```
+
+### GitHub Issue Management
+```bash
+# Check and close resolved issues
+gh issue list --state open
+gh issue close ISSUE_NUMBER --comment "✅ COMPLETED - Feature implemented in v$(cat VERSION)"
+gh issue view ISSUE_NUMBER  # Verify closure
 ```
 
 ---
