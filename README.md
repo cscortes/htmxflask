@@ -157,7 +157,69 @@ This project follows strict development standards:
 4. **Linting**: Automated code quality checks
 5. **Pre-commit Hooks**: Automatic validation before commits
 
+### Version Management & Git Tagging
+
+This project uses automated version management with git tagging for releases:
+
+#### Version Bumping
+```bash
+# Bump version (patch, minor, major, or feature)
+make version-update TYPE=feature    # 0.19.0 → 0.20.0
+make version-update TYPE=minor      # 0.19.0 → 0.20.0
+make version-update TYPE=major      # 0.19.0 → 1.0.0
+make version-update TYPE=patch      # 0.19.0 → 0.19.1
+```
+
+#### Git Tag Creation
+```bash
+# Create annotated tag for current version
+git tag -a v0.20.0 -m "Release v0.20.0: Feature description"
+
+# Push tag to GitHub
+git push origin v0.20.0
+```
+
+#### Complete Release Workflow
+1. **Make changes** and test thoroughly
+2. **Bump version**: `make version-update TYPE=feature`
+3. **Update documentation**: README.md, CHANGELOG.md, FEATURES.md
+4. **Clean whitespace**: `python scripts/clean_invisible_chars.py . --clean`
+5. **Run tests**: `make test`
+6. **Commit changes**: `git add . && git commit -m "feat: Description"`
+7. **Create tag**: `git tag -a v0.20.0 -m "Release v0.20.0: Description"`
+8. **Push everything**: `git push origin main && git push origin v0.20.0`
+
+#### Version Types
+- **feature**: New functionality (minor version bump)
+- **minor**: New features, backward compatible
+- **major**: Breaking changes
+- **patch**: Bug fixes, backward compatible
+
+#### Tag Message Format
+```bash
+git tag -a v0.20.0 -m "Release v0.20.0: Add RESETINPUT example with security-compliant JavaScript
+
+Features:
+- RESETINPUT example demonstrating automatic form input reset
+- Event listener approach to avoid htmx:evalDisallowedError
+- 24 comprehensive unit tests
+- Minimal CSS following Development Guiding Light principles
+- Educational documentation with troubleshooting guide
+- Security-compliant JavaScript implementation
+
+Examples: 14/47 completed (29.8%)
+HTMX Patterns: hx-on::after-request, hx-post, hx-target, hx-swap"
+```
+
+#### GitHub Integration
+- **Tags URL**: https://github.com/cscortes/htmxflask/releases/tag/v0.20.0
+- **Releases Page**: https://github.com/cscortes/htmxflask/releases
+- **Version History**: `git tag -l --sort=-version:refname`
+
+
 ## 🚀 CI/CD Pipeline
+- **Release Checklist**: [docs/RELEASECHECKLIST.md](docs/RELEASECHECKLIST.md) - Complete release procedures
+
 
 This project uses GitHub Actions for continuous integration and testing:
 

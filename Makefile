@@ -1,6 +1,6 @@
 # HTMX Flask Examples Makefile
 
-.PHONY: help version version-update clean test test-example install pre-git-commit lint test-files
+.PHONY: help version version-update create-tag release clean test test-example install pre-git-commit lint test-files
 
 # Default target
 help: ## Show this help message
@@ -11,6 +11,8 @@ help: ## Show this help message
 	@echo "Examples:"
 	@echo "  make help                    # Show this help message"
 	@echo "  make version-update TYPE=feature  # Auto-bump version for new features"
+	@echo "  make create-tag VERSION=v0.20.0  # Create and push git tag for release"
+	@echo "  make release TYPE=feature        # Complete release workflow (version + tag)"
 	@echo "  make version-update TYPE=bugfix   # Auto-bump version for bug fixes"
 	@echo "  make version 0.2.0          # Update version to 0.2.0 and create git tag"
 	@echo "  make clean                   # Clean up temporary files"
@@ -97,6 +99,25 @@ version-update: ## Automatically bump version based on change type (make version
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' LAZYLOAD/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' INLINVALIDATION/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' FILEUPLOAD/pyproject.toml; \
+
+create-tag: ## Create and push git tag for release (make create-tag VERSION=v0.20.0)
+	@if [ -z "$(VERSION)" ]; then 
+		echo "Error: VERSION is required. Usage: make create-tag VERSION=v0.20.0"; 
+		exit 1; 
+	fi
+	@echo "Creating git tag $(VERSION)..."
+	@git tag -a $(VERSION) -m "Release $(VERSION): $(shell cat VERSION | sed "s/v//")"
+	@echo "Pushing tag $(VERSION) to GitHub..."
+	@git push origin $(VERSION)
+	@echo "✅ Tag $(VERSION) created and pushed successfully!"
+	@echo "📋 Tag URL: https://github.com/cscortes/htmxflask/releases/tag/$(VERSION)"
+
+release: version-update create-tag ## Complete release workflow (make release TYPE=feature)
+	@echo "🚀 Release workflow completed!"
+	@echo "📋 Version: $(shell cat VERSION)"
+	@echo "🏷️  Tag: $(shell cat VERSION)"
+	@echo "📋 Release URL: https://github.com/cscortes/htmxflask/releases/tag/$(shell cat VERSION)"
+
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' FILEUPLOADPRESERVE/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' RESETINPUT/pyproject.toml; \
 	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: '$$VERSION_FROM_FILE'\*\*/g' README.md; \

@@ -266,4 +266,101 @@ An example is successful when:
 
 ---
 
+
+## 🚀 Release Process & Version Management
+
+### Version Bumping Workflow
+Every change to the project requires proper version management:
+
+1. **Determine Version Type**:
+   - `feature`: New functionality (minor version bump)
+   - `minor`: New features, backward compatible
+   - `major`: Breaking changes
+   - `patch`: Bug fixes, backward compatible
+
+2. **Bump Version**:
+   ```bash
+   make version-update TYPE=feature
+   ```
+   This automatically updates all `pyproject.toml` files and the `VERSION` file.
+
+3. **Update Documentation**:
+   - Update `README.md` with new features
+   - Add entry to `docs/CHANGELOG.md`
+   - Update `.docs/FEATURES.md` completion status
+
+4. **Clean and Test**:
+   ```bash
+   python scripts/clean_invisible_chars.py . --clean
+   make test
+   ```
+
+5. **Commit and Tag**:
+   ```bash
+   git add .
+   git commit -m "feat: Add FEATURE_NAME example with DESCRIPTION"
+   git tag -a v0.20.0 -m "Release v0.20.0: FEATURE_NAME"
+   git push origin main
+   git push origin v0.20.0
+   ```
+
+### Git Tag Best Practices
+
+#### Tag Message Format
+```bash
+git tag -a v0.20.0 -m "Release v0.20.0: Brief description
+
+Features:
+- Feature 1: Description
+- Feature 2: Description
+- Bug fixes and improvements
+
+Examples: X/47 completed (Y%)
+HTMX Patterns: hx-get, hx-post, hx-target, hx-swap"
+```
+
+#### Tag Naming Convention
+- **Format**: `v{MAJOR}.{MINOR}.{PATCH}`
+- **Examples**: `v0.20.0`, `v1.0.0`, `v0.19.1`
+- **Always use annotated tags** (`-a` flag) for releases
+
+#### GitHub Integration
+- Tags automatically create GitHub releases
+- Use tags for referencing specific versions
+- Link to releases in documentation
+- Tag URLs: `https://github.com/cscortes/htmxflask/releases/tag/v0.20.0`
+
+### Release Checklist
+
+Before creating a release:
+- [ ] All tests pass (`make test`)
+- [ ] Code is linted (`make lint`)
+- [ ] Invisible characters cleaned
+- [ ] Documentation updated
+- [ ] Version bumped appropriately
+- [ ] Changelog entry added
+- [ ] Features list updated
+- [ ] Git tag created with proper message
+- [ ] Tag pushed to GitHub
+
+### Version History Management
+
+View version history:
+```bash
+# List all tags sorted by version
+
+### Release Documentation
+- **Release Checklist**: [docs/RELEASECHECKLIST.md](docs/RELEASECHECKLIST.md) - Complete release procedures and checklists
+- **Changelog**: [docs/CHANGELOG.md](docs/CHANGELOG.md) - Version history and changes
+- **Features**: [.docs/FEATURES.md](.docs/FEATURES.md) - Feature tracking and roadmap
+
+git tag -l --sort=-version:refname
+
+# Show tag details
+git show v0.20.0
+
+# Compare versions
+git diff v0.19.0..v0.20.0
+```
+
 **Remember**: We're building a reference library, not a production application. Prioritize **clarity**, **education**, and **simplicity** over **completeness** or **real-world complexity**.
