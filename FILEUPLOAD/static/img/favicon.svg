@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background -->
+  <rect width="100" height="100" fill="#4CAF50" rx="15"/>
+  
+  <!-- Upload arrow -->
+  <path d="M50 25 L50 60 M35 40 L50 25 L65 40" 
+        stroke="white" 
+        stroke-width="6" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+  
+  <!-- Base/folder -->
+  <path d="M25 60 L25 75 L75 75 L75 60" 
+        stroke="white" 
+        stroke-width="5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+  
+  <!-- File symbol -->
+  <circle cx="50" cy="45" r="3" fill="white"/>
+</svg>

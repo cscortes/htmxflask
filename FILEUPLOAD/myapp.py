@@ -2,23 +2,22 @@
 """
 HTMX File Upload Example
 
-This example demonstrates modern file upload patterns using HTMX:
+This example demonstrates file upload patterns using HTMX:
 - hx-post: Send file upload requests to server
 - hx-encoding="multipart/form-data": Proper form encoding for files
-- hx-indicator: Show upload progress and loading states
-- Drag and drop: HTML5 drag and drop API integration
-- Progress tracking: Real-time upload progress indicators
+- htmx:xhr:progress event: Real-time upload progress tracking
+- Progress bar: Visual feedback using HTML5 progress element
 
-Based on the official HTMX file-upload example.
+Based on the official HTMX file-upload example at:
+https://htmx.org/examples/file-upload/
+
 Follows Development Guiding Light principles for educational clarity.
 """
 
 import os
-import uuid
-import time
 import mimetypes
 from pathlib import Path
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 
@@ -31,6 +30,7 @@ app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 # File upload configuration
 app.config['UPLOAD_FOLDER'] = upload_dir
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
 app.config['ALLOWED_EXTENSIONS'] = {
     # Images
     'png', 'jpg', 'jpeg', 'gif', 'webp', 'svg',
@@ -45,9 +45,6 @@ app.config['ALLOWED_EXTENSIONS'] = {
 # Create upload directory if it doesn't exist
 Path(upload_dir).mkdir(exist_ok=True)
 
-# Store active uploads for progress tracking
-active_uploads = {}
-
 
 @app.route('/')
 def index():
@@ -57,74 +54,59 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    """Handle single file upload with validation and progress tracking."""
+    """Handle single file upload with validation."""
     if 'file' not in request.files:
-        return jsonify({
-            'success': False,
-            'error': 'No file provided'
-        }), 400
+        return '<div class="error">❌ No file provided</div>', 400
 
     file = request.files['file']
 
     if file.filename == '':
-        return jsonify({
-            'success': False,
-            'error': 'No file selected'
-        }), 400
+        return '<div class="error">❌ No file selected</div>', 400
 
     # Validate file
     validation_result = validate_file(file)
     if not validation_result['valid']:
-        return jsonify({
-            'success': False,
-            'error': validation_result['error']
-        }), 400
+        return f'<div class="error">❌ {validation_result["error"]}</div>', 400
 
-    # Generate unique filename
-    original_filename = secure_filename(file.filename)
-    file_extension = Path(original_filename).suffix
-    unique_filename = f"{uuid.uuid4()}{file_extension}"
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+    # Use secure filename
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
     try:
+        # Ensure upload directory exists
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
         # Save file
         file.save(file_path)
 
+        # Verify file was saved
+        if not os.path.exists(file_path):
+            return '<div class="error">❌ File was not saved to disk</div>', 500
+
         # Get file info
         file_size = os.path.getsize(file_path)
-        file_type = mimetypes.guess_type(original_filename)[0] or 'application/octet-stream'
+        size_kb = file_size / 1024
 
-        return jsonify({
-            'success': True,
-            'filename': original_filename,
-            'unique_filename': unique_filename,
-            'size': file_size,
-            'type': file_type,
-            'message': f'Successfully uploaded {original_filename}'
-        })
+        return f'''<div class="success">
+            ✅ Successfully uploaded <strong>{filename}</strong>
+            ({size_kb:.1f} KB)
+        </div>'''
 
     except Exception as e:
         # Clean up partial upload
         if os.path.exists(file_path):
             os.remove(file_path)
-
-        return jsonify({
-            'success': False,
-            'error': f'Upload failed: {str(e)}'
-        }), 500
+        return f'<div class="error">❌ Upload failed: {str(e)}</div>', 500
 
 
 @app.route('/upload-multiple', methods=['POST'])
 def upload_multiple_files():
     """Handle multiple file uploads."""
     if 'files' not in request.files:
-        return jsonify({
-            'success': False,
-            'error': 'No files provided'
-        }), 400
+        return '<div class="error">❌ No files provided</div>', 400
 
     files = request.files.getlist('files')
-    results = []
+    uploaded = []
     errors = []
 
     for file in files:
@@ -134,65 +116,47 @@ def upload_multiple_files():
         # Validate file
         validation_result = validate_file(file)
         if not validation_result['valid']:
-            errors.append({
-                'filename': file.filename,
-                'error': validation_result['error']
-            })
+            errors.append(f"{file.filename}: {validation_result['error']}")
             continue
 
-        # Generate unique filename
-        original_filename = secure_filename(file.filename)
-        file_extension = Path(original_filename).suffix
-        unique_filename = f"{uuid.uuid4()}{file_extension}"
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        # Use secure filename
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
         try:
+            # Ensure upload directory exists
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
             # Save file
             file.save(file_path)
 
+            # Verify file was saved
+            if not os.path.exists(file_path):
+                errors.append(f"{file.filename}: Not saved to disk")
+                continue
+
             # Get file info
             file_size = os.path.getsize(file_path)
-            file_type = mimetypes.guess_type(original_filename)[0] or 'application/octet-stream'
-
-            results.append({
-                'filename': original_filename,
-                'unique_filename': unique_filename,
-                'size': file_size,
-                'type': file_type
-            })
+            uploaded.append(f"{filename} ({file_size/1024:.1f} KB)")
 
         except Exception as e:
-            errors.append({
-                'filename': file.filename,
-                'error': f'Upload failed: {str(e)}'
-            })
+            errors.append(f"{file.filename}: {str(e)}")
 
-    return jsonify({
-        'success': len(results) > 0,
-        'uploaded': results,
-        'errors': errors,
-        'message': f'Uploaded {len(results)} files successfully'
-    })
+    # Build response HTML
+    html = '<div class="multi-result">'
+    if uploaded:
+        html += f'<div class="success">✅ Uploaded {len(uploaded)} file(s):<ul>'
+        for file_info in uploaded:
+            html += f'<li>{file_info}</li>'
+        html += '</ul></div>'
+    if errors:
+        html += '<div class="error">❌ Errors:<ul>'
+        for error in errors:
+            html += f'<li>{error}</li>'
+        html += '</ul></div>'
+    html += '</div>'
 
-
-@app.route('/validate-file', methods=['POST'])
-def validate_file_endpoint():
-    """Validate file before upload."""
-    if 'file' not in request.files:
-        return jsonify({
-            'valid': False,
-            'error': 'No file provided'
-        })
-
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({
-            'valid': False,
-            'error': 'No file selected'
-        })
-
-    validation_result = validate_file(file)
-    return jsonify(validation_result)
+    return html
 
 
 def validate_file(file):
@@ -207,23 +171,23 @@ def validate_file(file):
     if extension not in app.config['ALLOWED_EXTENSIONS']:
         return {
             'valid': False,
-            'error': f'File type .{extension} not allowed. Allowed types: {", ".join(sorted(app.config["ALLOWED_EXTENSIONS"]))}'
+            'error': f'File type .{extension} not allowed'
         }
 
-    # Check file size (additional check beyond MAX_CONTENT_LENGTH)
+    # Check file size
     file.seek(0, os.SEEK_END)
     size = file.tell()
     file.seek(0)
 
     if size > app.config['MAX_CONTENT_LENGTH']:
-        return {'valid': False, 'error': 'File too large'}
+        return {'valid': False, 'error': 'File too large (max 16MB)'}
 
-    # Basic security checks
     if size == 0:
         return {'valid': False, 'error': 'File is empty'}
 
-    # Check for suspicious filenames (path traversal and invalid characters)
-    if any(char in filename for char in ['<', '>', ':', '"', '|', '?', '*', '/', '\\', '..']):
+    # Check for suspicious filenames
+    invalid_chars = ['<', '>', ':', '"', '|', '?', '*', '/', '\\', '..']
+    if any(char in filename for char in invalid_chars):
         return {'valid': False, 'error': 'Invalid characters in filename'}
 
     return {'valid': True}
@@ -231,7 +195,7 @@ def validate_file(file):
 
 @app.route('/files')
 def list_files():
-    """List uploaded files (for demonstration)."""
+    """List uploaded files."""
     try:
         files = []
         for filename in os.listdir(app.config['UPLOAD_FOLDER']):
@@ -240,17 +204,54 @@ def list_files():
 
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             stat = os.stat(file_path)
+            file_type = mimetypes.guess_type(filename)[0] or 'unknown'
+
+            # Get icon based on type
+            if file_type.startswith('image/'):
+                icon = '🖼️'
+            elif file_type.startswith('text/') or 'pdf' in file_type:
+                icon = '📄'
+            elif 'zip' in filename or 'rar' in filename:
+                icon = '📦'
+            else:
+                icon = '📁'
 
             files.append({
+                'icon': icon,
                 'filename': filename,
-                'size': stat.st_size,
-                'modified': stat.st_mtime,
-                'type': mimetypes.guess_type(filename)[0] or 'application/octet-stream'
+                'size': stat.st_size / 1024,  # KB
+                'type': file_type
             })
 
-        return jsonify({'files': files})
+        # Sort by filename
+        files.sort(key=lambda x: x['filename'])
+
+        # Build HTML
+        if not files:
+            return '<div class="no-files">No files uploaded yet</div>'
+
+        html = '<div class="file-list">'
+        for f in files:
+            html += f'''
+            <div class="file-item">
+                <span class="file-icon">{f["icon"]}</span>
+                <div class="file-info">
+                    <div class="file-name">{f["filename"]}</div>
+                    <div class="file-meta">{f["size"]:.1f} KB • {f["type"]}</div>
+                </div>
+                <button class="btn-delete"
+                        hx-delete="/delete-file/{f["filename"]}"
+                        hx-target="#file-list"
+                        hx-confirm="Delete {f["filename"]}?">
+                    🗑️
+                </button>
+            </div>
+            '''
+        html += '</div>'
+        return html
+
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return f'<div class="error">Error listing files: {str(e)}</div>'
 
 
 @app.route('/delete-file/<filename>', methods=['DELETE'])
@@ -260,20 +261,18 @@ def delete_file(filename):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         if os.path.exists(file_path):
             os.remove(file_path)
-            return jsonify({'success': True, 'message': 'File deleted'})
-        else:
-            return jsonify({'success': False, 'error': 'File not found'}), 404
+
+        # Return updated file list
+        return list_files()
+
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return f'<div class="error">Error deleting file: {str(e)}</div>'
 
 
 @app.errorhandler(RequestEntityTooLarge)
 def handle_file_too_large(error):
     """Handle file too large errors."""
-    return jsonify({
-        'success': False,
-        'error': 'File too large. Maximum size is 16MB.'
-    }), 413
+    return '<div class="error">❌ File too large. Maximum size is 16MB.</div>', 413
 
 
 if __name__ == '__main__':

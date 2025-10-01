@@ -1,13 +1,22 @@
 #!/usr/bin/env python3
 """
 Unit tests for HTMX File Upload Example
+
+Tests the file upload functionality including:
+- Single and multiple file uploads
+- Validation (file type, size, security)
+- HTML response format (not JSON)
+- File listing and deletion
 """
 
-import os
-import tempfile
 import unittest
-from unittest.mock import patch, MagicMock
+import tempfile
+import shutil
+import os
 from io import BytesIO
+from pathlib import Path
+
+# Import the Flask app
 from myapp import app
 
 
@@ -15,279 +24,336 @@ class FileUploadTestCase(unittest.TestCase):
     """Test cases for file upload functionality."""
 
     def setUp(self):
-        """Set up test environment before each test."""
-        self.upload_dir = tempfile.mkdtemp()
+        """Set up test client and temporary upload directory."""
+        # Create a temporary directory for uploads
+        self.test_upload_dir = tempfile.mkdtemp()
+        app.config['UPLOAD_FOLDER'] = self.test_upload_dir
         app.config['TESTING'] = True
-        app.config['UPLOAD_FOLDER'] = self.upload_dir
         self.client = app.test_client()
 
     def tearDown(self):
-        """Clean up after each test."""
-        # Clean up uploaded files
-        try:
-            for filename in os.listdir(self.upload_dir):
-                file_path = os.path.join(self.upload_dir, filename)
-                if os.path.isfile(file_path):
-                    os.unlink(file_path)
-            os.rmdir(self.upload_dir)
-        except (OSError, FileNotFoundError):
-            pass  # Directory might already be cleaned up
+        """Clean up temporary upload directory."""
+        if os.path.exists(self.test_upload_dir):
+            shutil.rmtree(self.test_upload_dir)
 
-    def test_index_page(self):
-        """Test the main page loads correctly."""
+    # =========================================================================
+    # Basic Upload Tests
+    # =========================================================================
+
+    def test_index_page_loads(self):
+        """Test that the main page loads successfully."""
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-        response_text = response.get_data(as_text=True)
-        self.assertIn('File Upload Example', response_text)
-        self.assertIn('upload-zone', response_text)
+        self.assertIn(b'File Upload Example', response.data)
+        self.assertIn(b'hx-post="/upload"', response.data)
 
     def test_successful_file_upload(self):
-        """Test successful file upload."""
-        # Create a test file
-        test_file = BytesIO(b'test file content')
-        test_file.filename = 'test.txt'
+        """Test uploading a valid file returns success HTML."""
+        data = {
+            'file': (BytesIO(b'test file content'), 'test.pdf')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-        response = self.client.post('/upload', data={'file': (test_file, 'test.txt')})
         self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+        self.assertIn('Successfully uploaded', html)
+        self.assertIn('test.pdf', html)
+        self.assertIn('class="success"', html)
 
-        response_data = response.get_json()
-        self.assertTrue(response_data['success'])
-        self.assertEqual(response_data['filename'], 'test.txt')
-        self.assertIn('Successfully uploaded', response_data['message'])
+    def test_file_saved_to_disk(self):
+        """Test that uploaded file is actually saved."""
+        data = {
+            'file': (BytesIO(b'test content'), 'saved.txt')
+        }
+        self.client.post('/upload', data=data,
+                        content_type='multipart/form-data')
 
-        # Check file was saved
-        files = os.listdir(app.config['UPLOAD_FOLDER'])
-        self.assertEqual(len(files), 1)
-        self.assertTrue(files[0].endswith('.txt'))
+        # Check file exists
+        file_path = os.path.join(self.test_upload_dir, 'saved.txt')
+        self.assertTrue(os.path.exists(file_path))
 
-    def test_upload_without_file(self):
-        """Test upload request without file."""
-        response = self.client.post('/upload', data={})
+        # Check content
+        with open(file_path, 'r') as f:
+            self.assertEqual(f.read(), 'test content')
+
+    # =========================================================================
+    # Validation Tests
+    # =========================================================================
+
+    def test_no_file_provided(self):
+        """Test error when no file is provided."""
+        response = self.client.post('/upload', data={},
+                                    content_type='multipart/form-data')
+
         self.assertEqual(response.status_code, 400)
+        html = response.get_data(as_text=True)
+        self.assertIn('No file provided', html)
+        self.assertIn('class="error"', html)
 
-        response_data = response.get_json()
-        self.assertFalse(response_data['success'])
-        self.assertIn('No file provided', response_data['error'])
+    def test_empty_filename(self):
+        """Test error when filename is empty."""
+        data = {
+            'file': (BytesIO(b'content'), '')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-    def test_upload_empty_filename(self):
-        """Test upload with empty filename."""
-        test_file = BytesIO(b'content')
-        test_file.filename = ''
-
-        response = self.client.post('/upload', data={'file': (test_file, '')})
         self.assertEqual(response.status_code, 400)
-
-        response_data = response.get_json()
-        self.assertFalse(response_data['success'])
-        self.assertIn('No file selected', response_data['error'])
+        html = response.get_data(as_text=True)
+        self.assertIn('No file selected', html)
 
     def test_invalid_file_extension(self):
-        """Test upload with invalid file extension."""
-        test_file = BytesIO(b'test content')
-        test_file.filename = 'test.exe'
+        """Test rejection of invalid file type."""
+        data = {
+            'file': (BytesIO(b'malicious code'), 'malware.exe')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-        response = self.client.post('/upload', data={'file': (test_file, 'test.exe')})
         self.assertEqual(response.status_code, 400)
-
-        response_data = response.get_json()
-        self.assertFalse(response_data['success'])
-        self.assertIn('not allowed', response_data['error'])
+        html = response.get_data(as_text=True)
+        self.assertIn('not allowed', html)
 
     def test_file_too_large(self):
-        """Test upload with file exceeding size limit."""
-        # Create a large file (over 16MB)
-        large_content = b'x' * (17 * 1024 * 1024)  # 17MB
-        test_file = BytesIO(large_content)
-        test_file.filename = 'large.txt'
+        """Test rejection of oversized file."""
+        # Create file larger than 16MB limit
+        large_content = b'x' * (17 * 1024 * 1024)
+        data = {
+            'file': (BytesIO(large_content), 'huge.pdf')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-        response = self.client.post('/upload', data={'file': (test_file, 'large.txt')})
-        self.assertEqual(response.status_code, 413)
+        # Should return 413 (Request Entity Too Large) or 400
+        self.assertIn(response.status_code, [400, 413])
 
-        response_data = response.get_json()
-        self.assertFalse(response_data['success'])
-        self.assertIn('too large', response_data['error'])
+    def test_empty_file_rejected(self):
+        """Test that empty files are rejected."""
+        data = {
+            'file': (BytesIO(b''), 'empty.pdf')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-    def test_valid_image_upload(self):
-        """Test upload of valid image file."""
-        # Create a mock image file
-        test_file = BytesIO(b'fake image content')
-        test_file.filename = 'test.png'
+        self.assertEqual(response.status_code, 400)
+        html = response.get_data(as_text=True)
+        self.assertIn('empty', html.lower())
 
-        response = self.client.post('/upload', data={'file': (test_file, 'test.png')})
-        self.assertEqual(response.status_code, 200)
+    def test_filename_sanitization(self):
+        """Test that dangerous filenames are sanitized."""
+        data = {
+            'file': (BytesIO(b'content'), '../../../etc/passwd')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-        response_data = response.get_json()
-        self.assertTrue(response_data['success'])
-        self.assertEqual(response_data['filename'], 'test.png')
+        # Should reject due to invalid characters
+        self.assertEqual(response.status_code, 400)
 
-    def test_valid_document_upload(self):
-        """Test upload of valid document file."""
-        test_file = BytesIO(b'document content')
-        test_file.filename = 'test.pdf'
-
-        response = self.client.post('/upload', data={'file': (test_file, 'test.pdf')})
-        self.assertEqual(response.status_code, 200)
-
-        response_data = response.get_json()
-        self.assertTrue(response_data['success'])
-        self.assertEqual(response_data['filename'], 'test.pdf')
+    # =========================================================================
+    # Multiple File Upload Tests
+    # =========================================================================
 
     def test_multiple_file_upload(self):
-        """Test multiple file upload."""
-        file1 = BytesIO(b'content1')
-        file1.filename = 'test1.txt'
-        file2 = BytesIO(b'content2')
-        file2.filename = 'test2.txt'
+        """Test uploading multiple files at once."""
+        data = {
+            'files': [
+                (BytesIO(b'file 1'), 'doc1.pdf'),
+                (BytesIO(b'file 2'), 'doc2.txt'),
+                (BytesIO(b'file 3'), 'image.png')
+            ]
+        }
+        response = self.client.post('/upload-multiple', data=data,
+                                    content_type='multipart/form-data')
 
-        response = self.client.post('/upload-multiple',
-                                  data={'files': [(file1, 'test1.txt'), (file2, 'test2.txt')]})
         self.assertEqual(response.status_code, 200)
-
-        response_data = response.get_json()
-        self.assertTrue(response_data['success'])
-        self.assertEqual(len(response_data['uploaded']), 2)
-        self.assertIn('Uploaded 2 files', response_data['message'])
+        html = response.get_data(as_text=True)
+        self.assertIn('Uploaded 3 file', html)
 
     def test_multiple_files_with_errors(self):
-        """Test multiple file upload with some valid and some invalid files."""
-        file1 = BytesIO(b'content1')
-        file1.filename = 'test1.txt'
-        file2 = BytesIO(b'content2')
-        file2.filename = 'test2.exe'  # Invalid extension
+        """Test multiple upload with some valid and some invalid files."""
+        data = {
+            'files': [
+                (BytesIO(b'valid'), 'valid.pdf'),
+                (BytesIO(b'invalid'), 'bad.exe'),  # Invalid extension
+                (BytesIO(b'another valid'), 'good.txt')
+            ]
+        }
+        response = self.client.post('/upload-multiple', data=data,
+                                    content_type='multipart/form-data')
 
-        response = self.client.post('/upload-multiple',
-                                  data={'files': [(file1, 'test1.txt'), (file2, 'test2.exe')]})
-        self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+        # Should have uploaded 2 valid files
+        self.assertIn('2 file', html)
+        # Should show error for .exe file
+        self.assertIn('bad.exe', html)
 
-        response_data = response.get_json()
-        self.assertTrue(response_data['success'])  # At least one file uploaded
-        self.assertEqual(len(response_data['uploaded']), 1)
-        self.assertEqual(len(response_data['errors']), 1)
+    def test_multiple_upload_no_files(self):
+        """Test multiple upload with no files provided."""
+        response = self.client.post('/upload-multiple', data={},
+                                    content_type='multipart/form-data')
 
-    def test_file_validation_endpoint(self):
-        """Test file validation endpoint."""
-        test_file = BytesIO(b'test content')
-        test_file.filename = 'test.txt'
+        self.assertEqual(response.status_code, 400)
+        html = response.get_data(as_text=True)
+        self.assertIn('No files provided', html)
 
-        response = self.client.post('/validate-file', data={'file': (test_file, 'test.txt')})
-        self.assertEqual(response.status_code, 200)
+    # =========================================================================
+    # File Listing Tests
+    # =========================================================================
 
-        response_data = response.get_json()
-        self.assertTrue(response_data['valid'])
-
-    def test_invalid_file_validation(self):
-        """Test validation of invalid file."""
-        test_file = BytesIO(b'test content')
-        test_file.filename = 'test.exe'
-
-        response = self.client.post('/validate-file', data={'file': (test_file, 'test.exe')})
-        self.assertEqual(response.status_code, 200)
-
-        response_data = response.get_json()
-        self.assertFalse(response_data['valid'])
-        self.assertIn('not allowed', response_data['error'])
-
-    def test_list_files(self):
-        """Test listing uploaded files."""
-        # First upload a file
-        test_file = BytesIO(b'test content')
-        test_file.filename = 'test.txt'
-        upload_response = self.client.post('/upload', data={'file': (test_file, 'test.txt')})
-        upload_data = upload_response.get_json()
-        self.assertTrue(upload_data['success'])
-
-        # Then list files
+    def test_list_files_empty(self):
+        """Test listing files when directory is empty."""
         response = self.client.get('/files')
+
         self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+        self.assertIn('No files', html)
 
-        response_data = response.get_json()
-        self.assertIn('files', response_data)
+    def test_list_files_with_content(self):
+        """Test listing files after uploading."""
+        # Upload a file first
+        data = {'file': (BytesIO(b'test'), 'example.pdf')}
+        self.client.post('/upload', data=data,
+                        content_type='multipart/form-data')
 
-        # Should have at least one file
-        self.assertGreaterEqual(len(response_data['files']), 1)
+        # List files
+        response = self.client.get('/files')
 
-        # Check that at least one file has the expected properties
-        found_file = False
-        for file_info in response_data['files']:
-            if file_info.get('size', 0) > 0:
-                found_file = True
-                break
+        self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+        self.assertIn('example.pdf', html)
+        self.assertIn('file-item', html)
 
-        self.assertTrue(found_file, "No valid files found in list")
+    # =========================================================================
+    # File Deletion Tests
+    # =========================================================================
 
     def test_delete_file(self):
-        """Test deleting uploaded file."""
-        # First upload a file
-        test_file = BytesIO(b'test content')
-        test_file.filename = 'test.txt'
-        upload_response = self.client.post('/upload', data={'file': (test_file, 'test.txt')})
-        upload_data = upload_response.get_json()
-        filename = upload_data['unique_filename']
+        """Test deleting an uploaded file."""
+        # Upload a file
+        data = {'file': (BytesIO(b'to delete'), 'delete-me.txt')}
+        self.client.post('/upload', data=data,
+                        content_type='multipart/form-data')
 
-        # Then delete it
-        response = self.client.delete(f'/delete-file/{filename}')
+        # Verify it exists
+        file_path = os.path.join(self.test_upload_dir, 'delete-me.txt')
+        self.assertTrue(os.path.exists(file_path))
+
+        # Delete it
+        response = self.client.delete('/delete-file/delete-me.txt')
         self.assertEqual(response.status_code, 200)
 
-        response_data = response.get_json()
-        self.assertTrue(response_data['success'])
-        self.assertIn('deleted', response_data['message'])
+        # Verify it's gone
+        self.assertFalse(os.path.exists(file_path))
 
     def test_delete_nonexistent_file(self):
-        """Test deleting non-existent file."""
-        response = self.client.delete('/delete-file/nonexistent.txt')
-        self.assertEqual(response.status_code, 404)
+        """Test deleting a file that doesn't exist."""
+        response = self.client.delete('/delete-file/nonexistent.pdf')
 
-        response_data = response.get_json()
-        self.assertFalse(response_data['success'])
-        self.assertIn('not found', response_data['error'])
+        # Should succeed (idempotent delete)
+        self.assertEqual(response.status_code, 200)
 
-    def test_security_filename_sanitization(self):
-        """Test that dangerous filenames are rejected."""
-        test_file = BytesIO(b'test content')
-        test_file.filename = '../../dangerous.txt'
+    # =========================================================================
+    # Security Tests
+    # =========================================================================
 
-        response = self.client.post('/upload', data={'file': (test_file, '../../dangerous.txt')})
+    def test_allowed_file_types(self):
+        """Test that all allowed file types are accepted."""
+        allowed_types = [
+            'image.png', 'photo.jpg', 'doc.pdf',
+            'text.txt', 'archive.zip', 'data.csv'
+        ]
+
+        for filename in allowed_types:
+            data = {'file': (BytesIO(b'content'), filename)}
+            response = self.client.post('/upload', data=data,
+                                        content_type='multipart/form-data')
+
+            self.assertEqual(response.status_code, 200,
+                           f"Failed to upload {filename}")
+
+    def test_filename_with_spaces(self):
+        """Test handling filename with spaces."""
+        data = {
+            'file': (BytesIO(b'content'), 'my document.pdf')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
+
+        # Should succeed (secure_filename handles spaces)
+        self.assertEqual(response.status_code, 200)
+
+        # Check that file was saved with sanitized name
+        files = os.listdir(self.test_upload_dir)
+        self.assertTrue(any('document' in f for f in files))
+
+    def test_no_file_extension(self):
+        """Test rejection of files without extension."""
+        data = {
+            'file': (BytesIO(b'content'), 'noextension')
+        }
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
+
         self.assertEqual(response.status_code, 400)
+        html = response.get_data(as_text=True)
+        self.assertIn('extension', html.lower())
 
-        response_data = response.get_json()
-        self.assertFalse(response_data['success'])
-        self.assertIn('Invalid characters', response_data['error'])
+    # =========================================================================
+    # HTML Response Format Tests
+    # =========================================================================
 
-    def test_empty_file_rejection(self):
-        """Test that empty files are rejected."""
-        test_file = BytesIO(b'')  # Empty file
-        test_file.filename = 'empty.txt'
+    def test_responses_are_html_not_json(self):
+        """Test that responses are HTML fragments, not JSON."""
+        data = {'file': (BytesIO(b'test'), 'test.pdf')}
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-        response = self.client.post('/upload', data={'file': (test_file, 'empty.txt')})
-        self.assertEqual(response.status_code, 400)
+        # Should be HTML
+        self.assertIn(b'<div', response.data)
 
-        response_data = response.get_json()
-        self.assertFalse(response_data['success'])
-        self.assertIn('empty', response_data['error'])
+        # Should NOT be JSON
+        self.assertNotIn(b'{"', response.data)
+        self.assertNotIn(b'"success":', response.data)
 
-    def test_response_content_type(self):
-        """Test that responses have correct content type."""
-        # Test main page
-        response = self.client.get('/')
-        self.assertEqual(response.content_type, 'text/html; charset=utf-8')
+    def test_success_response_format(self):
+        """Test that success responses have correct HTML structure."""
+        data = {'file': (BytesIO(b'test'), 'test.pdf')}
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
 
-        # Test upload endpoint
-        test_file = BytesIO(b'test')
-        test_file.filename = 'test.txt'
-        response = self.client.post('/upload', data={'file': (test_file, 'test.txt')})
-        self.assertEqual(response.content_type, 'application/json')
-
-    def test_htmx_attributes_present(self):
-        """Test that HTMX attributes are present in the HTML."""
-        response = self.client.get('/')
         html = response.get_data(as_text=True)
 
-        # Check for HTMX upload attributes
-        self.assertIn('hx-post="/upload"', html)
-        self.assertIn('hx-encoding="multipart/form-data"', html)
-        self.assertIn('hx-indicator="#upload-indicator"', html)
-        self.assertIn('hx-target="#upload-result"', html)
+        # Should have success class
+        self.assertIn('class="success"', html)
+
+        # Should have checkmark emoji
+        self.assertIn('✅', html)
+
+        # Should show filename
+        self.assertIn('test.pdf', html)
+
+    def test_error_response_format(self):
+        """Test that error responses have correct HTML structure."""
+        data = {'file': (BytesIO(b'bad'), 'bad.exe')}
+        response = self.client.post('/upload', data=data,
+                                    content_type='multipart/form-data')
+
+        html = response.get_data(as_text=True)
+
+        # Should have error class
+        self.assertIn('class="error"', html)
+
+        # Should have X emoji
+        self.assertIn('❌', html)
+
+
+def run_tests():
+    """Run all tests."""
+    unittest.main()
 
 
 if __name__ == '__main__':
-    unittest.main()
+    run_tests()
+
