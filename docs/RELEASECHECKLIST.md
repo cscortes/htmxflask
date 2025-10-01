@@ -54,10 +54,12 @@ This document provides a comprehensive checklist for creating releases of the HT
 
 ### GitHub Issue Management
 - [ ] **Check if release resolves any open issues**: `gh issue list --state open`
+- [ ] **Identify specific issues resolved** by this release
 - [ ] **Close resolved issues** with detailed completion comments
 - [ ] **Update issue labels** (if applicable)
 - [ ] **Link issues to releases** in commit messages
 - [ ] **Create new issues** for future work (if applicable)
+- [ ] **Verify issue closure** after release: `gh issue view ISSUE_NUMBER`
 
 ## 🚀 Release Process
 
@@ -121,11 +123,17 @@ HTMX Patterns: hx-get, hx-post, hx-target, hx-swap"
 # 1. Check if any open issues are resolved by this release
 gh issue list --state open
 
-# 2. Close resolved issues with detailed comments
-gh issue close ISSUE_NUMBER --comment "✅ **COMPLETED** - This feature has been implemented in the FEATURE_NAME example (v$VERSION).
+# 2. Identify specific issues resolved (look for matching feature names)
+# Example: If implementing "DIALOGSUIKIT", look for "Dialogs - UIKit" issues
+
+# 3. Close resolved issues with detailed comments
+VERSION=$(cat VERSION)
+gh issue close ISSUE_NUMBER --comment "✅ **COMPLETED in v$VERSION**
+
+This feature has been successfully implemented with the FEATURE_NAME example:
 
 ## Implementation Details:
-- **Example**: FEATURE_NAME/ directory
+- **Directory**: FEATURE_NAME/
 - **HTMX Patterns**: hx-pattern1, hx-pattern2, hx-pattern3
 - **Features**: 
   - Feature description 1
@@ -134,23 +142,28 @@ gh issue close ISSUE_NUMBER --comment "✅ **COMPLETED** - This feature has been
   - Educational documentation
   - Security-compliant implementation
 
+## Technical Highlights:
+- All X tests passing
+- Minimal CSS following Development Guiding Light principles
+- Security headers and proper error handling
+- Based on official HTMX example: https://htmx.org/examples/...
+
 ## Files Created:
 - FEATURE_NAME/myapp.py - Flask application
-- FEATURE_NAME/templates/index.html - HTML template
-- FEATURE_NAME/static/css/style.css - Styling
+- FEATURE_NAME/templates/index.html - Main page
+- FEATURE_NAME/templates/modal.html - Modal content (if applicable)
+- FEATURE_NAME/static/css/style.css - Enhanced styling
 - FEATURE_NAME/myapp_test.py - Test suite
 - FEATURE_NAME/README.md - Documentation
 - FEATURE_NAME/DESIGN.md - Design decisions
 
-## Testing:
-- All X tests pass
-- Manual testing confirmed working
-- Server-side processing verified
+The example is fully functional, tested, and ready for production use! 🚀"
 
-This example demonstrates the exact patterns requested in this issue and is ready for production use."
-
-# 3. Verify issues are closed
+# 4. Verify issues are closed
 gh issue view ISSUE_NUMBER
+
+# 5. Check final issue status
+gh issue list --state closed --limit 5
 ```
 
 ### Step 6: Create Git Tag
@@ -304,6 +317,74 @@ If a release needs to be rolled back:
    git push origin main
    git push origin v0.20.2
    ```
+
+## 🔧 GitHub Issue Management Automation
+
+### Quick Issue Check Commands
+```bash
+# Check all open issues
+gh issue list --state open
+
+# Check issues by feature type
+gh issue list --search "modal OR dialog" --state open
+gh issue list --search "validation OR form" --state open
+gh issue list --search "upload OR file" --state open
+
+# Check recently closed issues
+gh issue list --state closed --limit 5
+
+# View specific issue details
+gh issue view ISSUE_NUMBER
+```
+
+### Issue Resolution Template
+When closing issues, use this standardized template:
+
+```bash
+VERSION=$(cat VERSION)
+gh issue close ISSUE_NUMBER --comment "✅ **COMPLETED in v$VERSION**
+
+This feature has been successfully implemented with the FEATURE_NAME example:
+
+## Implementation Details:
+- **Directory**: FEATURE_NAME/
+- **HTMX Patterns**: hx-pattern1, hx-pattern2, hx-pattern3
+- **Features**: 
+  - Feature description 1
+  - Feature description 2
+  - X comprehensive unit tests
+  - Educational documentation
+  - Security-compliant implementation
+
+## Technical Highlights:
+- All X tests passing
+- Minimal CSS following Development Guiding Light principles
+- Security headers and proper error handling
+- Based on official HTMX example: https://htmx.org/examples/...
+
+## Files Created:
+- FEATURE_NAME/myapp.py - Flask application
+- FEATURE_NAME/templates/index.html - Main page
+- FEATURE_NAME/static/css/style.css - Enhanced styling
+- FEATURE_NAME/myapp_test.py - Test suite
+- FEATURE_NAME/README.md - Documentation
+- FEATURE_NAME/DESIGN.md - Design decisions
+
+The example is fully functional, tested, and ready for production use! 🚀"
+```
+
+### Issue Status Tracking
+```bash
+# Count open vs closed issues
+echo "Open issues: $(gh issue list --state open --json number | jq length)"
+echo "Closed issues: $(gh issue list --state closed --json number | jq length)"
+
+# Check issue completion rate
+TOTAL_ISSUES=$(gh issue list --json number | jq length)
+CLOSED_ISSUES=$(gh issue list --state closed --json number | jq length)
+COMPLETION_RATE=$((CLOSED_ISSUES * 100 / TOTAL_ISSUES))
+echo "Issue completion rate: $COMPLETION_RATE%"
+```
 
 ## 📚 Resources
 

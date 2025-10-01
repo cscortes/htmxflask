@@ -267,3 +267,20 @@ pre-git-commit: ## Remove invisible characters from all files before git commit
 	@python scripts/clean_invisible_chars.py . --clean
 	@echo "Invisible characters removed successfully!"
 	@echo "Ready for git commit!"
+
+check-issues: ## Check GitHub issues that might be resolved by current changes
+	@echo "🔍 Checking GitHub issues..."
+	@echo "Open issues:"
+	@gh issue list --state open --limit 10
+	@echo ""
+	@echo "Recently closed issues:"
+	@gh issue list --state closed --limit 5
+	@echo ""
+	@echo "💡 Tip: Use 'gh issue view ISSUE_NUMBER' to see details of specific issues"
+	@echo "💡 Tip: Use 'gh issue close ISSUE_NUMBER --comment \"...\"' to close resolved issues"
+
+issue-stats: ## Show GitHub issue statistics
+	@echo "📊 GitHub Issue Statistics:"
+	@echo "Open issues: $$(gh issue list --state open --json number | jq length)"
+	@echo "Closed issues: $$(gh issue list --state closed --json number | jq length)"
+	@echo "Total issues: $$(gh issue list --json number | jq length)"
