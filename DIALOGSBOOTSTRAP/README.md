@@ -1,14 +1,20 @@
 # DIALOGSBOOTSTRAP - Bootstrap Modal Dialogs with HTMX
 
-This example demonstrates how to integrate HTMX with Bootstrap's native modal dialog functionality, creating dynamic modal content that loads from the server.
+This example demonstrates how to integrate HTMX with Bootstrap's native modal
+dialog functionality, creating dynamic modal content that loads from the
+server.
 
 ## 🎯 Overview
 
-The DIALOGSBOOTSTRAP example shows how to combine HTMX's dynamic content loading with Bootstrap's robust modal system. This approach leverages the best of both worlds: HTMX's simplicity for server communication and Bootstrap's polished UI components.
+The DIALOGSBOOTSTRAP example shows how to combine HTMX's dynamic content
+loading with Bootstrap's robust modal system. This approach leverages the
+best of both worlds: HTMX's simplicity for server communication and
+Bootstrap's polished UI components.
 
 ## 🚀 Features
 
-- **Bootstrap Modal Integration**: Uses Bootstrap 5's native modal functionality
+- **Bootstrap Modal Integration**: Uses Bootstrap 5's native modal
+functionality
 - **HTMX Dynamic Loading**: Modal content loaded dynamically from server
 - **Responsive Design**: Mobile-friendly modal dialogs
 - **Backdrop Blur Effect**: Enhanced visual appeal with backdrop blur
@@ -82,11 +88,14 @@ The test suite includes 20 test cases covering:
 ## 🔧 How It Works
 
 1. **Button Click**: User clicks the "Open Bootstrap Modal" button
-2. **Dual Trigger**: Both HTMX (`hx-get`) and Bootstrap (`data-bs-toggle`) are triggered
+2. **Dual Trigger**: Both HTMX (`hx-get`) and Bootstrap
+(`data-bs-toggle`) are triggered
 3. **Bootstrap Shows Modal**: Bootstrap immediately shows the modal container
-4. **HTMX Loads Content**: HTMX sends a `GET` request to `/modal` and loads content into `.modal-content`
+4. **HTMX Loads Content**: HTMX sends a `GET` request to
+`/modal` and loads content into `.modal-content`
 5. **Server Response**: Flask returns the modal content (header, body, footer)
-6. **User Interaction**: User can interact with modal and close it using Bootstrap's native close functionality
+6. **User Interaction**: User can interact with modal
+and close it using Bootstrap's native close functionality
 
 ## 🎨 Customization
 
@@ -124,4 +133,5 @@ https://htmx.org/examples/modal-bootstrap/
 
 ## 📝 License
 
-This example is part of the HTMX Flask Examples project and follows the same licensing terms.
+This example is part of the HTMX Flask Examples project and
+follows the same licensing terms.

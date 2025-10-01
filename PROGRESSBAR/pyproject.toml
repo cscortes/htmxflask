@@ -1,6 +1,6 @@
 [project]
 name = "htmx-progress-bar"
-version = "0.22.0"
+version = "0.23.0"
 description = "HTMX Progress Bar Example - Flask Demo"
 authors = [
     {name = "HTMX Flask Examples", email = "examples@htmxflask.com"}

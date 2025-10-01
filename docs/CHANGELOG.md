@@ -5,6 +5,21 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.23.0] - 2025-10-01
+
+### Added
+- **DIALOGSCUSTOM Example**: New example demonstrating custom modal dialogs built from scratch with HTMX and Hyperscript
+  - Based on official HTMX custom modal example (https://htmx.org/examples/modal-custom/)
+  - No CSS framework dependencies - built entirely from scratch
+  - Hyperscript integration for event-driven modal close behavior
+  - HTMX Patterns: `hx-get`, `hx-target="body"`, `hx-swap="beforeend"`
+  - Custom CSS animations with keyframes (fade-in/fade-out, zoom effects)
+  - Event-driven architecture using Hyperscript's `closeModal` custom event
+  - Click outside to close (underlay click handler)
+  - 20 comprehensive unit tests covering all functionality
+  - Beautiful gradient design with responsive layout
+  - Educational documentation explaining Hyperscript and HTMX integration
+
 ## [0.22.0] - 2025-10-01
 
 ### Added

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX Custom Modal Dialogs Example</title>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- Hyperscript for modal animations and event handling -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 HTMX Custom Modal Dialogs</h1>
+
+        <div class="intro">
+            <p>This example demonstrates how to build custom modal dialogs from scratch using HTMX and Hyperscript, without relying on CSS frameworks.</p>
+        </div>
+
+        <div class="demo-section">
+            <button class="btn primary" hx-get="/modal" hx-target="body" hx-swap="beforeend">
+                Open a Modal
+            </button>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="info-card">
+            <h3>How It Works</h3>
+            <p>This example shows how to create custom modal dialogs with HTMX:</p>
+            <ul>
+                <li><strong>HTMX Loading</strong>: Uses <code>hx-get="/modal"</code> to load modal content from server</li>
+                <li><strong>Append to Body</strong>: Uses <code>hx-swap="beforeend"</code> to append modal to end of body</li>
+                <li><strong>Hyperscript Animations</strong>: Uses Hyperscript for smooth open/close animations</li>
+                <li><strong>Event-Driven Close</strong>: Hyperscript triggers <code>closeModal</code> event to remove dialog</li>
+                <li><strong>CSS Animations</strong>: Custom keyframe animations for fade and zoom effects</li>
+            </ul>
+
+            <h4>HTMX Patterns Used:</h4>
+            <ul>
+                <li><code>hx-get</code> - Load modal content from server</li>
+                <li><code>hx-target="body"</code> - Target the body element</li>
+                <li><code>hx-swap="beforeend"</code> - Append content to end of target</li>
+            </ul>
+
+            <h4>Hyperscript Features:</h4>
+            <ul>
+                <li><code>_="on closeModal..."</code> - Event-driven modal removal</li>
+                <li><code>add .closing</code> - Add CSS class for close animation</li>
+                <li><code>wait for animationend</code> - Wait for animation to complete</li>
+                <li><code>remove me</code> - Remove modal from DOM</li>
+            </ul>
+
+            <h4>Key Features:</h4>
+            <ul>
+                <li>No CSS framework dependencies</li>
+                <li>Smooth fade-in/fade-out animations</li>
+                <li>Zoom animations for modal content</li>
+                <li>Click outside to close (underlay)</li>
+                <li>Close button with event trigger</li>
+                <li>Fully customizable styling</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,21 @@
+<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+    <div class="modal-underlay" _="on click trigger closeModal"></div>
+    <div class="modal-content">
+        <h1>Modal Dialog</h1>
+        <p>This is the modal content loaded dynamically from the server.</p>
+        <p>You can put anything here, like text, forms, or images.</p>
+
+        <div class="modal-info">
+            <h4>💡 How This Works:</h4>
+            <ul>
+                <li><strong>Click outside</strong> the modal (on the underlay) to close it</li>
+                <li><strong>Click the Close button</strong> below to trigger the close animation</li>
+                <li>The modal uses <strong>Hyperscript</strong> to handle the <code>closeModal</code> event</li>
+                <li>CSS animations provide smooth <strong>fade and zoom</strong> effects</li>
+            </ul>
+        </div>
+
+        <button class="btn danger" _="on click trigger closeModal">Close</button>
+    </div>
+</div>
+
