@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'  # Replace with a strong secret key in production
-
-# In-memory storage for form submissions
-submissions = []
 
 @app.after_request
 def add_security_headers(response):
@@ -22,32 +19,12 @@ def add_security_headers(response):
 @app.route('/')
 def index():
     """Render the main page with UIKit modal examples"""
-    return render_template('index.html', submissions=submissions)
+    return render_template('index.html')
 
 @app.route('/modal')
 def modal():
     """Return the modal dialog HTML"""
     return render_template('modal.html')
-
-@app.route('/submit', methods=['POST'])
-def submit():
-    """Handle form submission from modal"""
-    name = request.form.get('name', '').strip()
-    
-    if name:
-        submissions.append({
-            'name': name,
-            'timestamp': 'Just now'
-        })
-        return f"Hello, {name}! Your submission has been saved."
-    else:
-        return "Please enter your name."
-
-@app.route('/clear', methods=['POST'])
-def clear():
-    """Clear all submissions"""
-    submissions.clear()
-    return "All submissions cleared!"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
