@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.19.0**
+**Version: 0.20.0**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
@@ -19,7 +19,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains thirteen educational HTMX examples:
+This project contains fourteen educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -105,6 +105,13 @@ This project contains thirteen educational HTMX examples:
 - Based on official HTMX file-upload-input example
 - Side-by-side comparison showing with/without `hx-preserve`
 - Server-side validation with file input preservation
+
+### 14. **RESETINPUT** - Reset User Input
+- Automatically reset form inputs after successful requests
+- Demonstrates `hx-on::after-request`, `hx-post`, `hx-target`, `hx-swap="afterbegin"`
+- Based on official HTMX reset-user-input example
+- Dual method demonstration (form reset vs individual input reset)
+- Event listener approach to avoid `htmx:evalDisallowedError`
 
 ## 🛠️ Development Tools
 

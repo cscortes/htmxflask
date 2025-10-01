@@ -1,7 +1,7 @@
 [project]
-name = "fileuploadpreserve"
+name = "resetinput"
 version = "0.20.0"
-description = "HTMX File Upload Input Preservation Example"
+description = "HTMX Reset User Input Example - Demonstrates automatic form reset after successful requests"
 authors = [
     {name = "HTMX Flask Examples", email = "examples@htmxflask.dev"}
 ]
@@ -19,12 +19,11 @@ dev = [
 ]
 
 [build-system]
-requires = ["setuptools>=45", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["*"]
+[tool.hatch.build.targets.wheel]
+packages = ["."]
 
 [tool.pytest.ini_options]
 testpaths = ["."]

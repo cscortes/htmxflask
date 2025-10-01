@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset User Input - HTMX Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon-emoji.svg') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔄 Reset User Input</h1>
+            <p>Demonstrates automatic form reset after successful HTMX requests using <code>hx-on::after-request</code></p>
+        </header>
+
+        <main>
+            <!-- Note Form with Auto-Reset -->
+            <section class="form-section">
+                <h2>Add a Note</h2>
+                <p><strong>How to see the reset in action:</strong> Type a note and click "Add" - the input will automatically clear after successful submission!</p>
+
+                <div class="debugging-instructions">
+                    <h3>🔍 Debugging Instructions</h3>
+                    <ol>
+                        <li><strong>Open Developer Tools</strong> (F12 or right-click → Inspect)</li>
+                        <li><strong>Go to Console tab</strong> to see debug messages</li>
+                        <li><strong>Type a note</strong> and click "Add Note"</li>
+                        <li><strong>Watch the console</strong> for messages like:
+                            <ul>
+                                <li><code>HTMX Request completed: {successful: true, xhr: 200}</code></li>
+                                <li><code>Request was successful, form should reset</code></li>
+                                <li><code>Resetting form via this.reset()</code> or <code>Resetting input via getElementById</code></li>
+                            </ul>
+                        </li>
+                        <li><strong>If you don't see reset messages</strong>, check for JavaScript errors in the console</li>
+                    </ol>
+                </div>
+
+                <!-- Method 1: Form with reset() method -->
+                <div class="method">
+                    <h3>Method 1: Form Reset</h3>
+                    <p>Uses <code>this.reset()</code> to reset the entire form after successful request.</p>
+
+                    <form id="form-reset-method"
+                          hx-post="/note"
+                          hx-target="#notes"
+                          hx-swap="afterbegin">
+                        <div class="form-group">
+                            <label for="note-text">Add a note</label>
+                            <input type="text"
+                                   id="note-text"
+                                   name="note-text"
+                                   placeholder="Enter your note here..."
+                                   required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Add Note
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Method 2: Individual input reset -->
+                <div class="method">
+                    <h3>Method 2: Individual Input Reset</h3>
+                    <p>Uses <code>document.getElementById().value = ''</code> to reset specific input.</p>
+
+                    <div class="form-group">
+                        <label for="note-input">Add a note</label>
+                        <input id="note-input"
+                               type="text"
+                               name="note-text"
+                               placeholder="Enter your note here..."
+                               required>
+                    </div>
+                    <button id="input-reset-method"
+                            class="btn btn-primary"
+                            hx-post="/note"
+                            hx-target="#notes"
+                            hx-swap="afterbegin"
+                            hx-include="#note-input">
+                        Add Note
+                    </button>
+                </div>
+            </section>
+
+            <!-- Notes Display -->
+            <section class="notes-section">
+                <div class="notes-header">
+                    <h2>Your Notes</h2>
+                    <button class="btn btn-secondary"
+                            hx-post="/clear"
+                            hx-target="#notes"
+                            hx-swap="innerHTML"
+                            hx-confirm="Are you sure you want to clear all notes?">
+                        Clear All Notes
+                    </button>
+                </div>
+
+                <ul id="notes" class="notes-list">
+                    {% if notes %}
+                        {% for note in notes %}
+                        <li class="note-item">
+                            <div class="note-content">{{ note.text }}</div>
+                            <div class="note-timestamp">{{ note.timestamp }}</div>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="no-notes">No notes yet. Add one above!</li>
+                    {% endif %}
+                </ul>
+            </section>
+
+            <!-- How it works section -->
+            <section class="how-it-works">
+                <h2>🔧 How It Works</h2>
+                <ul>
+                    <li><strong>hx-on::after-request</strong>: Executes JavaScript after HTMX request completes</li>
+                    <li><strong>event.detail.successful</strong>: Checks if the request was successful (2xx status)</li>
+                    <li><strong>this.reset()</strong>: Resets the entire form to its initial state</li>
+                    <li><strong>hx-swap="afterbegin"</strong>: Prepends new notes to the top of the list</li>
+                    <li><strong>hx-include</strong>: Includes specific elements in form data when not using a form</li>
+                </ul>
+
+                <div class="tip">
+                    <strong>💡 Tip:</strong> The <code>reset()</code> method is only available on form elements.
+                    For other elements, explicitly set the input value to empty string.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- HTMX CDN -->
+    <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js"></script>
+    <script>
+        // HTMX configuration for educational examples
+        htmx.config.historyEnabled = false;
+        htmx.config.allowEval = false;
+        htmx.config.allowScriptTags = false;
+
+        // Log HTMX events for debugging
+        document.body.addEventListener('htmx:afterRequest', function(evt) {
+            console.log('HTMX Request completed:', {
+                successful: evt.detail.successful,
+                xhr: evt.detail.xhr.status,
+                statusText: evt.detail.xhr.statusText
+            });
+
+            if (evt.detail.successful) {
+                console.log('Request was successful, form should reset');
+
+                // Handle form reset for Method 1 (form reset)
+                if (evt.target.id === 'form-reset-method') {
+                    console.log('Resetting form via this.reset()');
+                    evt.target.reset();
+                }
+
+                // Handle input reset for Method 2 (individual input reset)
+                if (evt.target.id === 'input-reset-method') {
+                    console.log('Resetting input via getElementById');
+                    document.getElementById('note-input').value = '';
+                }
+            } else {
+                console.log('Request failed, form will not reset');
+            }
+        });
+    </script>
+</body>
+</html>

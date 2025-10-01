@@ -5,6 +5,31 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.0] - 2025-10-01
+
+### Added
+- **RESETINPUT Example**: New example demonstrating automatic form input reset using `hx-on::after-request`
+  - Based on official HTMX reset-user-input example (https://htmx.org/examples/reset-user-input/)
+  - Dual method demonstration: form reset vs individual input reset
+  - Event listener approach to avoid `htmx:evalDisallowedError` with `allowEval = false`
+  - 24 comprehensive unit tests covering all functionality
+  - Minimal CSS following Development Guiding Light principles
+  - Educational documentation with troubleshooting guide
+  - Comprehensive debugging with console logging
+  - Security-compliant JavaScript implementation
+
+### Fixed
+- **RESETINPUT Security Issue**: Fixed `htmx:evalDisallowedError` by replacing inline JavaScript with event listeners
+  - Removed `hx-on::after-request` inline JavaScript that was blocked by security settings
+  - Implemented proper event listener approach for form reset functionality
+  - Maintains security compliance with `htmx.config.allowEval = false`
+
+### Changed
+- **Documentation**: Updated README.md to include RESETINPUT example
+- **Project Count**: Updated from thirteen to fourteen examples
+- **Makefile**: Added RESETINPUT to all targets (version, lint, test, install)
+- **FEATURES.md**: Updated completion count to 14/47 examples
+
 ## [0.19.0] - 2025-10-01
 
 ### Added
