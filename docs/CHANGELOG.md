@@ -5,6 +5,39 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.18.0] - 2025-10-01
+
+### Changed
+- **FILEUPLOAD Example**: Completely refactored following Development Guiding Light principles
+- **Simplified Structure**: Reduced from 4 templates to 1 (75% reduction)
+- **Minimal CSS**: Reduced from 296 to 96 lines (67% reduction)
+- **Inline HTML Responses**: Server returns HTML fragments, not JSON
+- **Original Filenames**: Removed UUID generation, use secure_filename only
+- **Real Progress Tracking**: Uses htmx:xhr:progress event for actual upload progress
+
+### Added
+- **Comprehensive Unit Tests**: 22 tests covering all functionality
+- **HTML Response Validation**: Tests verify HTML fragments (not JSON)
+- **BestPractices.md**: Lessons learned and simplified patterns
+- **Educational Documentation**: README and DESIGN following guiding light template
+- **HTMX Comments**: All attributes explained in HTML
+- **JavaScript Documentation**: Explains why HTMX alone isn't sufficient
+- **Favicon Support**: Added SVG favicon files
+
+### Enhanced
+- **Development Guiding Light Compliance**: Minimal dependencies, educational code
+- **Official HTMX Pattern**: Based on htmx.org/examples/file-upload
+- **Security**: Maintained all validation (type, size, path traversal)
+- **Makefile Integration**: Tests fully integrated with root Makefile
+- **Code Simplicity**: -153 lines overall, clearer structure
+
+### Technical
+- **Template Reduction**: Removed upload_result.html, multi_upload_result.html, file_list.html
+- **Response Format**: Inline HTML in routes (e.g., `<div class="success">✅ Uploaded</div>`)
+- **Progress Bars**: Real HTML5 progress elements updated via JavaScript
+- **Test Coverage**: 22 unit tests (basic, validation, security, HTML format)
+- **Dependencies**: Removed uuid, minimal imports
+
 ## [0.17.0] - 2024-12-19
 
 ### Added

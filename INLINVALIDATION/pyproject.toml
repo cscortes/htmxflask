@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "htmx-inline-validation"
-version = "0.17.0"
+version = "0.18.0"
 description = "HTMX Inline Validation Example - Demonstrates real-time form field validation with debouncing"
 authors = [{name = "HTMX Flask Examples", email = "examples@htmx.org"}]
 readme = "README.md"
