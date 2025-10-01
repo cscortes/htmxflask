@@ -1,0 +1,116 @@
+/* DIALOGSUIKIT Example - Custom Styles */
+/* Following Development Guiding Light principles: minimal, focused, educational */
+
+/* Custom overrides for better integration with HTMX */
+.uk-modal {
+    z-index: 1000;
+}
+
+.uk-modal-dialog {
+    max-width: 500px;
+}
+
+/* Form styling enhancements */
+.uk-input:focus {
+    border-color: #1e87f0;
+    box-shadow: 0 0 0 2px rgba(30, 135, 240, 0.2);
+}
+
+/* Button hover effects */
+.uk-button-primary:hover {
+    background-color: #0f7ae5;
+    color: #fff;
+}
+
+.uk-button-danger:hover {
+    background-color: #e53e3e;
+    color: #fff;
+}
+
+/* Card styling for submissions */
+.uk-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.uk-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Code styling */
+code {
+    background-color: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .uk-modal-dialog {
+        margin: 20px;
+        max-width: calc(100% - 40px);
+    }
+    
+    .uk-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .uk-button:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Loading states for HTMX */
+.htmx-indicator {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
+
+.htmx-request .htmx-indicator {
+    opacity: 1;
+}
+
+.htmx-request.htmx-indicator {
+    opacity: 1;
+}
+
+/* Success/error message styling */
+.uk-alert {
+    margin-top: 20px;
+}
+
+/* Animation for modal appearance */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.uk-modal.uk-open .uk-modal-dialog {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+/* Focus management for accessibility */
+.uk-modal.uk-open {
+    outline: none;
+}
+
+.uk-modal.uk-open .uk-input:first-of-type {
+    outline: 2px solid #1e87f0;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .uk-modal,
+    .uk-button {
+        display: none !important;
+    }
+}
