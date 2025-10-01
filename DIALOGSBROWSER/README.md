@@ -1,4 +1,4 @@
-# DIALOGS - HTMX Native Browser Dialogs
+# DIALOGSBROWSER - HTMX Native Browser Dialogs
 
 This example demonstrates native browser dialogs using HTMX's `hx-prompt` and `hx-confirm` attributes.
 
@@ -99,7 +99,7 @@ def submit():
 Run the comprehensive test suite:
 
 ```bash
-cd DIALOGS
+cd DIALOGSBROWSER
 python myapp_test.py
 ```
 
@@ -117,7 +117,7 @@ python myapp_test.py
 
 ## 🚀 Try It Out
 
-1. `cd DIALOGS`
+1. `cd DIALOGSBROWSER`
 2. `uv sync`
 3. `uv run myapp.py`
 4. Visit http://localhost:5000

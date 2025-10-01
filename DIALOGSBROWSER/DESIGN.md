@@ -1,4 +1,4 @@
-# DIALOGS - Design Decisions
+# DIALOGSBROWSER - Design Decisions
 
 ## 🎯 Design Goals
 

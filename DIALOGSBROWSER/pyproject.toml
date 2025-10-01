@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "htmx-dialogs"
+name = "dialogsbrowser"
 version = "0.20.0"
 description = "HTMX Dialogs Example - Native browser dialogs with hx-prompt and hx-confirm"
 readme = "README.md"

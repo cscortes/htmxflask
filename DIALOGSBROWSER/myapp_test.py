@@ -9,7 +9,7 @@ import tempfile
 import os
 from myapp import app
 
-class TestDialogsExample(unittest.TestCase):
+class TestDialogsBrowserExample(unittest.TestCase):
     def setUp(self):
         """Set up test client and clear responses"""
         app.config['TESTING'] = True
@@ -22,7 +22,7 @@ class TestDialogsExample(unittest.TestCase):
         """Test that the main page loads correctly"""
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'HTMX Dialogs', response.data)
+        self.assertIn(b'HTMX Browser Dialogs', response.data)
         self.assertIn(b'hx-prompt', response.data)
         self.assertIn(b'hx-confirm', response.data)
 
