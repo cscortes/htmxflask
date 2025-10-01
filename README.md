@@ -1,6 +1,6 @@
 # HTMX Flask Examples
 
-**Version: 0.18.0**
+**Version: 0.19.0**
 
 ![CI](https://github.com/yourusername/htmxflask/workflows/CI/badge.svg)
 
@@ -19,7 +19,7 @@ cd ACTIVESEARCH && uv run myapp.py
 
 ## 📁 Project Structure
 
-This project contains twelve educational HTMX examples:
+This project contains thirteen educational HTMX examples:
 
 ### 1. **ACTIVESEARCH** - Live Search with Debouncing
 - Real-time search with 500ms debounce
@@ -98,6 +98,13 @@ This project contains twelve educational HTMX examples:
 - Visual feedback with highlighted editing rows
 
 ### 12. **BULKUPDATE** - Bulk Operations with Checkboxes
+
+### 13. **FILEUPLOADPRESERVE** - File Upload Input Preservation
+- Preserve file selections after form validation errors
+- Demonstrates `hx-preserve`, `hx-post`, `hx-target`, `hx-swap="outerHTML"`
+- Based on official HTMX file-upload-input example
+- Side-by-side comparison showing with/without `hx-preserve`
+- Server-side validation with file input preservation
 
 ## 🛠️ Development Tools
 

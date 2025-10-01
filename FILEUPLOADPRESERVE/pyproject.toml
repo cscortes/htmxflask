@@ -1,0 +1,33 @@
+[project]
+name = "fileuploadpreserve"
+version = "0.19.0"
+description = "HTMX File Upload Input Preservation Example"
+authors = [
+    {name = "HTMX Flask Examples", email = "examples@htmxflask.dev"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "flask>=2.0.0",
+    "werkzeug>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0.0",
+    "pytest-flask>=1.2.0",
+]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+python_files = ["*_test.py", "test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

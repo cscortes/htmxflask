@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Input Preservation - HTMX Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon-emoji.svg') }}">
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.6"></script>
+    <script>
+        // Fallback HTMX loading
+        if (typeof htmx === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"><\/script>');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📁 File Upload Input Preservation</h1>
+            <p>Demonstrates preserving file inputs after form validation errors using <code>hx-preserve</code></p>
+        </header>
+
+        <main>
+            <!-- Instructions Section -->
+            <section class="instructions-section">
+                <h2>🧪 How to Test the Difference</h2>
+                <div class="instructions">
+                    <p><strong>To see the difference between <code>hx-preserve</code> and without it:</strong></p>
+                    <ol>
+                        <li><strong>Select a file</strong> in both forms below (any .txt, .pdf, .png, etc.)</li>
+                        <li><strong>Enter invalid data</strong> to trigger server-side validation errors:
+                            <ul>
+                                <li><strong>Name:</strong> Enter just "A" (too short - must be 2+ characters)</li>
+                                <li><strong>Email:</strong> Enter "invalid-email" (missing @ symbol)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Submit both forms</strong> and observe the difference:
+                            <ul>
+                                <li><strong>First form (with hx-preserve):</strong> Your selected file remains selected ✅</li>
+                                <li><strong>Second form (without hx-preserve):</strong> Your selected file is lost ❌</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <div class="note">
+                        <strong>📝 Note:</strong> Client-side validation has been disabled to allow HTMX to handle all validation server-side, demonstrating the <code>hx-preserve</code> functionality.
+                    </div>
+                    <div class="tip">
+                        <strong>💡 Tip:</strong> You can also test with invalid file types (like .exe files) to see file validation errors while preserving the file selection.
+                    </div>
+                    <div class="quick-test">
+                        <p><strong>🚀 Quick Test:</strong> Click these buttons to automatically fill invalid data:</p>
+                        <button type="button" class="btn btn-secondary" onclick="fillInvalidData('preserveForm')">Fill Invalid Data (Form 1)</button>
+                        <button type="button" class="btn btn-secondary" onclick="fillInvalidData('noPreserveForm')">Fill Invalid Data (Form 2)</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Example 1: With hx-preserve (File input preserved) -->
+            <section class="example-section">
+                <h2>✅ With hx-preserve (File Input Preserved)</h2>
+                <p>When validation errors occur, the selected file is preserved thanks to <code>hx-preserve</code>.</p>
+
+                <div id="preserveFormContainer">
+                    <form id="preserveForm"
+                          method="POST"
+                          enctype="multipart/form-data"
+                          hx-post="/upload"
+                          hx-target="#preserveForm"
+                          hx-swap="outerHTML">
+
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text"
+                               id="name"
+                               name="name"
+                               placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="text"
+                               id="email"
+                               name="email"
+                               placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">File *</label>
+                        <!-- hx-preserve: Preserves the file input value after form errors -->
+                        <input type="file"
+                               id="file"
+                               name="file"
+                               hx-preserve
+                               accept=".txt,.pdf,.png,.jpg,.jpeg,.gif,.doc,.docx,.zip,.rar">
+                        <small>Allowed types: txt, pdf, png, jpg, jpeg, gif, doc, docx, zip, rar (max 16MB)</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Upload File
+                    </button>
+                    </form>
+                </div>
+
+                <div id="preserveResult" class="result-container"></div>
+            </section>
+
+            <!-- Example 2: Without hx-preserve (File input lost) -->
+            <section class="example-section">
+                <h2>❌ Without hx-preserve (File Input Lost)</h2>
+                <p>When validation errors occur, the selected file is lost and must be re-selected.</p>
+
+                <div id="noPreserveFormContainer">
+                    <form id="noPreserveForm"
+                          method="POST"
+                          enctype="multipart/form-data"
+                          hx-post="/upload-without-preserve"
+                          hx-target="#noPreserveForm"
+                          hx-swap="outerHTML">
+
+                    <div class="form-group">
+                        <label for="name2">Name *</label>
+                        <input type="text"
+                               id="name2"
+                               name="name"
+                               placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email2">Email *</label>
+                        <input type="text"
+                               id="email2"
+                               name="email"
+                               placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file2">File *</label>
+                        <!-- File input value will be lost after form errors -->
+                        <input type="file"
+                               id="file2"
+                               name="file"
+                               accept=".txt,.pdf,.png,.jpg,.jpeg,.gif,.doc,.docx,.zip,.rar">
+                        <small>Allowed types: txt, pdf, png, jpg, jpeg, gif, doc, docx, zip, rar (max 16MB)</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Upload File
+                    </button>
+                    </form>
+                </div>
+
+                <div id="noPreserveResult" class="result-container"></div>
+            </section>
+
+            <!-- How it works section -->
+            <section class="how-it-works">
+                <h2>🔧 How It Works</h2>
+                <div class="explanation">
+                    <h3>hx-preserve Attribute</h3>
+                    <p>The <code>hx-preserve</code> attribute tells HTMX to preserve the element's value when the form is updated after an error. This is particularly useful for file inputs where users don't want to re-select their files after fixing validation errors.</p>
+
+                    <h3>Alternative Approach: Form Restructuring</h3>
+                    <p>You can also preserve file inputs by moving them outside the form element and using the <code>form</code> attribute to associate them:</p>
+
+                    <pre><code>&lt;input form="myForm" type="file" name="file"&gt;
+&lt;form id="myForm" hx-target="#myForm" hx-swap="outerHTML"&gt;
+    &lt;!-- other form fields --&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+                    <h3>Server-Side Control</h3>
+                    <p>You can control whether to preserve file inputs on the server side by conditionally including the <code>hx-preserve</code> attribute based on validation results.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Based on <a href="https://htmx.org/examples/file-upload-input/" target="_blank">HTMX File Upload Input Preservation Example</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Quick test function to fill invalid data
+        function fillInvalidData(formId) {
+            const form = document.getElementById(formId);
+            const nameField = form.querySelector('input[name="name"]');
+            const emailField = form.querySelector('input[name="email"]');
+
+            if (nameField) nameField.value = 'A';  // Too short name
+            if (emailField) emailField.value = 'invalid-email';  // Invalid email
+
+            // Focus on the name field to show the change
+            if (nameField) nameField.focus();
+        }
+    </script>
+</body>
+</html>

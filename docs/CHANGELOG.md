@@ -5,6 +5,30 @@ All notable changes to the HTMX Flask Examples project will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.19.0] - 2025-10-01
+
+### Added
+- **FILEUPLOADPRESERVE Example**: New example demonstrating file upload input preservation using `hx-preserve`
+  - Based on official HTMX file-upload-input example (https://htmx.org/examples/file-upload-input/)
+  - Side-by-side comparison showing with/without `hx-preserve`
+  - Server-side validation with file input preservation
+  - 20 comprehensive unit tests covering all functionality
+  - Minimal CSS following Development Guiding Light principles
+  - Educational documentation (README.md, DESIGN.md)
+  - Quick test buttons with JavaScript for easy demonstration
+  - Disabled client-side validation to showcase server-side validation
+
+### Fixed
+- **FILEUPLOADPRESERVE Bug**: Fixed duplicate form appearing when invalid data was entered
+  - Changed HTMX targeting from `innerHTML` to `outerHTML` swap
+  - Forms now replace themselves correctly instead of duplicating
+  - Error templates use consistent HTMX targeting
+
+### Changed
+- **Documentation**: Updated README.md to include FILEUPLOADPRESERVE example
+- **Project Count**: Updated from twelve to thirteen examples
+- **FEATURES.md**: Updated completion count to 13/47 examples
+
 ## [0.18.0] - 2025-10-01
 
 ### Changed

@@ -1,0 +1,52 @@
+<!-- Form with validation errors - file input NOT preserved -->
+<form id="noPreserveForm"
+      method="POST"
+      enctype="multipart/form-data"
+      hx-post="/upload-without-preserve"
+      hx-target="#noPreserveForm"
+      hx-swap="outerHTML">
+
+    <div class="form-group">
+        <label for="name2">Name *</label>
+        <input type="text"
+               id="name2"
+               name="name"
+               value="{{ name }}"
+               placeholder="Enter your name"
+               class="{{ 'error' if 'name' in errors else '' }}">
+        {% if 'name' in errors %}
+            <div class="error-message">{{ errors.name }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="email2">Email *</label>
+        <input type="text"
+               id="email2"
+               name="email"
+               value="{{ email }}"
+               placeholder="Enter your email"
+               class="{{ 'error' if 'email' in errors else '' }}">
+        {% if 'email' in errors %}
+            <div class="error-message">{{ errors.email }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="file2">File *</label>
+        <!-- File input value will be lost after form errors -->
+        <input type="file"
+               id="file2"
+               name="file"
+               accept=".txt,.pdf,.png,.jpg,.jpeg,.gif,.doc,.docx,.zip,.rar"
+               class="{{ 'error' if 'file' in errors else '' }}">
+        <small>Allowed types: txt, pdf, png, jpg, jpeg, gif, doc, docx, zip, rar (max 16MB)</small>
+        {% if 'file' in errors %}
+            <div class="error-message">{{ errors.file }}</div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Upload File
+    </button>
+</form>

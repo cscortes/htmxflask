@@ -42,6 +42,7 @@ version: ## Update version to specified version (e.g., make version 0.2.0)
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' LAZYLOAD/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' INLINVALIDATION/pyproject.toml; \
 	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' FILEUPLOAD/pyproject.toml; \
+	sed -i 's/version = "[^"]*"/version = "'$$VERSION_FROM_FILE'"/g' FILEUPLOADPRESERVE/pyproject.toml; \
 	sed -i 's/\*\*Version: [0-9]\+\.[0-9]\+\.[0-9]\+\*\*/\*\*Version: '$$VERSION_FROM_FILE'\*\*/g' README.md
 	@echo "Note: Remember to update docs/CHANGELOG.md with new version details"
 	@echo "Version updated to $(VERSION) in all files"
@@ -134,6 +135,8 @@ lint: ## Run flake8 linter on all examples
 	uv run -- flake8 --ignore=W391,E128 --exclude=.venv INLINVALIDATION 2>/dev/null || true
 	@echo "Running flake8 on FILEUPLOAD..."
 	uv run -- flake8 --ignore=W391,E128 --exclude=.venv FILEUPLOAD 2>/dev/null || true
+	@echo "Running flake8 on FILEUPLOADPRESERVE..."
+	uv run -- flake8 --ignore=W391,E128 --exclude=.venv FILEUPLOADPRESERVE 2>/dev/null || true
 	@echo "Linting complete!"
 
 test: lint ## Run tests on all examples (lint + tests)
@@ -162,13 +165,15 @@ test: lint ## Run tests on all examples (lint + tests)
 	@cd INLINVALIDATION && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Running tests on FILEUPLOAD..."
 	@cd FILEUPLOAD && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
+	@echo "Running tests on FILEUPLOADPRESERVE..."
+	@cd FILEUPLOADPRESERVE && (test -f myapp_test.py && uv run python myapp_test.py 2>/dev/null > /tmp/test_output 2>&1 && echo "  ✓ Tests passed" || echo "  ✗ Tests failed") || echo "  No test file found"
 	@echo "Tests completed!"
 
 test-example: ## Run tests for a specific example (make test-example EXAMPLE=CLICKEDIT)
 	@if [ -z "$(EXAMPLE)" ]; then \
 		echo "Error: Please specify an example name"; \
 		echo "Usage: make test-example EXAMPLE=CLICKEDIT"; \
-		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT, CLICKLOAD, DELETEROW, BULKUPDATE, EDITROW, LAZYLOAD, INLINVALIDATION, FILEUPLOAD"; \
+		echo "Available examples: ACTIVESEARCH, VALUESELECT, PLY3, PROGRESSBAR, CLICKEDIT, CLICKLOAD, DELETEROW, BULKUPDATE, EDITROW, LAZYLOAD, INLINVALIDATION, FILEUPLOAD, FILEUPLOADPRESERVE"; \
 		exit 1; \
 	fi
 	@echo "Running tests for $(EXAMPLE)..."
@@ -210,6 +215,8 @@ install: ## Install dependencies for all examples
 	@cd INLINVALIDATION && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "FILEUPLOAD:"
 	@cd FILEUPLOAD && uv pip install -e . || echo "  Failed to install (check if uv is available)"
+	@echo "FILEUPLOADPRESERVE:"
+	@cd FILEUPLOADPRESERVE && uv pip install -e . || echo "  Failed to install (check if uv is available)"
 	@echo "Installation complete!"
 
 pre-git-commit: ## Remove invisible characters from all files before git commit
